@@ -44,7 +44,7 @@ void CHudHull:: Reset (void)
 {
 	m_flHull = HULL_INIT;
 	m_nHullLow = -1;
-	SetBgColor (Color (0,0,0,128));
+	SetBgColor (Color (0,0,0,0));
 }
 
 

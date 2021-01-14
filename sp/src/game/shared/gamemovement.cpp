@@ -66,8 +66,8 @@ ConVar debug_latch_reset_onduck( "debug_latch_reset_onduck", "1", FCVAR_CHEAT );
 #endif
 
 // Camera Bob
-ConVar cl_viewbob_timer		( "cl_viewbob_timer", "4", 0, "Speed of Oscillation");
-ConVar cl_viewbob_scale		( "cl_viewbob_scale", "0.05", 0, "Magnitude of Oscillation");
+ConVar cl_viewbob_timer		( "cl_viewbob_timer", "8", 0, "Speed of Oscillation");
+ConVar cl_viewbob_scale		( "cl_viewbob_scale", "0.01", 0, "Magnitude of Oscillation");
 
 // [MD] I'll remove this eventually. For now, I want the ability to A/B the optimizations.
 bool g_bMovementOptimizations = true;
@@ -1919,7 +1919,7 @@ if ( !engine->IsPaused() )
 	float fmove, smove;
 	Vector wishdir;
 	float wishspeed;
-
+	
 	Vector dest;
 	trace_t pm;
 	Vector forward, right, up;

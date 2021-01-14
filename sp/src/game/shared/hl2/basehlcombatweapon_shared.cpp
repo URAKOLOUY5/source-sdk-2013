@@ -249,6 +249,148 @@ static ConVar	v_iyaw_level( "v_iyaw_level", "0.3"/*, FCVAR_UNREGISTERED*/ );
 static ConVar	v_iroll_level( "v_iroll_level", "0.1"/*, FCVAR_UNREGISTERED*/ );
 static ConVar	v_ipitch_level( "v_ipitch_level", "0.3"/*, FCVAR_UNREGISTERED*/ );
 
+#ifdef DBR
+//-----------------------------------------------------------------------------
+// Purpose: 
+// Output : float
+//-----------------------------------------------------------------------------
+float CBaseHLCombatWeapon::CalcViewmodelBob( void )
+{
+	static	float bobtime;
+	static	float lastbobtime;
+	float	cycle;
+	
+	CBasePlayer *player = ToBasePlayer( GetOwner() );
+	//Assert( player );
+
+	//NOTENOTE: For now, let this cycle continue when in the air, because it snaps badly without it
+
+	if ( ( !gpGlobals->frametime ) || ( player == NULL ) )
+	{
+		//NOTENOTE: We don't use this return value in our case (need to restructure the calculation function setup!)
+		return 0.0f;// just use old value
+	}
+
+	// Note: we use paint code for this so when player move on speed paint, gun bob faster (Bank)
+	//Find the speed of the player
+	float speed = player->GetLocalVelocity().Length();
+
+	speed = clamp( speed, -player->MaxSpeed(), player->MaxSpeed() );
+
+	float bob_offset = RemapVal( speed, 0, player->MaxSpeed(), 0.0f, 1.0f );
+
+	////Find the speed of the player
+	//float speed = player->GetLocalVelocity().Length2D();
+
+	////FIXME: This maximum speed value must come from the server.
+	////		 MaxSpeed() is not sufficient for dealing with sprinting - jdw
+
+	//speed = clamp( speed, -320, 320 );
+
+	//float bob_offset = RemapVal( speed, 0, 320, 0.0f, 1.0f );
+	
+	bobtime += ( gpGlobals->curtime - lastbobtime ) * bob_offset;
+	lastbobtime = gpGlobals->curtime;
+
+	//Calculate the vertical bob
+	cycle = bobtime - (int)(bobtime/HL2_BOB_CYCLE_MAX)*HL2_BOB_CYCLE_MAX;
+	cycle /= HL2_BOB_CYCLE_MAX;
+
+	if ( cycle < HL2_BOB_UP )
+	{
+		cycle = M_PI * cycle / HL2_BOB_UP;
+	}
+	else
+	{
+		cycle = M_PI + M_PI*(cycle-HL2_BOB_UP)/(1.0 - HL2_BOB_UP);
+	}
+	
+	g_verticalBob = speed*0.005f;
+	g_verticalBob = g_verticalBob*0.3 + g_verticalBob*0.7*sin(cycle);
+
+	g_verticalBob = clamp( g_verticalBob, -7.0f, 4.0f );
+
+	//Calculate the lateral bob
+	cycle = bobtime - (int)(bobtime/HL2_BOB_CYCLE_MAX*2)*HL2_BOB_CYCLE_MAX*2;
+	cycle /= HL2_BOB_CYCLE_MAX*2;
+
+	if ( cycle < HL2_BOB_UP )
+	{
+		cycle = M_PI * cycle / HL2_BOB_UP;
+	}
+	else
+	{
+		cycle = M_PI + M_PI*(cycle-HL2_BOB_UP)/(1.0 - HL2_BOB_UP);
+	}
+
+	g_lateralBob = speed*0.005f;
+	g_lateralBob = g_lateralBob*0.3 + g_lateralBob*0.7*sin(cycle);
+	g_lateralBob = clamp( g_lateralBob, -7.0f, 4.0f );
+	
+	//NOTENOTE: We don't use this return value in our case (need to restructure the calculation function setup!)
+	return 0.0f;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+// Input  : &origin - 
+//			&angles - 
+//			viewmodelindex - 
+//-----------------------------------------------------------------------------
+void CBaseHLCombatWeapon::AddViewmodelBob( CBaseViewModel *viewmodel, Vector &origin, QAngle &angles )
+{
+	Vector	forward, right, up;
+	AngleVectors( angles, &forward, &right, &up );
+
+	CalcViewmodelBob();
+
+	// Apply bob, but scaled down to 40%
+	VectorMA( origin, g_verticalBob * 0.1f, forward, origin );
+
+	// Z bob a bit more
+	origin += g_verticalBob * 0.1f * 0.4;
+
+	//move left and right
+	VectorMA( origin, g_lateralBob * 0.8f, right, origin );
+
+	//roll, pitch, yaw
+	float rollAngle = g_verticalBob * 0.5f;
+	VMatrix rotMatrix;
+	Vector rotAxis = CrossProduct( right, up ).Normalized();
+
+	MatrixBuildRotationAboutAxis( rotMatrix, rotAxis, rollAngle );
+	up = rotMatrix * up;
+	forward = rotMatrix * forward;
+	right = rotMatrix * right;
+
+	float pitchAngle = -g_verticalBob * 0.9f;
+	rotAxis = right;
+	MatrixBuildRotationAboutAxis( rotMatrix, rotAxis, pitchAngle );
+	up = rotMatrix * up;
+	forward = rotMatrix * forward;
+
+	float yawAngle = -g_lateralBob * 0.3f;
+	rotAxis = up;
+	MatrixBuildRotationAboutAxis( rotMatrix, rotAxis, yawAngle );
+	forward = rotMatrix * forward;
+
+	VectorAngles( forward, up, angles );
+
+	//// Apply bob, but scaled down to 40%
+	//VectorMA( origin, g_verticalBob * 0.1f, forward, origin );
+	//
+	//// Z bob a bit more
+	//origin[2] += g_verticalBob * 0.1f;
+	//
+	//// bob the angles
+	//angles[ ROLL ]	+= g_verticalBob * 0.5f;
+	//angles[ PITCH ]	-= g_verticalBob * 0.4f;
+
+	//angles[ YAW ]	-= g_lateralBob  * 0.3f;
+
+	//VectorMA( origin, g_lateralBob * 0.8f, right, origin );
+}
+#else
 //-----------------------------------------------------------------------------
 // Purpose: 
 // Output : float
@@ -349,6 +491,7 @@ void CBaseHLCombatWeapon::AddViewmodelBob( CBaseViewModel *viewmodel, Vector &or
 
 	VectorMA( origin, g_lateralBob * 0.8f, right, origin );
 }
+#endif
 
 //-----------------------------------------------------------------------------
 Vector CBaseHLCombatWeapon::GetBulletSpread( WeaponProficiency_t proficiency )
