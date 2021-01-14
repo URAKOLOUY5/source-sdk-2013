@@ -22,6 +22,11 @@ If not "%EPISODIC%"=="n" (
     set game=%game% /episodic
 )
 
+set /p DBR=Use DBR? (y): 
+If not "%DBR%"=="n" (
+    set game=%game% /dbr
+)
+
 cls
 
 rem echo.
