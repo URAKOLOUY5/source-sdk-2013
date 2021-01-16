@@ -28,6 +28,9 @@ public:
 	void SetShouldDisplayValue(bool state);
 	void SetShouldDisplaySecondaryValue(bool state);
 	void SetLabelText(const wchar_t *text);
+#ifdef DBR
+	void SetSmallLabelText(const wchar_t* text);
+#endif
 	void SetIndent(bool state);
 	void SetIsTime(bool state);
 
@@ -41,6 +44,10 @@ protected:
 	virtual void Paint();
 	virtual void PaintLabel();
 
+#ifdef DBR
+	virtual void PaintSmallLabel();
+#endif
+
 	virtual void PaintNumbers(vgui::HFont font, int xpos, int ypos, int value);
 
 protected:
@@ -48,6 +55,9 @@ protected:
 	int m_iValue;
 	int m_iSecondaryValue;
 	wchar_t m_LabelText[32];
+#ifdef DBR
+	wchar_t m_SmallLabelText[32];
+#endif
 	bool m_bDisplayValue, m_bDisplaySecondaryValue;
 	bool m_bIndent;
 	bool m_bIsTime;
@@ -59,7 +69,10 @@ protected:
 	CPanelAnimationVar( vgui::HFont, m_hNumberFont, "NumberFont", "HudNumbers" );
 	CPanelAnimationVar( vgui::HFont, m_hNumberGlowFont, "NumberGlowFont", "HudNumbersGlow" );
 	CPanelAnimationVar( vgui::HFont, m_hSmallNumberFont, "SmallNumberFont", "HudNumbersSmall" );
-	CPanelAnimationVar( vgui::HFont, m_hTextFont, "TextFont", "Default" );
+#ifdef DBR
+	CPanelAnimationVar( vgui::HFont, m_hSmallTextFont, "SmallTextFont", "HeartIconSmall" );
+#endif
+	CPanelAnimationVar( vgui::HFont, m_hTextFont, "TextFont", "HeartIcon" );
 
 	CPanelAnimationVarAliasType( float, text_xpos, "text_xpos", "8", "proportional_float" );
 	CPanelAnimationVarAliasType( float, text_ypos, "text_ypos", "20", "proportional_float" );

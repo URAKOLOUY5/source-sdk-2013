@@ -104,7 +104,6 @@ void CHudHull::Paint()
 	}
 
 	// Draw our name
-
 	surface()->DrawSetTextFont(m_hTextFont);
 	surface()->DrawSetTextColor(m_HullColor);
 	surface()->DrawSetTextPos(text_xpos, text_ypos);

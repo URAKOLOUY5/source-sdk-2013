@@ -29,6 +29,9 @@ CHudNumericDisplay::CHudNumericDisplay(vgui::Panel *parent, const char *name) : 
 
 	m_iValue = 0;
 	m_LabelText[0] = 0;
+#ifdef DBR
+	m_SmallLabelText[0] = 0;
+#endif
 	m_iSecondaryValue = 0;
 	m_bDisplayValue = true;
 	m_bDisplaySecondaryValue = false;
@@ -84,6 +87,17 @@ void CHudNumericDisplay::SetLabelText(const wchar_t *text)
 	wcsncpy(m_LabelText, text, sizeof(m_LabelText) / sizeof(wchar_t));
 	m_LabelText[(sizeof(m_LabelText) / sizeof(wchar_t)) - 1] = 0;
 }
+
+#ifdef DBR
+//-----------------------------------------------------------------------------
+// Purpose: data accessor
+//-----------------------------------------------------------------------------
+void CHudNumericDisplay::SetSmallLabelText(const wchar_t* text)
+{
+	wcsncpy(m_SmallLabelText, text, sizeof(m_SmallLabelText) / sizeof(wchar_t));
+	m_SmallLabelText[(sizeof(m_SmallLabelText) / sizeof(wchar_t)) - 1] = 0;
+}
+#endif
 
 //-----------------------------------------------------------------------------
 // Purpose: data accessor
@@ -156,6 +170,19 @@ void CHudNumericDisplay::PaintLabel( void )
 	surface()->DrawUnicodeString( m_LabelText );
 }
 
+#ifdef DBR
+//-----------------------------------------------------------------------------
+// Purpose: draws the small text
+//-----------------------------------------------------------------------------
+void CHudNumericDisplay::PaintSmallLabel(void)
+{
+	surface()->DrawSetTextFont(m_hSmallTextFont);
+	surface()->DrawSetTextColor(GetFgColor());
+	surface()->DrawSetTextPos(text_xpos, text_ypos);
+	surface()->DrawUnicodeString(m_SmallLabelText);
+}
+#endif
+
 //-----------------------------------------------------------------------------
 // Purpose: renders the vgui panel
 //-----------------------------------------------------------------------------
@@ -193,6 +220,9 @@ void CHudNumericDisplay::Paint()
 	}
 
 	PaintLabel();
+#ifdef DBR
+	PaintSmallLabel();
+#endif
 }
 
 

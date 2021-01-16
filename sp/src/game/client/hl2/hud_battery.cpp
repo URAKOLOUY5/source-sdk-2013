@@ -73,7 +73,13 @@ void CHudBattery::Init( void )
 //-----------------------------------------------------------------------------
 void CHudBattery::Reset( void )
 {
-	SetLabelText(g_pVGuiLocalize->Find("#Valve_Hud_SUIT"));
+#ifndef DBR
+	SetLabelText(g_pVGuiLocalize->Find("#Valve_Hud_Health"));
+#endif
+
+#ifdef DBR
+	SetLabelText(L"*");
+#endif
 	SetDisplayValue(m_iBat);
 }
 
