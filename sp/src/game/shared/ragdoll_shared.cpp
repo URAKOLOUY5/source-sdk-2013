@@ -174,10 +174,6 @@ void RagdollSetupAnimatedFriction( IPhysicsEnvironment *pPhysEnv, ragdoll_t *rag
 	}
 }
 
-#ifdef MAPBASE
-ConVar g_ragdoll_fixed_constraints_mass( "g_ragdoll_fixed_constraints_mass", "1000", FCVAR_REPLICATED );
-#endif
-
 static void RagdollAddSolid( IPhysicsEnvironment *pPhysEnv, ragdoll_t &ragdoll, const ragdollparams_t &params, solid_t &solid )
 {
 	if ( solid.index >= 0 && solid.index < params.pCollide->solidCount)
@@ -190,12 +186,7 @@ static void RagdollAddSolid( IPhysicsEnvironment *pPhysEnv, ragdoll_t &ragdoll, 
 		{
 			if ( params.fixedConstraints )
 			{
-#ifdef MAPBASE
-				if (g_ragdoll_fixed_constraints_mass.GetFloat() != -1)
-					solid.params.mass = g_ragdoll_fixed_constraints_mass.GetFloat();
-#else
 				solid.params.mass = 1000.f;
-#endif
 			}
 
 			solid.params.rotInertiaLimit = 0.1;
