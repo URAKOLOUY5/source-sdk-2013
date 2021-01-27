@@ -338,16 +338,6 @@ struct thinkfunc_t
 	DECLARE_SIMPLE_DATADESC();
 };
 
-#ifdef MAPBASE_VSCRIPT
-struct scriptthinkfunc_t
-{
-	HSCRIPT			m_hfnThink;
-	unsigned short	m_iContextHash;
-	int				m_nNextThinkTick;
-	bool			m_bNoParam;
-};
-#endif
-
 struct EmitSound_t;
 struct rotatingpushmove_t;
 
@@ -1998,12 +1988,11 @@ public:
 #ifdef MAPBASE_VSCRIPT
 	void ScriptSetThinkFunction(const char *szFunc, float time);
 	void ScriptStopThinkFunction();
-	void ScriptSetContextThink( const char* szContext, HSCRIPT hFunc, float time );
-	void ScriptSetThink( HSCRIPT hFunc, float time );
+	void ScriptSetThink(HSCRIPT hFunc, float time);
 	void ScriptStopThink();
-	void ScriptContextThink();
+	void ScriptThinkH();
 private:
-	CUtlVector< scriptthinkfunc_t > m_ScriptThinkFuncs;
+	HSCRIPT m_hfnThink;
 public:
 #endif
 	const char* GetScriptId();

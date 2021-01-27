@@ -13,10 +13,6 @@
 
 void RegisterUserMessages( void );
 
-#ifdef MAPBASE
-void RegisterMapbaseUserMessages( void );
-#endif
-
 //-----------------------------------------------------------------------------
 // Purpose: Force registration on .dll load
 // FIXME:  Should this be a client/server system?
@@ -25,11 +21,6 @@ CUserMessages::CUserMessages()
 {
 	// Game specific registration function;
 	RegisterUserMessages();
-
-#ifdef MAPBASE
-	// Mapbase registration function;
-	RegisterMapbaseUserMessages();
-#endif
 }
 
 CUserMessages::~CUserMessages()
