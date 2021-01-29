@@ -469,6 +469,13 @@ public:
 	int		ScriptGetSkin() { return GetSkin(); }
 	void	SetSkin( int iSkin ) { m_nSkin = iSkin; }
 
+	int		GetForceBone()				{ return m_nForceBone; }
+	void	SetForceBone( int iBone )	{ m_nForceBone = iBone; }
+	const Vector&	GetRagdollForce()					{ return m_vecForce; }
+	void	SetRagdollForce( const Vector &vecForce )	{ m_vecForce = vecForce; }
+
+	HSCRIPT			ScriptBecomeRagdollOnClient();
+
 	static ScriptHook_t	g_Hook_OnClientRagdoll;
 
 	float							ScriptGetPoseParameter(const char* szName);

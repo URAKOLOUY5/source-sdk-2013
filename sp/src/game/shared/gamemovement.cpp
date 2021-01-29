@@ -65,9 +65,10 @@ ConVar debug_latch_reset_onduck( "debug_latch_reset_onduck", "1", FCVAR_CHEAT );
 #endif
 #endif
 
-// Camera Bob
+#ifdef DBR
 ConVar cl_viewbob_timer		( "cl_viewbob_timer", "8", 0, "Speed of Oscillation");
 ConVar cl_viewbob_scale		( "cl_viewbob_scale", "0.01", 0, "Magnitude of Oscillation");
+#endif
 
 // [MD] I'll remove this eventually. For now, I want the ability to A/B the optimizations.
 bool g_bMovementOptimizations = true;
@@ -1905,10 +1906,9 @@ void CGameMovement::WalkMove( void )
 #ifdef DBR
 if ( !engine->IsPaused() )
 {
-	//float xoffset = sin(gpGlobals->curtime * cl_viewbob_timer.GetFloat()) * player->GetAbsVelocity().Length() * cl_viewbob_scale.GetFloat() / 1000;
-	//float yoffset = sin(gpGlobals->curtime * cl_viewbob_timer.GetFloat()) * player->GetAbsVelocity().Length() * cl_viewbob_scale.GetFloat() / 1000;
+	float xoffset = sin(gpGlobals->curtime * cl_viewbob_timer.GetFloat()) * player->GetAbsVelocity().Length() * cl_viewbob_scale.GetFloat() / 500;
 	float zoffset = sin(gpGlobals->curtime * cl_viewbob_timer.GetFloat()) * player->GetAbsVelocity().Length() * cl_viewbob_scale.GetFloat() / 100;
-	player->ViewPunch(QAngle(0, 0, zoffset));
+	player->ViewPunch(QAngle(xoffset, 0, zoffset));
 }	
 #endif
 
@@ -1919,7 +1919,7 @@ if ( !engine->IsPaused() )
 	float fmove, smove;
 	Vector wishdir;
 	float wishspeed;
-	
+
 	Vector dest;
 	trace_t pm;
 	Vector forward, right, up;

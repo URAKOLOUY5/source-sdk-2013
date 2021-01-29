@@ -1312,7 +1312,11 @@ void CHL2_Player::ToggleZoom(void)
 //-----------------------------------------------------------------------------
 void CHL2_Player::StartZooming( void )
 {
+#ifdef DBR
+	int iFOV = 60; // For focus mode
+#else
 	int iFOV = 25;
+#endif
 	if ( SetFOV( this, iFOV, 0.4f ) )
 	{
 		m_HL2Local.m_bZooming = true;
