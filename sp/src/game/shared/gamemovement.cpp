@@ -2101,7 +2101,7 @@ void CGameMovement::FullWalkMove( )
 		// Was jump button pressed?
 		if (mv->m_nButtons & IN_JUMP)
 		{
- 			CheckJumpButton();
+				CheckJumpButton();
 		}
 		else
 		{
@@ -2419,6 +2419,12 @@ bool CGameMovement::CheckJumpButton( void )
 	// Don't allow jumping when the player is in a stasis field.
 #ifndef HL2_EPISODIC
 	if ( player->m_Local.m_bSlowMovement )
+		return false;
+#endif
+
+#ifdef DBR
+	// Cannot jump will while duck
+	if ( player->GetFlags() & FL_DUCKING )
 		return false;
 #endif
 
