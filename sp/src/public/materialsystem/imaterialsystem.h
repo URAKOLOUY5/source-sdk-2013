@@ -432,6 +432,11 @@ struct FlashlightState_t
 		m_flShadowFilterSize = 1.0f;
 		m_flShadowSlopeScaleDepthBias = 4.0f;
 		m_flShadowDepthBias = 0.00001f;
+#elif defined(DBR)
+		m_flShadowMapResolution = 2048;
+		m_flShadowFilterSize = 5.0f;
+		m_flShadowSlopeScaleDepthBias = 4.0f;
+		m_flShadowDepthBias = 0.00001f;		
 #else
 		m_flShadowMapResolution = 1024.0f;
 		m_flShadowFilterSize = 3.0f;
