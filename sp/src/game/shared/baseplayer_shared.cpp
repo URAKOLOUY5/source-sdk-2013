@@ -552,10 +552,12 @@ void CBasePlayer::UpdateStepSound( surfacedata_t *psurface, const Vector &vecOri
 	bool movingalongground = ( groundspeed > 0.0001f );
 	bool moving_fast_enough =  ( speed >= velwalk );
 
-#ifdef PORTAL
+#if defined (PORTAL) || (DBR)
 	// In Portal we MUST play footstep sounds even when the player is moving very slowly
 	// This is used to count the number of footsteps they take in the challenge mode
 	// -Jeep
+
+	// Also in DBR (for moving in vents and other scenarious)
 	moving_fast_enough = true;
 #endif
 
