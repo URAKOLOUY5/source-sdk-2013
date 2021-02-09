@@ -88,9 +88,16 @@ extern int gEvilImpulse101;
 
 ConVar sv_autojump( "sv_autojump", "0" );
 
+
+#ifdef DBR
+ConVar hl2_walkspeed( "hl2_walkspeed", "95", FCVAR_DEVELOPMENTONLY);
+ConVar hl2_normspeed( "hl2_normspeed", "150", FCVAR_DEVELOPMENTONLY);
+ConVar hl2_sprintspeed( "hl2_sprintspeed", "220", FCVAR_DEVELOPMENTONLY);
+#else
 ConVar hl2_walkspeed( "hl2_walkspeed", "150" );
 ConVar hl2_normspeed( "hl2_normspeed", "190" );
 ConVar hl2_sprintspeed( "hl2_sprintspeed", "320" );
+#endif
 
 ConVar hl2_darkness_flashlight_factor ( "hl2_darkness_flashlight_factor", "1" );
 
@@ -666,14 +673,20 @@ void CHL2_Player::Precache( void )
 {
 	BaseClass::Precache();
 
+#ifndef DBR
 	PrecacheScriptSound( "HL2Player.SprintNoPower" );
 	PrecacheScriptSound( "HL2Player.SprintStart" );
+#endif
+#ifdef DBR
+	PrecacheScriptSound( "dbr.player_UseObject" );	
+#else
 	PrecacheScriptSound( "HL2Player.UseDeny" );
+	PrecacheScriptSound( "HL2Player.Use" );
+#endif
 	PrecacheScriptSound( "HL2Player.FlashLightOn" );
 	PrecacheScriptSound( "HL2Player.FlashLightOff" );
 	PrecacheScriptSound( "HL2Player.PickupWeapon" );
 	PrecacheScriptSound( "HL2Player.TrainUse" );
-	PrecacheScriptSound( "HL2Player.Use" );
 	PrecacheScriptSound( "HL2Player.BurnPain" );
 }
 
@@ -1645,23 +1658,29 @@ void CHL2_Player::StartSprinting( void )
 	{
 		// Don't sprint unless there's a reasonable
 		// amount of suit power.
-		
+
+#ifndef DBR		
 		// debounce the button for sound playing
 		if ( m_afButtonPressed & IN_SPEED )
 		{
+
 			CPASAttenuationFilter filter( this );
 			filter.UsePredictionRules();
+
 			EmitSound( filter, entindex(), "HL2Player.SprintNoPower" );
 		}
+#endif
 		return;
 	}
 
 	if( !SuitPower_AddDevice( SuitDeviceSprint ) )
 		return;
 
+#ifndef DBR
 	CPASAttenuationFilter filter( this );
 	filter.UsePredictionRules();
 	EmitSound( filter, entindex(), "HL2Player.SprintStart" );
+#endif
 
 	SetMaxSpeed( HL2_SPRINT_SPEED );
 	m_fIsSprinting = true;
@@ -3583,7 +3602,11 @@ void CHL2_Player::PlayerUse ( void )
 			// Robin: Don't play sounds for NPCs, because NPCs will allow respond with speech.
 			if ( !pUseEntity->MyNPCPointer() )
 			{
+#ifdef DBR
+				EmitSound("dbr.player_UseObject");
+#else
 				EmitSound( "HL2Player.Use" );
+#endif
 			}
 		}
 
@@ -4330,7 +4353,9 @@ void CHL2_Player::ItemPostFrame()
 	if ( m_bPlayUseDenySound )
 	{
 		m_bPlayUseDenySound = false;
+#ifndef DBR		
 		EmitSound( "HL2Player.UseDeny" );
+#endif
 	}
 }
 
