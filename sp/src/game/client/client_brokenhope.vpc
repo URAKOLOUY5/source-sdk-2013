@@ -3,6 +3,15 @@ $Macro GAMENAME 	"brokenhope"
 
 $Include "$SRCDIR\game\client\client_portal.vpc"
 
+$Configuration
+{
+	$Compiler
+	{
+		$AdditionalIncludeDirectories	".\portal2;.\brokenhope;$BASE"
+		$PreprocessorDefinitions		"$BASE;PORTAL2;BROKENHOPE"
+	}
+}
+
 $Project "Broken Hope - Client"
 {
 	
