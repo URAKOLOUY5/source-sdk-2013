@@ -140,6 +140,10 @@ static	kbutton_t	in_alt2;
 static	kbutton_t	in_score;
 static	kbutton_t	in_break;
 static	kbutton_t	in_zoom;
+#ifdef PORTAL2
+static  kbutton_t   in_zoomin;
+static  kbutton_t   in_zoomout;
+#endif
 static  kbutton_t   in_grenade1;
 static  kbutton_t   in_grenade2;
 static	kbutton_t	in_attack3;
@@ -483,6 +487,12 @@ void IN_GraphDown( const CCommand &args ) {KeyDown(&in_graph, args[1] );}
 void IN_GraphUp( const CCommand &args ) {KeyUp(&in_graph, args[1] );}
 void IN_ZoomDown( const CCommand &args ) {KeyDown(&in_zoom, args[1] );}
 void IN_ZoomUp( const CCommand &args ) {KeyUp(&in_zoom, args[1] );}
+#ifdef PORTAL2
+void IN_ZoomInDown( const CCommand &args ) {KeyDown(&in_zoomin, args[1] );}
+void IN_ZoomInUp( const CCommand &args ) {KeyUp(&in_zoomin, args[1] );}
+void IN_ZoomOutDown( const CCommand &args ) {KeyDown(&in_zoomout, args[1] );}
+void IN_ZoomOutUp( const CCommand &args ) {KeyUp(&in_zoomout, args[1] );}
+#endif
 void IN_Grenade1Up( const CCommand &args ) { KeyUp( &in_grenade1, args[1] ); }
 void IN_Grenade1Down( const CCommand &args ) { KeyDown( &in_grenade1, args[1] ); }
 void IN_Grenade2Up( const CCommand &args ) { KeyUp( &in_grenade2, args[1] ); }
@@ -1469,6 +1479,10 @@ int CInput::GetButtonBits( int bResetState )
 	CalcButtonBits( bits, IN_ALT2, s_ClearInputState, &in_alt2, bResetState );
 	CalcButtonBits( bits, IN_SCORE, s_ClearInputState, &in_score, bResetState );
 	CalcButtonBits( bits, IN_ZOOM, s_ClearInputState, &in_zoom, bResetState );
+#ifdef PORTAL2
+	CalcButtonBits( bits, IN_ZOOMIN, s_ClearInputState, &in_zoomin, bResetState );
+	CalcButtonBits( bits, IN_ZOOMOUT, s_ClearInputState, &in_zoomout, bResetState );
+#endif
 	CalcButtonBits( bits, IN_GRENADE1, s_ClearInputState, &in_grenade1, bResetState );
 	CalcButtonBits( bits, IN_GRENADE2, s_ClearInputState, &in_grenade2, bResetState );
 	CalcButtonBits( bits, IN_ATTACK3, s_ClearInputState, &in_attack3, bResetState );
@@ -1621,6 +1635,12 @@ static ConCommand startbreak("+break",IN_BreakDown);
 static ConCommand endbreak("-break",IN_BreakUp);
 static ConCommand force_centerview("force_centerview", IN_CenterView_f);
 static ConCommand joyadvancedupdate("joyadvancedupdate", IN_Joystick_Advanced_f, "", FCVAR_CLIENTCMD_CAN_EXECUTE);
+#ifdef PORTAL2
+static ConCommand startzoomin("+zoom_in", IN_ZoomInDown);
+static ConCommand endzoomin("-zoom_in", IN_ZoomInUp);
+static ConCommand startzoomout("+zoom_out", IN_ZoomOutDown);
+static ConCommand endzoomout("-zoom_out", IN_ZoomOutUp);
+#endif
 static ConCommand startzoom("+zoom", IN_ZoomDown);
 static ConCommand endzoom("-zoom", IN_ZoomUp);
 static ConCommand endgrenade1( "-grenade1", IN_Grenade1Up );
