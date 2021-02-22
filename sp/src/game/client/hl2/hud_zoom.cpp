@@ -192,7 +192,8 @@ void CHudZoom::Paint( void )
 	int wide, tall;
 	GetSize( wide, tall );
 
-#ifndef DBR	
+#ifndef DBR
+#ifndef PORTAL
 	surface()->DrawOutlinedCircle( xCrosshair, yCrosshair, m_flCircle1Radius * scale, 48);
 	surface()->DrawOutlinedCircle( xCrosshair, yCrosshair, m_flCircle2Radius * scale, 64);
 
@@ -212,6 +213,7 @@ void CHudZoom::Paint( void )
 		surface()->DrawFilledRect(xpos, ypos, xpos + 1, ypos + m_flDashHeight);
 		dashCount++;
 	}
+#endif
 #endif
 
 	// draw the darkened edges, with a rotated texture in the four corners

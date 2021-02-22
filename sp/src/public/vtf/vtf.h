@@ -1,4 +1,4 @@
-//========= Copyright Valve Corporation, All rights reserved. ============//
+//===== Copyright © 1996-2005, Valve Corporation, All rights reserved. ======//
 //
 // Purpose: 
 //
@@ -138,11 +138,11 @@ enum CubeMapFaceIndex_t
 	CUBEMAP_FACE_UP,
 	CUBEMAP_FACE_DOWN,
 
-	// This is the fallback for low-end
-	CUBEMAP_FACE_SPHEREMAP,
+	CUBEMAP_FACE_COUNT,
 
-	// NOTE: Cubemaps have *7* faces; the 7th is the fallback spheremap
-	CUBEMAP_FACE_COUNT
+	// vtf 7.5: spheremap isn't used anymore, just
+	// here for backward compatibility.
+	CUBEMAP_FACE_SPHEREMAP = CUBEMAP_FACE_COUNT,
 };
 
 
@@ -171,8 +171,6 @@ enum LookDir_t
 class IVTFTexture
 {
 public:
-	virtual ~IVTFTexture() {}
-
 	// Initializes the texture and allocates space for the bits
 	// In most cases, you shouldn't force the mip count.
 	virtual bool Init( int nWidth, int nHeight, int nDepth, ImageFormat fmt, int nFlags, int iFrameCount, int nForceMipCount = -1 ) = 0;
@@ -426,7 +424,7 @@ bool GetVTFPreload360Data( const char *pDebugName, CUtlBuffer &fileBufferIn, CUt
 
 // version number for the disk texture cache
 #define VTF_MAJOR_VERSION 7
-#define VTF_MINOR_VERSION 4
+#define VTF_MINOR_VERSION 5
 
 //-----------------------------------------------------------------------------
 // !!!!CRITICAL!!!! BEFORE YOU CHANGE THE FORMAT
@@ -457,7 +455,7 @@ struct VTFFileHeaderV7_1_t : public VTFFileBaseHeader_t
 	unsigned int	flags;
 	unsigned short	numFrames;
 	unsigned short	startFrame;
-#if !defined( POSIX ) && !defined( _X360 )
+#if !defined( _X360 )
 	VectorAligned	reflectivity;
 #else
 	// must manually align in order to maintain pack(1) expected layout with existing binaries
@@ -531,7 +529,7 @@ struct VTFFileHeaderV7_3_t : public VTFFileHeaderV7_2_t
 	char			pad4[3];
 	unsigned int	numResources;
 
-#if defined( _X360 ) || defined( POSIX )
+#if defined( _X360 )
 	// must manually align in order to maintain pack(1) expected layout with existing binaries
 	char			pad5[8];
 #endif

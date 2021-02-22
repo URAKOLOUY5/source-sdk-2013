@@ -27,6 +27,11 @@ If not "%DBR%"=="n" (
     set game=%game% /dbr
 )
 
+set /p DBR=Use Portal Prelude? (y): 
+If not "%DBR%"=="n" (
+    set game=%game% /portalprelude
+)
+
 cls
 
 rem echo.

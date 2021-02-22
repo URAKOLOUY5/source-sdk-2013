@@ -279,6 +279,7 @@ $Project
 		$File	"colorcorrectionvolume.cpp"
 		$File	"CommentarySystem.cpp"
 		$File	"controlentities.cpp"
+		$File	"$SRCDIR\game\shared\content_mounter.cpp"		
 		$File	"cplane.cpp"
 		$File	"CRagdollMagnet.cpp"
 		$File	"CRagdollMagnet.h"

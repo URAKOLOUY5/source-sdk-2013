@@ -18,6 +18,7 @@ $Project "client"
 	"game\client\client_hl2.vpc"		[($WIN32||$X360||$POSIX) && $HL2]
 	"game\client\client_episodic.vpc"	[($WIN32||$X360||$POSIX) && $EPISODIC]
 	"game\client\client_dbr.vpc"	[($WIN32||$X360||$POSIX) && $DBR]		
+	"game\client\client_portalprelude.vpc"	[($WIN32||$X360||$POSIX) && $PORTALPRELUDE]		
 }
 
 $Project "fgdlib"
@@ -42,11 +43,17 @@ $Project "height2normal"
 	"utils\height2normal\height2normal.vpc" [$WIN32]
 }
 
+$Project "vtf"
+{
+	"vtf\vtf.vpc" [$WIN32]
+}
+
 $Project "server"
 {
 	"game\server\server_hl2.vpc"		[($WIN32||$X360||$POSIX) && $HL2]
 	"game\server\server_episodic.vpc"	[($WIN32||$X360||$POSIX) && $EPISODIC]
-	"game\server\server_dbr.vpc"	[($WIN32||$X360||$POSIX) && $DBR]		
+	"game\server\server_dbr.vpc"	[($WIN32||$X360||$POSIX) && $DBR]	
+	"game\server\server_portalprelude.vpc"	[($WIN32||$X360||$POSIX) && $PORTALPRELUDE]				
 }
 
 $Project "mathlib"

@@ -700,6 +700,9 @@ bool CServerGameDLL::DLLInit( CreateInterfaceFn appSystemFactory,
 	g_pGameSaveRestoreBlockSet->AddBlockHandler( GetAchievementSaveRestoreBlockHandler() );
 	g_pGameSaveRestoreBlockSet->AddBlockHandler( GetVScriptSaveRestoreBlockHandler() );
 
+	extern void MountExtraContent();
+	MountExtraContent();	
+
 	// The string system must init first + shutdown last
 	IGameSystem::Add( GameStringSystem() );
 

@@ -1,0 +1,9 @@
+$Macro SRCDIR		"..\.."
+$Macro GAMENAME 	"portalprelude_mapbase"
+
+$Include "$SRCDIR\game\server\server_portal.vpc"
+
+$Project "Portal Prelude - Server"
+{
+	
+}

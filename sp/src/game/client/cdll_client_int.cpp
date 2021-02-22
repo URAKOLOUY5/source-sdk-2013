@@ -1124,6 +1124,9 @@ int CHLClient::Init( CreateInterfaceFn appSystemFactory, CreateInterfaceFn physi
 	HookHapticMessages(); // Always hook the messages
 #endif
 
+extern void MountExtraContent();
+MountExtraContent();
+
 #ifdef MAPBASE_RPC
 	MapbaseRPC_Init();
 #endif
