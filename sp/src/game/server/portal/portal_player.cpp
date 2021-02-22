@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose:	Player for Portal.
 //
@@ -1579,6 +1579,7 @@ bool CPortal_Player::ClientCommand(const CCommand& args)
 
 void CPortal_Player::CheatImpulseCommands(int iImpulse)
 {
+#ifndef PORTAL2
 	switch (iImpulse)
 	{
 	case 101:
@@ -1593,6 +1594,7 @@ void CPortal_Player::CheatImpulseCommands(int iImpulse)
 	default:
 		BaseClass::CheatImpulseCommands(iImpulse);
 	}
+#endif
 }
 
 void CPortal_Player::CreateViewModel(int index /*=0*/)
