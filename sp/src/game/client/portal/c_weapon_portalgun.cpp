@@ -37,7 +37,6 @@ CLIENTEFFECT_MATERIAL( PORTALGUN_BEAM_SPRITE )
 CLIENTEFFECT_MATERIAL( PORTALGUN_BEAM_SPRITE_NOZ )
 CLIENTEFFECT_MATERIAL( PORTALGUN_GLOW_SPRITE )
 CLIENTEFFECT_MATERIAL( PORTALGUN_ENDCAP_SPRITE )
-CLIENTEFFECT_MATERIAL( PORTALGUN_GRAV_ACTIVE_GLOW )
 CLIENTEFFECT_MATERIAL( PORTALGUN_PORTAL1_FIRED_LAST_GLOW )
 CLIENTEFFECT_MATERIAL( PORTALGUN_PORTAL2_FIRED_LAST_GLOW )
 CLIENTEFFECT_MATERIAL( PORTALGUN_PORTAL_MUZZLE_GLOW_SPRITE )
@@ -219,35 +218,6 @@ void C_WeaponPortalgun::StartEffects( void )
 	// ------------------------------------------
 	// Lights
 	// ------------------------------------------
-
-	if ( m_Parameters[PORTALGUN_GRAVLIGHT].GetMaterial() == NULL )
-	{
-		m_Parameters[PORTALGUN_GRAVLIGHT].GetScale().SetAbsolute( 0.018f * SPRITE_SCALE );
-		m_Parameters[PORTALGUN_GRAVLIGHT].GetAlpha().SetAbsolute( 128.0f );
-		m_Parameters[PORTALGUN_GRAVLIGHT].SetAttachment( pModelView->LookupAttachment( "Body_light" ) );
-		m_Parameters[PORTALGUN_GRAVLIGHT].SetVisible( false );
-
-		if ( m_Parameters[PORTALGUN_GRAVLIGHT].SetMaterial( PORTALGUN_GRAV_ACTIVE_GLOW ) == false )
-		{
-			// This means the texture was not found
-			Assert( 0 );
-		}
-	}
-
-	if ( m_Parameters[PORTALGUN_GRAVLIGHT_WORLD].GetMaterial() == NULL )
-	{
-		m_Parameters[PORTALGUN_GRAVLIGHT_WORLD].GetScale().SetAbsolute( 0.03f * SPRITE_SCALE );
-		m_Parameters[PORTALGUN_GRAVLIGHT_WORLD].GetAlpha().SetAbsolute( 128.0f );
-		m_Parameters[PORTALGUN_GRAVLIGHT_WORLD].SetAttachment( pModelWorld->LookupAttachment( "Body_light" ) );
-		m_Parameters[PORTALGUN_GRAVLIGHT_WORLD].SetVisible( false );
-
-		if ( m_Parameters[PORTALGUN_GRAVLIGHT_WORLD].SetMaterial( PORTALGUN_GRAV_ACTIVE_GLOW ) == false )
-		{
-			// This means the texture was not found
-			Assert( 0 );
-		}
-	}
-
 	if ( m_Parameters[PORTALGUN_PORTAL1LIGHT].GetMaterial() == NULL )
 	{
 		m_Parameters[PORTALGUN_PORTAL1LIGHT].GetScale().SetAbsolute( 0.018f * SPRITE_SCALE );
@@ -298,62 +268,6 @@ void C_WeaponPortalgun::StartEffects( void )
 		m_Parameters[PORTALGUN_PORTAL2LIGHT_WORLD].SetVisible( false );
 
 		if ( m_Parameters[PORTALGUN_PORTAL2LIGHT_WORLD].SetMaterial( PORTALGUN_PORTAL2_FIRED_LAST_GLOW ) == false )
-		{
-			// This means the texture was not found
-			Assert( 0 );
-		}
-	}
-
-	// ------------------------------------------
-	// Glows
-	// ------------------------------------------
-
-	const char *attachNamesGlow[NUM_GLOW_SPRITES] = 
-	{
-		"Arm1_attach1",
-		"Arm1_attach2",
-		"Arm2_attach1",
-		"Arm2_attach2",
-		"Arm3_attach1",
-		"Arm3_attach2"
-	};
-
-	//Create the view glow sprites
-	for ( i = PORTALGUN_GLOW1; i < (PORTALGUN_GLOW1+NUM_GLOW_SPRITES); i++ )
-	{
-		if ( m_Parameters[i].GetMaterial() != NULL )
-			continue;
-
-		m_Parameters[i].GetScale().SetAbsolute( 0.05f * SPRITE_SCALE );
-		m_Parameters[i].GetAlpha().SetAbsolute( 24.0f );
-
-		// Different for different views
-		m_Parameters[i].SetAttachment( pModelView->LookupAttachment( attachNamesGlow[i-PORTALGUN_GLOW1] ) );
-		m_Parameters[i].SetColor( Vector( 255, 128, 0 ) );
-		m_Parameters[i].SetVisible( false );
-
-		if ( m_Parameters[i].SetMaterial( PORTALGUN_GLOW_SPRITE ) == false )
-		{
-			// This means the texture was not found
-			Assert( 0 );
-		}
-	}
-
-	//Create the world glow sprites
-	for ( i = PORTALGUN_GLOW1_WORLD; i < (PORTALGUN_GLOW1_WORLD+NUM_GLOW_SPRITES_WORLD); i++ )
-	{
-		if ( m_Parameters[i].GetMaterial() != NULL )
-			continue;
-
-		m_Parameters[i].GetScale().SetAbsolute( 0.1f * SPRITE_SCALE );
-		m_Parameters[i].GetAlpha().SetAbsolute( 24.0f );
-
-		// Different for different views
-		m_Parameters[i].SetAttachment( pModelWorld->LookupAttachment( attachNamesGlow[i-PORTALGUN_GLOW1_WORLD] ) );
-		m_Parameters[i].SetColor( Vector( 255, 128, 0 ) );
-		m_Parameters[i].SetVisible( false );
-
-		if ( m_Parameters[i].SetMaterial( PORTALGUN_GLOW_SPRITE ) == false )
 		{
 			// This means the texture was not found
 			Assert( 0 );
@@ -536,21 +450,6 @@ void C_WeaponPortalgun::DoEffectReady( void )
 {
 	int i;
 
-	// Turn on the glow sprites
-	for ( i = PORTALGUN_GLOW1; i < (PORTALGUN_GLOW1+NUM_GLOW_SPRITES); i++ )
-	{
-		m_Parameters[i].GetScale().InitFromCurrent( 0.4f * SPRITE_SCALE, 0.2f );
-		m_Parameters[i].GetAlpha().InitFromCurrent( 32.0f, 0.2f );
-		m_Parameters[i].SetVisibleViewModel();
-	}
-
-	for ( i = PORTALGUN_GLOW1_WORLD; i < (PORTALGUN_GLOW1_WORLD+NUM_GLOW_SPRITES_WORLD); i++ )
-	{
-		m_Parameters[i].GetScale().InitFromCurrent( 0.8f * SPRITE_SCALE, 0.4f );
-		m_Parameters[i].GetAlpha().InitFromCurrent( 32.0f, 0.2f );
-		m_Parameters[i].SetVisible3rdPerson();
-	}
-
 	// Turn on the endcap sprites
 	for ( i = PORTALGUN_ENDCAP1; i < (PORTALGUN_ENDCAP1+NUM_ENDCAP_SPRITES); i++ )
 	{
@@ -611,21 +510,6 @@ void C_WeaponPortalgun::DoEffectReady( void )
 void C_WeaponPortalgun::DoEffectHolding( void )
 {
 	int i;
-
-	// Turn on the glow sprites
-	for ( i = PORTALGUN_GLOW1; i < (PORTALGUN_GLOW1+NUM_GLOW_SPRITES); i++ )
-	{
-		m_Parameters[i].GetScale().InitFromCurrent( 0.5f * SPRITE_SCALE, 0.2f );
-		m_Parameters[i].GetAlpha().InitFromCurrent( 64.0f, 0.2f );
-		m_Parameters[i].SetVisibleViewModel();
-	}
-
-	for ( i = PORTALGUN_GLOW1_WORLD; i < (PORTALGUN_GLOW1_WORLD+NUM_GLOW_SPRITES_WORLD); i++ )
-	{
-		m_Parameters[i].GetScale().InitFromCurrent( 1.0f * SPRITE_SCALE, 0.4f );
-		m_Parameters[i].GetAlpha().InitFromCurrent( 64.0f, 0.2f );
-		m_Parameters[i].SetVisible3rdPerson();
-	}
 
 	// Turn on the endcap sprites
 	for ( i = PORTALGUN_ENDCAP1; i < (PORTALGUN_ENDCAP1+NUM_ENDCAP_SPRITES); i++ )
@@ -690,22 +574,10 @@ void C_WeaponPortalgun::DoEffectNone( void )
 	int i;
 
 	//Turn off main glows
-	m_Parameters[PORTALGUN_GRAVLIGHT].SetVisible( false );
-	m_Parameters[PORTALGUN_GRAVLIGHT_WORLD].SetVisible( false );
 	m_Parameters[PORTALGUN_PORTAL1LIGHT].SetVisible( false );
 	m_Parameters[PORTALGUN_PORTAL1LIGHT_WORLD].SetVisible( false );
 	m_Parameters[PORTALGUN_PORTAL2LIGHT].SetVisible( false );
 	m_Parameters[PORTALGUN_PORTAL1LIGHT_WORLD].SetVisible( false );
-
-	for ( i = PORTALGUN_GLOW1; i < (PORTALGUN_GLOW1+NUM_GLOW_SPRITES); i++ )
-	{
-		m_Parameters[i].SetVisible( false );
-	}
-
-	for ( i = PORTALGUN_GLOW1_WORLD; i < (PORTALGUN_GLOW1_WORLD+NUM_GLOW_SPRITES_WORLD); i++ )
-	{
-		m_Parameters[i].SetVisible( false );
-	}
 
 	for ( i = PORTALGUN_ENDCAP1; i < (PORTALGUN_ENDCAP1+NUM_ENDCAP_SPRITES); i++ )
 	{
@@ -802,9 +674,6 @@ void C_WeaponPortalgun::ClientThink( void )
 			//}
 			//else
 			{
-				m_Parameters[PORTALGUN_GRAVLIGHT].SetVisibleViewModel( false );
-				m_Parameters[PORTALGUN_GRAVLIGHT_WORLD].SetVisible3rdPerson( false );
-
 				//Turn on and off the correct fired last lights
 				m_Parameters[PORTALGUN_PORTAL1LIGHT].SetVisibleViewModel( m_iLastFiredPortal == 1 );
 				m_Parameters[PORTALGUN_PORTAL1LIGHT_WORLD].SetVisible3rdPerson( m_iLastFiredPortal == 1 );
@@ -1033,20 +902,6 @@ void C_WeaponPortalgun::DoEffectIdle( void )
 	StartEffects();
 
 	int i;
-
-	// Turn on the glow sprites
-	for ( i = PORTALGUN_GLOW1; i < (PORTALGUN_GLOW1+NUM_GLOW_SPRITES); i++ )
-	{
-		m_Parameters[i].GetScale().InitFromCurrent( RandomFloat( 0.0075f, 0.05f ) * SPRITE_SCALE, 0.1f );
-		m_Parameters[i].GetAlpha().SetAbsolute( RandomInt( 10, 24 ) );
-	}
-
-	// Turn on the world glow sprites
-	for ( i = PORTALGUN_GLOW1_WORLD; i < (PORTALGUN_GLOW1_WORLD+NUM_GLOW_SPRITES_WORLD); i++ )
-	{
-		m_Parameters[i].GetScale().InitFromCurrent( RandomFloat( 0.015f, 0.1f ) * SPRITE_SCALE, 0.1f );
-		m_Parameters[i].GetAlpha().SetAbsolute( RandomInt( 10, 24 ) );
-	}
 
 	// Turn on the endcap sprites
 	for ( i = PORTALGUN_ENDCAP1; i < (PORTALGUN_ENDCAP1+NUM_ENDCAP_SPRITES); i++ )
