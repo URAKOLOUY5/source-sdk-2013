@@ -1695,7 +1695,9 @@ public:
 	string_t		m_iszRotorBlast;
 };
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_helicopter_custom, CNPC_CustomHelicopter );
+#endif
 
 BEGIN_DATADESC( CNPC_CustomHelicopter )
 

@@ -126,8 +126,10 @@ public:
 		return false;
 	}
 };
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS(item_box_srounds, CItem_BoxSRounds);
 LINK_ENTITY_TO_CLASS(item_ammo_pistol, CItem_BoxSRounds);
+#endif
 
 // ========================================================================
 //	>> LargeBoxSRounds
@@ -160,8 +162,10 @@ public:
 		return false;
 	}
 };
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS(item_large_box_srounds, CItem_LargeBoxSRounds);
 LINK_ENTITY_TO_CLASS(item_ammo_pistol_large, CItem_LargeBoxSRounds);
+#endif
 
 // ========================================================================
 //	>> BoxMRounds
@@ -194,8 +198,10 @@ public:
 		return false;
 	}
 };
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS(item_box_mrounds, CItem_BoxMRounds);
 LINK_ENTITY_TO_CLASS(item_ammo_smg1, CItem_BoxMRounds);
+#endif
 
 // ========================================================================
 //	>> LargeBoxMRounds
@@ -228,8 +234,10 @@ public:
 		return false;
 	}
 };
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS(item_large_box_mrounds, CItem_LargeBoxMRounds);
 LINK_ENTITY_TO_CLASS(item_ammo_smg1_large, CItem_LargeBoxMRounds);
+#endif
 
 // ========================================================================
 //	>> BoxLRounds
@@ -262,8 +270,10 @@ public:
 		return false;
 	}
 };
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS(item_box_lrounds, CItem_BoxLRounds);
 LINK_ENTITY_TO_CLASS(item_ammo_ar2, CItem_BoxLRounds);
+#endif
 
 // ========================================================================
 //	>> LargeBoxLRounds
@@ -296,9 +306,10 @@ public:
 		return false;
 	}
 };
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS(item_large_box_lrounds, CItem_LargeBoxLRounds);
 LINK_ENTITY_TO_CLASS(item_ammo_ar2_large, CItem_LargeBoxLRounds);
-
+#endif
 
 // ========================================================================
 //	>> CItem_Box357Rounds
@@ -332,7 +343,9 @@ public:
 		return false;
 	}
 };
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS(item_ammo_357, CItem_Box357Rounds);
+#endif
 
 
 // ========================================================================
@@ -367,7 +380,9 @@ public:
 		return false;
 	}
 };
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS(item_ammo_357_large, CItem_LargeBox357Rounds);
+#endif
 
 
 // ========================================================================
@@ -403,7 +418,9 @@ public:
 		return false;
 	}
 };
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS(item_ammo_crossbow, CItem_BoxXBowRounds);
+#endif
 
 
 // ========================================================================
@@ -539,8 +556,10 @@ public:
 		return false;
 	}
 };
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS(item_ar2_grenade, CItem_AR2_Grenade);
 LINK_ENTITY_TO_CLASS(item_ammo_smg1_grenade, CItem_AR2_Grenade);
+#endif
 
 // ========================================================================
 //	>> BoxSniperRounds
@@ -646,7 +665,9 @@ public:
 	}
 };
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( item_ammo_ar2_altfire, CItem_AR2AltFireRound );
+#endif
 
 // ==================================================================
 // Ammo crate which will supply infinite ammo of the specified type
@@ -718,7 +739,9 @@ protected:
 	DECLARE_DATADESC();
 };
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( item_ammo_crate, CItem_AmmoCrate );
+#endif
 
 BEGIN_DATADESC( CItem_AmmoCrate )
 

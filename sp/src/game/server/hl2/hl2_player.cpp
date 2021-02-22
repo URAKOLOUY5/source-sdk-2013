@@ -696,18 +696,22 @@ void CHL2_Player::Precache( void )
 void CHL2_Player::CheckSuitZoom( void )
 {
 //#ifndef _XBOX 
+#ifndef PORTAL
 	//Adrian - No zooming without a suit!
 	if ( IsSuitEquipped() )
 	{
-		if ( m_afButtonReleased & IN_ZOOM )
+#endif
+		if ( m_afButtonPressed & IN_ZOOMOUT )
 		{
 			StopZooming();
 		}	
-		else if ( m_afButtonPressed & IN_ZOOM )
+		else if ( m_afButtonPressed & IN_ZOOMIN )
 		{
 			StartZooming();
 		}
+#ifndef PORTAL
 	}
+#endif
 //#endif//_XBOX
 }
 
@@ -1782,9 +1786,13 @@ void CHL2_Player::StartZooming( void )
 #ifdef DBR
 	int iFOV = 60;
 #else
-	int iFOV = 25;
+	int iFOV = 45;
 #endif
+#ifdef PORTAL2
+	if ( SetFOV( this, iFOV, 0.1f ) )
+#else
 	if ( SetFOV( this, iFOV, 0.4f ) )
+#endif
 	{
 		m_HL2Local.m_bZooming = true;
 	}
@@ -1797,7 +1805,11 @@ void CHL2_Player::StopZooming( void )
 {
 	int iFOV = GetZoomOwnerDesiredFOV( m_hZoomOwner );
 
-	if ( SetFOV( this, iFOV, 0.2f ) )
+#ifdef PORTAL2
+	if (SetFOV(this, iFOV, 0.14f))
+#else
+	if (SetFOV(this, iFOV, 0.4f))
+#endif
 	{
 		m_HL2Local.m_bZooming = false;
 	}

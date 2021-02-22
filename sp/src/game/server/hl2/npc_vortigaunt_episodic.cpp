@@ -201,7 +201,9 @@ BEGIN_DATADESC( CNPC_Vortigaunt )
 
 END_DATADESC()
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_vortigaunt, CNPC_Vortigaunt );
+#endif
 
 IMPLEMENT_SERVERCLASS_ST( CNPC_Vortigaunt, DT_NPC_Vortigaunt )
 	SendPropTime( SENDINFO (m_flBlueEndFadeTime ) ),

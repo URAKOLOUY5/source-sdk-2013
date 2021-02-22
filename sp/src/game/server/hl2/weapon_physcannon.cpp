@@ -1414,7 +1414,9 @@ IMPLEMENT_SERVERCLASS_ST(CWeaponPhysCannon, DT_WeaponPhysCannon)
 	SendPropFloat( SENDINFO( m_flTimeForceView ) ),
 END_SEND_TABLE()
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( weapon_physcannon, CWeaponPhysCannon );
+#endif
 PRECACHE_WEAPON_REGISTER( weapon_physcannon );
 
 BEGIN_DATADESC( CWeaponPhysCannon )

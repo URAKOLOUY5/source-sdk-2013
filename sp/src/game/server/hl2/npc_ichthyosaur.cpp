@@ -232,7 +232,9 @@ void CNPC_Ichthyosaur::InitCustomSchedules( void )
 	AI_LOAD_SCHEDULE( CNPC_Ichthyosaur,	SCHED_ICH_THRASH );
 }
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_ichthyosaur, CNPC_Ichthyosaur );
+#endif
 IMPLEMENT_CUSTOM_AI( npc_ichthyosaur, CNPC_Ichthyosaur );
 
 //-----------------------------------------------------------------------------

@@ -230,7 +230,9 @@ private:
 	int m_nThrowCrab;				// The crab we are about to throw.
 };
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_poisonzombie, CNPC_PoisonZombie );
+#endif
 
 
 BEGIN_DATADESC( CNPC_PoisonZombie )

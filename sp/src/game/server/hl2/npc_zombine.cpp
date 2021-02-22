@@ -183,7 +183,9 @@ protected:
 
 };
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_zombine, CNPC_Zombine );
+#endif
 
 BEGIN_DATADESC( CNPC_Zombine )
 	DEFINE_FIELD( m_flSprintTime, FIELD_TIME ),

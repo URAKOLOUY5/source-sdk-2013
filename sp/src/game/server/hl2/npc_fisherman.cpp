@@ -106,7 +106,9 @@ public:
 	DEFINE_CUSTOM_AI;
 };
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_fisherman, CNPC_Fisherman );
+#endif
 
 //---------------------------------------------------------
 // 

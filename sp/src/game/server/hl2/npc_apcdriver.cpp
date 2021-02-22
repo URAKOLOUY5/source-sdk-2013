@@ -65,7 +65,9 @@ BEGIN_DATADESC( CNPC_APCDriver )
 
 END_DATADESC()
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_apcdriver, CNPC_APCDriver );
+#endif
 
 
 //------------------------------------------------------------------------------

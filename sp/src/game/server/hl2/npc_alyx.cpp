@@ -22,7 +22,9 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_alyx, CNPC_Alyx );
+#endif
 
 BEGIN_DATADESC( CNPC_Alyx )
 

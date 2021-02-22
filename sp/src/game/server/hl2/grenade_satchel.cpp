@@ -37,7 +37,9 @@ BEGIN_DATADESC( CSatchelCharge )
 
 END_DATADESC()
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_satchel, CSatchelCharge );
+#endif
 
 //=========================================================
 // Deactivate - do whatever it is we do to an orphaned 

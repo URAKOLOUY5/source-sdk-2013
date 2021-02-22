@@ -127,7 +127,9 @@ BEGIN_DATADESC( CNPC_CraneDriver )
 
 END_DATADESC()
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_cranedriver, CNPC_CraneDriver );
+#endif
 
 //------------------------------------------------------------------------------
 // Purpose :

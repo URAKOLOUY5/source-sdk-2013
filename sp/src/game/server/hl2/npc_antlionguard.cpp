@@ -650,7 +650,9 @@ CNPC_AntlionGuard::CNPC_AntlionGuard( void )
 	m_iszPhysicsPropClass = AllocPooledString( "prop_physics" );
 }
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_antlionguard, CNPC_AntlionGuard );
+#endif
 
 IMPLEMENT_SERVERCLASS_ST(CNPC_AntlionGuard, DT_NPC_AntlionGuard)
 	SendPropBool( SENDINFO( m_bCavernBreed ) ),

@@ -84,7 +84,9 @@ ConVar sk_alyx_health( "sk_alyx_health", "80" );
 //-----------------------------------------------------------------------------
 extern int g_interactionZombieMeleeWarning;
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_alyx, CNPC_Alyx );
+#endif
 
 BEGIN_DATADESC( CNPC_Alyx )
 

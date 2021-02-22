@@ -187,7 +187,9 @@ CNPC_Antlion::CNPC_Antlion( void )
 	m_bSuppressUnburrowEffects = false;
 }
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_antlion, CNPC_Antlion );
+#endif
 
 //==================================================
 // CNPC_Antlion::m_DataDesc

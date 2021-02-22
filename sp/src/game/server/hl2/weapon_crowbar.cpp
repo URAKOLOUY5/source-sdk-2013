@@ -33,7 +33,9 @@ IMPLEMENT_SERVERCLASS_ST(CWeaponCrowbar, DT_WeaponCrowbar)
 END_SEND_TABLE()
 
 #ifndef HL2MP
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( weapon_crowbar, CWeaponCrowbar );
+#endif
 PRECACHE_WEAPON_REGISTER( weapon_crowbar );
 #endif
 

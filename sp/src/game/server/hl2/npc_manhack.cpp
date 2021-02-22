@@ -210,8 +210,9 @@ BEGIN_DATADESC( CNPC_Manhack )
 
 END_DATADESC()
 
-
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_manhack, CNPC_Manhack );
+#endif
 
 IMPLEMENT_SERVERCLASS_ST(CNPC_Manhack, DT_NPC_Manhack)
 	SendPropIntWithMinusOneFlag	(SENDINFO(m_nEnginePitch1), 8 ),

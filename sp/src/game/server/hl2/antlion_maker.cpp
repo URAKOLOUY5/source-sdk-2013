@@ -126,7 +126,9 @@ void CAntlionMakerManager::LevelInitPostEntity( void )
 // Antlion template maker
 //-----------------------------------------------------------------------------
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_antlion_template_maker, CAntlionTemplateMaker );
+#endif
 
 //DT Definition
 BEGIN_DATADESC( CAntlionTemplateMaker )

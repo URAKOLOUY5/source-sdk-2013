@@ -36,7 +36,9 @@ public:
 	bool	UseSemaphore( void );
 };
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_breen, CNPC_Breen );
+#endif
 
 //-----------------------------------------------------------------------------
 // Classify - indicates this NPC's place in the 

@@ -39,7 +39,9 @@ public:
 	int		GetSoundInterests ( void );
 };
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_magnusson, CNPC_Magnusson );
+#endif
 
 
 //-----------------------------------------------------------------------------

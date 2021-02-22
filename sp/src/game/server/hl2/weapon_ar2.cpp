@@ -56,7 +56,9 @@ END_DATADESC()
 IMPLEMENT_SERVERCLASS_ST(CWeaponAR2, DT_WeaponAR2)
 END_SEND_TABLE()
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( weapon_ar2, CWeaponAR2 );
+#endif
 PRECACHE_WEAPON_REGISTER(weapon_ar2);
 
 acttable_t	CWeaponAR2::m_acttable[] = 

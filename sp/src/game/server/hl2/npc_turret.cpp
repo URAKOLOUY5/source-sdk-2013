@@ -905,7 +905,9 @@ public:
 
 #define TURRET_GLOW_SPRITE "sprites/glow01.vmt"
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_turret_ceiling, CCeilingTurret );
+#endif
 
 void CCeilingTurret::Spawn()
 { 

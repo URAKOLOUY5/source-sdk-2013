@@ -121,7 +121,9 @@ private:
 IMPLEMENT_SERVERCLASS_ST(CWeaponPistol, DT_WeaponPistol)
 END_SEND_TABLE()
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( weapon_pistol, CWeaponPistol );
+#endif
 PRECACHE_WEAPON_REGISTER( weapon_pistol );
 
 BEGIN_DATADESC( CWeaponPistol )

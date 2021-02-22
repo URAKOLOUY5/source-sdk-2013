@@ -619,7 +619,9 @@ private:
 	bool				m_bMustReload;
 };
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( weapon_crossbow, CWeaponCrossbow );
+#endif
 
 PRECACHE_WEAPON_REGISTER( weapon_crossbow );
 

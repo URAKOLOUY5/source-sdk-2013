@@ -74,7 +74,9 @@ protected:
 IMPLEMENT_SERVERCLASS_ST(CWeaponSMG1, DT_WeaponSMG1)
 END_SEND_TABLE()
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( weapon_smg1, CWeaponSMG1 );
+#endif
 PRECACHE_WEAPON_REGISTER(weapon_smg1);
 
 BEGIN_DATADESC( CWeaponSMG1 )

@@ -786,7 +786,9 @@ static const char *pFollowerBoneNames[] =
 };
 #endif // HL2_EPISODIC
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_helicopter, CNPC_AttackHelicopter );
+#endif
 
 BEGIN_DATADESC( CNPC_AttackHelicopter )
 
@@ -4947,7 +4949,9 @@ AI_END_CUSTOM_NPC()
 // A sensor used to drop bombs only in the correct points
 //
 //------------------------------------------------------------------------------
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_helicoptersensor, CBombDropSensor );
+#endif
 
 BEGIN_DATADESC( CBombDropSensor )
 
@@ -5675,7 +5679,9 @@ CUtlVector< CAvoidSphere::AvoidSphereHandle_t > CAvoidSphere::s_AvoidSpheres;
 
 #define SF_AVOIDSPHERE_AVOID_BELOW	0x00010000
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_heli_avoidsphere, CAvoidSphere );
+#endif
 
 BEGIN_DATADESC( CAvoidSphere )
 
@@ -5819,7 +5825,9 @@ CUtlVector< CAvoidBox::AvoidBoxHandle_t > CAvoidBox::s_AvoidBoxes;
 
 #define SF_AVOIDBOX_AVOID_BELOW	0x00010000
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_heli_avoidbox, CAvoidBox );
+#endif
 
 BEGIN_DATADESC( CAvoidBox )
 END_DATADESC()
@@ -5966,7 +5974,9 @@ void CAvoidBox::ComputeAvoidanceForces( CBaseEntity *pEntity, float flEntityRadi
 //-----------------------------------------------------------------------------
 CUtlVector< CBombSuppressor::BombSuppressorHandle_t > CBombSuppressor::s_BombSuppressors; 
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_heli_nobomb, CBombSuppressor );
+#endif
 
 BEGIN_DATADESC( CBombSuppressor )
 END_DATADESC()

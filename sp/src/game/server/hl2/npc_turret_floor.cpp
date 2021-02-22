@@ -159,7 +159,9 @@ BEGIN_DATADESC( CNPC_FloorTurret )
 
 END_DATADESC()
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_turret_floor, CNPC_FloorTurret );
+#endif
 
 //-----------------------------------------------------------------------------
 // Constructor

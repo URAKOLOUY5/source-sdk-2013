@@ -358,7 +358,9 @@ protected:
 
 string_t CNPC_RollerMine::gm_iszDropshipClassname;
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_rollermine, CNPC_RollerMine );
+#endif
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------

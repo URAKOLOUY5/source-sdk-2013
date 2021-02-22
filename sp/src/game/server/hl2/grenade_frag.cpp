@@ -77,7 +77,9 @@ protected:
 	bool	m_punted;
 };
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_grenade_frag, CGrenadeFrag );
+#endif
 
 BEGIN_DATADESC( CGrenadeFrag )
 

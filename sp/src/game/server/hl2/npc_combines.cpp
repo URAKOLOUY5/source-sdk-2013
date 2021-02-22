@@ -43,7 +43,9 @@ extern ConVar sk_plr_num_shotgun_pellets;
 //Whether or not the combine should spawn health on death
 ConVar	combine_spawn_health( "combine_spawn_health", "1" );
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_combine_s, CNPC_CombineS );
+#endif
 
 
 #define AE_SOLDIER_BLOCK_PHYSICS		20 // trying to block an incoming physics object

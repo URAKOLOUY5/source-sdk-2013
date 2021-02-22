@@ -295,8 +295,9 @@ protected:
 #endif
 };
 
-
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_advisor, CNPC_Advisor );
+#endif
 
 BEGIN_DATADESC( CNPC_Advisor )
 

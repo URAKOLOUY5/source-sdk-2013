@@ -59,4 +59,6 @@ public:
 	}
 };
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS(item_suit, CItemSuit);
+#endif

@@ -129,7 +129,9 @@ private:
 	DECLARE_DATADESC();
 };
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_combine_cannon, CNPC_Combine_Cannon );
+#endif
 
 //=========================================================
 //=========================================================

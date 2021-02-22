@@ -46,7 +46,9 @@ private:
 	CAI_FollowBehavior	m_FollowBehavior;
 };
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_gman, CNPC_GMan );
+#endif
 
 BEGIN_DATADESC( CNPC_GMan )
 // (auto saved by AI)

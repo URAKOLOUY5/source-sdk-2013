@@ -21,7 +21,9 @@ ConVar    sk_plr_dmg_tripmine		( "sk_plr_dmg_tripmine","0");
 ConVar    sk_npc_dmg_tripmine		( "sk_npc_dmg_tripmine","0");
 ConVar    sk_tripmine_radius		( "sk_tripmine_radius","0");
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_tripmine, CTripmineGrenade );
+#endif
 
 BEGIN_DATADESC( CTripmineGrenade )
 

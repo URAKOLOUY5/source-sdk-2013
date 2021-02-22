@@ -137,7 +137,9 @@ protected:
 	DEFINE_CUSTOM_AI;
 };
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_dog, CNPC_Dog );
+#endif
 
 BEGIN_DATADESC( CNPC_Dog )
 	DEFINE_EMBEDDED( m_BoneFollowerManager ),

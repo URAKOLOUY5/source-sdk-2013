@@ -28,7 +28,9 @@ IMPLEMENT_SERVERCLASS_ST(CWeaponStunStick, DT_WeaponStunStick)
 END_SEND_TABLE()
 
 #ifndef HL2MP
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( weapon_stunstick, CWeaponStunStick );
+#endif
 PRECACHE_WEAPON_REGISTER( weapon_stunstick );
 #endif
 

@@ -39,7 +39,9 @@ public:
 	void	PrescheduleThink( void );
 };
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_eli, CNPC_Eli );
+#endif
 
 //-----------------------------------------------------------------------------
 // Classify - indicates this NPC's place in the 

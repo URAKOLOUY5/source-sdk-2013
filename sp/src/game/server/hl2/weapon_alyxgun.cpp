@@ -17,7 +17,9 @@
 IMPLEMENT_SERVERCLASS_ST(CWeaponAlyxGun, DT_WeaponAlyxGun)
 END_SEND_TABLE()
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( weapon_alyxgun, CWeaponAlyxGun );
+#endif
 PRECACHE_WEAPON_REGISTER(weapon_alyxgun);
 
 BEGIN_DATADESC( CWeaponAlyxGun )

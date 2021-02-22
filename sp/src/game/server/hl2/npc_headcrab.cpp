@@ -2898,10 +2898,10 @@ void CFastHeadcrab::StartTask( const Task_t *pTask )
 	}
 }
 
-
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_headcrab, CHeadcrab );
 LINK_ENTITY_TO_CLASS( npc_headcrab_fast, CFastHeadcrab );
-
+#endif
 
 //-----------------------------------------------------------------------------
 // Purpose: Make the sound of this headcrab chomping a target.
@@ -3053,10 +3053,10 @@ BEGIN_DATADESC( CBlackHeadcrab )
 
 END_DATADESC()
 
-
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_headcrab_black, CBlackHeadcrab );
 LINK_ENTITY_TO_CLASS( npc_headcrab_poison, CBlackHeadcrab );
-
+#endif
 
 //-----------------------------------------------------------------------------
 // Purpose: Make the sound of this headcrab chomping a target.

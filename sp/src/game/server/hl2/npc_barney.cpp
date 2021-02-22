@@ -87,8 +87,9 @@ public:
 	DEFINE_CUSTOM_AI;
 };
 
-
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_barney, CNPC_Barney );
+#endif
 
 //---------------------------------------------------------
 // 

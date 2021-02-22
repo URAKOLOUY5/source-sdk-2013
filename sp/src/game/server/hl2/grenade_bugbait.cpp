@@ -78,8 +78,9 @@ BEGIN_DATADESC( CGrenadeBugBait )
 
 END_DATADESC()
 
-
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_grenade_bugbait, CGrenadeBugBait );
+#endif
 
 //Radius of the bugbait's effect on other creatures
 ConVar bugbait_radius( "bugbait_radius", "512" );

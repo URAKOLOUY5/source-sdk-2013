@@ -77,7 +77,9 @@ int g_interactionBarnacleVictimBite     = 0;
 int g_interactionBarnacleVictimFinalBite = 0;
 #endif
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_barnacle, CNPC_Barnacle );
+#endif
 
 // Tongue Spring constants
 #define BARNACLE_TONGUE_SPRING_CONSTANT_HANGING			10000
@@ -2638,7 +2640,9 @@ CBaseEntity *CNPC_Barnacle::TongueTouchEnt ( float *pflLength )
 // BARNACLE TONGUE TIP
 //===============================================================================================================================
 // Crane tip
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_barnacle_tongue_tip, CBarnacleTongueTip );
+#endif
 
 BEGIN_DATADESC( CBarnacleTongueTip )
 

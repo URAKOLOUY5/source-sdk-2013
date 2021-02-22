@@ -67,7 +67,9 @@ public:
 	float		m_flReloadedTime;
 };
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_missiledefense, CNPC_MissileDefense );
+#endif
 
 //=========================================================
 //=========================================================

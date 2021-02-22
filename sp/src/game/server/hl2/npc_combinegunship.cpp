@@ -416,7 +416,9 @@ private:
 	bool			m_fPatrolLoopPlaying;
 };
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_combinegunship, CNPC_CombineGunship );
+#endif
 
 IMPLEMENT_SERVERCLASS_ST( CNPC_CombineGunship, DT_CombineGunship )
 	SendPropVector(SENDINFO(m_vecHitPos), -1, SPROP_COORD),

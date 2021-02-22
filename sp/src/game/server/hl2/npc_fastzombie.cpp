@@ -347,8 +347,10 @@ public:
 	DECLARE_DATADESC();
 };
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_fastzombie, CFastZombie );
 LINK_ENTITY_TO_CLASS( npc_fastzombie_torso, CFastZombie );
+#endif
 
 
 BEGIN_DATADESC( CFastZombie )

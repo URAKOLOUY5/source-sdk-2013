@@ -324,8 +324,9 @@ int	ACT_CIT_STARTLED;		// Startled by sneaky scanner
 
 //---------------------------------------------------------
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_citizen, CNPC_Citizen );
-
+#endif
 //---------------------------------------------------------
 
 BEGIN_DATADESC( CNPC_Citizen )

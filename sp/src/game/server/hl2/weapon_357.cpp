@@ -78,7 +78,9 @@ public:
 #endif
 };
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( weapon_357, CWeapon357 );
+#endif
 
 PRECACHE_WEAPON_REGISTER( weapon_357 );
 

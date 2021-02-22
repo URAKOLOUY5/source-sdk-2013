@@ -946,9 +946,11 @@ bool CProtoSniper::KeyValue( const char *szKeyName, const char *szValue )
 	}
 }
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_sniper, CProtoSniper );
 LINK_ENTITY_TO_CLASS( proto_sniper, CProtoSniper );
 LINK_ENTITY_TO_CLASS( sniperbullet, CSniperBullet );
+#endif
 
 //-----------------------------------------------------------------------------
 // Purpose: 

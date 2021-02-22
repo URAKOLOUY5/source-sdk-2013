@@ -274,7 +274,9 @@ BEGIN_DATADESC( CNPC_CeilingTurret )
 
 END_DATADESC()
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_turret_ceiling, CNPC_CeilingTurret );
+#endif
 
 //-----------------------------------------------------------------------------
 // Constructor
@@ -1487,7 +1489,9 @@ BEGIN_DATADESC( CNPC_LabTurret )
 
 END_DATADESC()
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_turret_lab, CNPC_LabTurret );
+#endif
 
 //-----------------------------------------------------------------------------
 // Purpose: 

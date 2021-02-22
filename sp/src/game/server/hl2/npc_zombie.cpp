@@ -182,8 +182,10 @@ private:
 	Vector				 m_vPositionCharged;
 };
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_zombie, CZombie );
 LINK_ENTITY_TO_CLASS( npc_zombie_torso, CZombie );
+#endif
 
 //---------------------------------------------------------
 //---------------------------------------------------------
@@ -1078,9 +1080,10 @@ BEGIN_DATADESC( CZombieCustom )
 
 END_DATADESC()
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_zombie_custom, CZombieCustom );
 LINK_ENTITY_TO_CLASS( npc_zombie_custom_torso, CZombieCustom );
-
+#endif
 
 //-----------------------------------------------------------------------------
 // Purpose: 

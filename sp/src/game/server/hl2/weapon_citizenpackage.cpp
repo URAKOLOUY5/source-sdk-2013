@@ -16,7 +16,9 @@ END_SEND_TABLE()
 BEGIN_DATADESC( CWeaponCitizenPackage )
 END_DATADESC()
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( weapon_citizenpackage, CWeaponCitizenPackage );
+#endif
 PRECACHE_WEAPON_REGISTER(weapon_citizenpackage);
 
 acttable_t	CWeaponCitizenPackage::m_acttable[] = 
@@ -63,7 +65,9 @@ END_SEND_TABLE()
 BEGIN_DATADESC( CWeaponCitizenSuitcase )
 END_DATADESC()
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( weapon_citizensuitcase, CWeaponCitizenSuitcase );
+#endif
 PRECACHE_WEAPON_REGISTER(weapon_citizensuitcase);
 
 acttable_t	CWeaponCitizenSuitcase::m_acttable[] = 

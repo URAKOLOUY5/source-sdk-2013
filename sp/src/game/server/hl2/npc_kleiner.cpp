@@ -37,7 +37,9 @@ public:
 	int		GetSoundInterests ( void );
 };
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_kleiner, CNPC_Kleiner );
+#endif
 
 //-----------------------------------------------------------------------------
 // Classify - indicates this NPC's place in the 

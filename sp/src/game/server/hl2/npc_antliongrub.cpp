@@ -156,7 +156,9 @@ BEGIN_DATADESC( CAntlionGrub )
 
 END_DATADESC()
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_antlion_grub, CAntlionGrub );
+#endif
 
 //-----------------------------------------------------------------------------
 // Purpose: 

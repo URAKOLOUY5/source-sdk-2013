@@ -1393,7 +1393,9 @@ END_DATADESC()
 IMPLEMENT_SERVERCLASS_ST(CWeaponRPG, DT_WeaponRPG)
 END_SEND_TABLE()
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( weapon_rpg, CWeaponRPG );
+#endif
 PRECACHE_WEAPON_REGISTER(weapon_rpg);
 
 acttable_t	CWeaponRPG::m_acttable[] = 

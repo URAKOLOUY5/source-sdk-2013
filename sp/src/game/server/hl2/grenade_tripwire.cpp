@@ -28,7 +28,9 @@ ConVar    sk_tripwire_radius	( "sk_tripwire_radius","0");
 #define TGRENADE_MISSILE_OFFSET 50
 #define TGRENADE_MAX_ROPE_LEN	1500
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_tripwire, CTripwireGrenade );
+#endif
 
 BEGIN_DATADESC( CTripwireGrenade )
 

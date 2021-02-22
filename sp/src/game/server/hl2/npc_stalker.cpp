@@ -67,7 +67,9 @@ ConVar	sk_stalker_melee_dmg( "sk_stalker_melee_dmg","0");
 
 extern void		SpawnBlood(Vector vecSpot, const Vector &vAttackDir, int bloodColor, float flDamage);
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_stalker, CNPC_Stalker );
+#endif
 
 float g_StalkerBeamThinkTime = 0.0; //0.025;
 

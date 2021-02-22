@@ -776,7 +776,9 @@ void CCombineDropshipContainer::AddSmokeTrail( const Vector &vecPos )
 // Combine Dropship implementation:
 //
 //------------------------------------------------------------------------------
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_combinedropship, CNPC_CombineDropship );
+#endif
 
 BEGIN_DATADESC( CNPC_CombineDropship )
 

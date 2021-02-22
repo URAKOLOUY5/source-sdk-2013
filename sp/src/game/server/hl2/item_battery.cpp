@@ -40,6 +40,8 @@ public:
 	}
 };
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS(item_battery, CItemBattery);
+#endif
 PRECACHE_REGISTER(item_battery);
 

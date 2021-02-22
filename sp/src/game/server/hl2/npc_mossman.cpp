@@ -45,7 +45,9 @@ private:
 	CAI_FollowBehavior		m_FollowBehavior;
 };
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_mossman, CNPC_Mossman );
+#endif
 
 BEGIN_DATADESC( CNPC_Mossman )
 //	DEFINE_FIELD( m_FollowBehavior, FIELD_EMBEDDED ),	(auto saved by AI)

@@ -1541,8 +1541,9 @@ private:
 	EHANDLE		m_hHitByVehicle;
 };
 
-
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_hunter, CNPC_Hunter );
+#endif
 
 
 BEGIN_DATADESC( CNPC_Hunter )

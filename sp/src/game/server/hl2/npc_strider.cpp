@@ -293,7 +293,9 @@ END_SEND_TABLE()
 
 //-------------------------------------
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( npc_strider, CNPC_Strider );
+#endif
 
 //-------------------------------------
 

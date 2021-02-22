@@ -44,7 +44,9 @@ END_DATADESC()
 IMPLEMENT_SERVERCLASS_ST(CWeapon_SLAM, DT_Weapon_SLAM)
 END_SEND_TABLE()
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( weapon_slam, CWeapon_SLAM );
+#endif
 PRECACHE_WEAPON_REGISTER(weapon_slam);
 
 acttable_t	CWeapon_SLAM::m_acttable[] = 

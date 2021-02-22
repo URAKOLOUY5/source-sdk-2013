@@ -95,7 +95,9 @@ public:
 IMPLEMENT_SERVERCLASS_ST(CWeaponShotgun, DT_WeaponShotgun)
 END_SEND_TABLE()
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( weapon_shotgun, CWeaponShotgun );
+#endif
 PRECACHE_WEAPON_REGISTER(weapon_shotgun);
 
 BEGIN_DATADESC( CWeaponShotgun )

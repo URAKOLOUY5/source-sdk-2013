@@ -69,7 +69,9 @@ public:
 IMPLEMENT_SERVERCLASS_ST(CWeaponAnnabelle, DT_WeaponAnnabelle)
 END_SEND_TABLE()
 
+#ifndef PORTAL2
 LINK_ENTITY_TO_CLASS( weapon_annabelle, CWeaponAnnabelle );
+#endif
 #ifndef HL2MP
 PRECACHE_WEAPON_REGISTER(weapon_annabelle);
 #endif
