@@ -17,8 +17,8 @@ $Project "client"
 {
 	"game\client\client_hl2.vpc"		[($WIN32||$X360||$POSIX) && $HL2]
 	"game\client\client_episodic.vpc"	[($WIN32||$X360||$POSIX) && $EPISODIC]
-	"game\client\client_dbr.vpc"	[($WIN32||$X360||$POSIX) && $DBR]		
-	"game\client\client_portalprelude.vpc"	[($WIN32||$X360||$POSIX) && $PORTALPRELUDE]		
+	"game\client\client_dbr.vpc"		[($WIN32||$X360||$POSIX) && $DBR]		
+	"game\client\client_brokenhope.vpc"	[($WIN32||$X360||$POSIX) && $BROKENHOPE]		
 }
 
 $Project "fgdlib"
@@ -30,7 +30,8 @@ $Project "game_shader_dx9"
 {
 	"materialsystem\stdshaders\game_shader_dx9_hl2.vpc" [$HL2]
 	"materialsystem\stdshaders\game_shader_dx9_episodic.vpc"  [$EPISODIC]
-	"materialsystem\stdshaders\game_shader_dx9_episodic.vpc"  [$DBR]		
+	"materialsystem\stdshaders\game_shader_dx9_episodic.vpc"  [$DBR]
+	"materialsystem\stdshaders\game_shader_dx9_episodic.vpc"  [$BROKENHOPE]	
 }
 
 $Project "glview"
@@ -53,7 +54,7 @@ $Project "server"
 	"game\server\server_hl2.vpc"		[($WIN32||$X360||$POSIX) && $HL2]
 	"game\server\server_episodic.vpc"	[($WIN32||$X360||$POSIX) && $EPISODIC]
 	"game\server\server_dbr.vpc"	[($WIN32||$X360||$POSIX) && $DBR]	
-	"game\server\server_portalprelude.vpc"	[($WIN32||$X360||$POSIX) && $PORTALPRELUDE]				
+	"game\server\server_brokenhope.vpc"	[($WIN32||$X360||$POSIX) && $BROKENHOPE]				
 }
 
 $Project "mathlib"
