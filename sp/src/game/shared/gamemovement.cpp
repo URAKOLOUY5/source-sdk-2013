@@ -2422,7 +2422,7 @@ bool CGameMovement::CheckJumpButton( void )
 		return false;
 #endif
 
-#ifdef DBR
+#if defined (DBR) && (PORTAL2)
 	// Cannot jump will while duck
 	if ( player->GetFlags() & FL_DUCKING )
 		return false;
@@ -2456,14 +2456,19 @@ bool CGameMovement::CheckJumpButton( void )
 	float flMul;
 	if ( g_bMovementOptimizations )
 	{
-#if defined(HL2_DLL) || defined(HL2_CLIENT_DLL)
-		Assert( GetCurrentGravity() == 600.0f );
+#ifndef PORTAL2
+#if defined(HL2_DLL) || defined(HL2_CLIENT_DLL) || defined(WORLD_USE_HL2_GRAVITY)
+		Assert( sv_gravity.GetFloat() == 600.0f );
 		flMul = 160.0f;	// approx. 21 units.
 #else
-		Assert( GetCurrentGravity() == 800.0f );
+		Assert( sv_gravity.GetFloat() == 800.0f );
 		flMul = 268.3281572999747f;
 #endif
-
+#endif
+#ifdef PORTAL2
+		Assert( sv_gravity.GetFloat() == 600.0f );
+		flMul = 168;
+#endif
 	}
 	else
 	{
