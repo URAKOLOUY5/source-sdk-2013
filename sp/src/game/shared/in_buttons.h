@@ -42,6 +42,10 @@
 #define IN_GRENADE1		(1 << 23)	// grenade 1
 #define IN_GRENADE2		(1 << 24)	// grenade 2
 #define	IN_ATTACK3		(1 << 25)
+#ifdef PORTAL2
+#define	IN_ZOOMIN		(1 << 26)
+#define	IN_ZOOMOUT  	(1 << 27)
+#endif
 
 #ifdef VGUI_SCREEN_FIX
 #define IN_VALIDVGUIINPUT		    (1 << 23) //bitflag for vgui fix
