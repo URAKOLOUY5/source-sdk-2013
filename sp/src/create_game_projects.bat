@@ -27,9 +27,9 @@ If not "%DBR%"=="n" (
     set game=%game% /dbr
 )
 
-set /p DBR=Use Portal Prelude? (y): 
+set /p DBR=Use Broken Hope? (y): 
 If not "%DBR%"=="n" (
-    set game=%game% /portalprelude
+    set game=%game% /brokenhope
 )
 
 cls
