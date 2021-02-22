@@ -1270,12 +1270,14 @@ void C_Portal_Player::ItemPreFrame( void )
 	if ( GetFlags() & FL_FROZEN )
 		return;
 
+#ifndef PORTAL
 	// Disallow shooting while zooming
 	if ( m_nButtons & IN_ZOOM )
 	{
 		//FIXME: Held weapons like the grenade get sad when this happens
 		m_nButtons &= ~(IN_ATTACK|IN_ATTACK2);
 	}
+#endif
 
 	BaseClass::ItemPreFrame();
 
@@ -1625,15 +1627,19 @@ void C_Portal_Player::CalcViewModelView( const Vector& eyeOrigin, const QAngle& 
 	Vector vUp;
 	AngleVectors( eyeAngles, &vForward, &vRight, &vUp );
 
+#ifndef PORTAL2
 	if ( vForward.z < 0.0f )
 	{
 		float fT = vForward.z * vForward.z;
 		vInterpEyeOrigin += vRight * ( fT * 4.7f ) + vForward * ( fT * 5.0f ) + vUp * ( fT * 4.0f );
 	}
+#endif
 
+#ifndef PORTAL2
 	if ( UTIL_IntersectEntityExtentsWithPortal( this ) )
 		g_fMaxViewModelLag = 0.0f;
 	else
+#endif
 		g_fMaxViewModelLag = 1.5f;
 
 	for ( int i = 0; i < MAX_VIEWMODELS; i++ )
