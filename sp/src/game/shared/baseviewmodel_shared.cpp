@@ -552,6 +552,7 @@ void CBaseViewModel::CalcViewModelLag( Vector& origin, QAngle& angles, QAngle& o
 		Assert( m_vecLastFacing.IsValid() );
 	}
 
+#ifndef PORTAL2
 	Vector right, up;
 	AngleVectors( original_angles, &forward, &right, &up );
 
@@ -568,9 +569,10 @@ void CBaseViewModel::CalcViewModelLag( Vector& origin, QAngle& angles, QAngle& o
 	}
 
 	//FIXME: These are the old settings that caused too many exposed polys on some models
-	VectorMA( origin, -pitch * 0.035f,	forward,	origin );
+	VectorMA( origin, -pitch * 0.035f,		forward,	origin );
 	VectorMA( origin, -pitch * 0.03f,		right,	origin );
 	VectorMA( origin, -pitch * 0.02f,		up,		origin);
+#endif
 }
 
 //-----------------------------------------------------------------------------
