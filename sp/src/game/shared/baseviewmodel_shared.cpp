@@ -33,6 +33,14 @@ extern ConVar in_forceuser;
 #define VIEWMODEL_ANIMATION_PARITY_BITS 3
 #define SCREEN_OVERLAY_MATERIAL "vgui/screens/vgui_overlay"
 
+#ifdef PORTAL2
+#if defined( CLIENT_DLL )
+	ConVar viewmodel_offset_x( "viewmodel_offset_x", "0.0", FCVAR_ARCHIVE );	 // the viewmodel offset from default in X
+	ConVar viewmodel_offset_y( "viewmodel_offset_y", "0.0", FCVAR_ARCHIVE );	 // the viewmodel offset from default in Y
+	ConVar viewmodel_offset_z( "viewmodel_offset_z", "0.0", FCVAR_ARCHIVE );	 // the viewmodel offset from default in Z
+#endif
+#endif
+
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
@@ -382,6 +390,54 @@ void CBaseViewModel::SendViewModelMatchingSequence( int sequence )
 #include "ivieweffects.h"
 #endif
 
+#ifdef PORTAL2
+void CBaseViewModel::CalcViewModelView( CBasePlayer *owner, const Vector& eyePosition, const QAngle& eyeAngles )
+{
+	// UNDONE: Calc this on the server?  Disabled for now as it seems unnecessary to have this info on the server
+#if defined( CLIENT_DLL )
+	QAngle vmangoriginal = eyeAngles;
+	QAngle vmangles = eyeAngles;
+	Vector vmorigin = eyePosition;
+
+	Vector vecRight;
+	Vector vecUp;
+	Vector vecForward;
+	AngleVectors( vmangoriginal, &vecForward, &vecRight, &vecUp );
+	//Vector vecOffset = Vector( viewmodel_offset_x.GetFloat(), viewmodel_offset_y.GetFloat(), viewmodel_offset_z.GetFloat() ); 
+	vmorigin += (vecForward * viewmodel_offset_y.GetFloat()) + (vecUp * viewmodel_offset_z.GetFloat()) + (vecRight * viewmodel_offset_x.GetFloat());
+
+	CBaseCombatWeapon* pWeapon = m_hWeapon.Get();
+	//Allow weapon lagging
+	if (pWeapon != NULL)
+	{
+#if defined( CLIENT_DLL )
+		if (!prediction->InPrediction())
+#endif
+		{
+			// add weapon-specific bob 
+			pWeapon->AddViewmodelBob(this, vmorigin, vmangles);
+#if defined ( CSTRIKE_DLL )
+			CalcViewModelLag(vmorigin, vmangles, vmangoriginal);
+#endif
+		}
+	}
+
+#if defined( CLIENT_DLL )
+	if (!prediction->InPrediction())
+	{
+		// Add lag
+		CalcViewModelLag(vmorigin, vmangles, vmangoriginal);
+
+		// Let the viewmodel shake at about 10% of the amplitude of the player's view
+		vieweffects->ApplyShake(vmorigin, vmangles, 0.1);
+	}
+#endif
+
+	SetLocalOrigin( vmorigin );
+	SetLocalAngles( vmangles );
+
+#endif
+#else
 void CBaseViewModel::CalcViewModelView( CBasePlayer *owner, const Vector& eyePosition, const QAngle& eyeAngles )
 {
 	// UNDONE: Calc this on the server?  Disabled for now as it seems unnecessary to have this info on the server
@@ -454,7 +510,7 @@ void CBaseViewModel::CalcViewModelView( CBasePlayer *owner, const Vector& eyePos
 	}
 #endif
 #endif
-
+#endif
 }
 
 //-----------------------------------------------------------------------------
