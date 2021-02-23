@@ -2435,21 +2435,28 @@ void CPortalSimulator::PrePhysFrame( void )
 	}
 }
 
-void CPortalSimulator::PostPhysFrame( void )
+void CPortalSimulator::PostPhysFrame(void)
 {
-	if ( g_bPlayerIsInSimulator )
+	if (g_bPlayerIsInSimulator)
 	{
-		CPortal_Player* pPlayer = dynamic_cast<CPortal_Player*>( UTIL_GetLocalPlayer() );
-		CProp_Portal* pTouchedPortal = pPlayer->m_hPortalEnvironment.Get();
-		CPortalSimulator* pSim = GetSimulatorThatOwnsEntity( pPlayer );
-		if ( pTouchedPortal && pSim && (pTouchedPortal->m_PortalSimulator.GetPortalSimulatorGUID() != pSim->GetPortalSimulatorGUID()) )
+		for (int i = 1; i <= gpGlobals->maxClients; ++i)
 		{
-			Warning ( "Player is simulated in a physics environment but isn't touching a portal! Can't teleport, but can fall through portal hole. Returning player to main environment.\n" );
-			ADD_DEBUG_HISTORY( HISTORY_PLAYER_DAMAGE, UTIL_VarArgs( "Player in PortalSimulator but not touching a portal, removing from sim at : %f\n",  gpGlobals->curtime ) );
-			
-			if ( pSim )
+			CPortal_Player* pPlayer = static_cast<CPortal_Player*>(UTIL_PlayerByIndex(i));
+
+			if (pPlayer == NULL || FNullEnt(pPlayer->edict()) || !pPlayer->IsPlayer() || !pPlayer->IsConnected())
+				continue;
+
+			CProp_Portal* pTouchedPortal = pPlayer->m_hPortalEnvironment.Get();
+			CPortalSimulator* pSim = GetSimulatorThatOwnsEntity(pPlayer);
+			if (pTouchedPortal && pSim && (pTouchedPortal->m_PortalSimulator.GetPortalSimulatorGUID() != pSim->GetPortalSimulatorGUID()))
 			{
-				pSim->ReleaseOwnershipOfEntity( pPlayer, false );
+				Warning("Player is simulated in a physics environment but isn't touching a portal! Can't teleport, but can fall through portal hole. Returning player to main environment.\n");
+				ADD_DEBUG_HISTORY(HISTORY_PLAYER_DAMAGE, UTIL_VarArgs("Player in PortalSimulator but not touching a portal, removing from sim at : %f\n", gpGlobals->curtime));
+
+				if (pSim)
+				{
+					pSim->ReleaseOwnershipOfEntity(pPlayer, false);
+				}
 			}
 		}
 	}
