@@ -702,7 +702,7 @@ bool CServerGameDLL::DLLInit( CreateInterfaceFn appSystemFactory,
 
 	extern void MountExtraContent();
 	MountExtraContent();	
-
+	
 	// The string system must init first + shutdown last
 	IGameSystem::Add( GameStringSystem() );
 

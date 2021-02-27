@@ -96,3 +96,4 @@ sp/src/vgui2/*.pdb
 # Build support files
 sp/src/devtools/gcc9+support.o
 *.pdb
+sp/game/mod_episodic/bin/game_shader_dx9.dll

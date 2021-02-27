@@ -2497,30 +2497,24 @@ bool CGameMovement::CheckJumpButton( void )
 #if defined( HL2_DLL ) || defined( HL2_CLIENT_DLL )
 	if ( gpGlobals->maxClients == 1 )
 	{
-		CHLMoveData *pMoveData = ( CHLMoveData* )mv;
+		CHLMoveData *pMoveData = (CHLMoveData *)mv;
 		Vector vecForward;
-		AngleVectors( mv->m_vecViewAngles, &vecForward );
+		AngleVectors(mv->m_vecViewAngles, &vecForward);
 		vecForward.z = 0;
-		VectorNormalize( vecForward );
-		
-		// We give a certain percentage of the current forward movement as a bonus to the jump speed.  That bonus is clipped
-		// to not accumulate over time.
-		float flSpeedBoostPerc = ( !pMoveData->m_bIsSprinting && !player->m_Local.m_bDucked ) ? 0.5f : 0.1f;
-		float flSpeedAddition = fabs( mv->m_flForwardMove * flSpeedBoostPerc );
-		float flMaxSpeed = mv->m_flMaxSpeed + ( mv->m_flMaxSpeed * flSpeedBoostPerc );
-		float flNewSpeed = ( flSpeedAddition + mv->m_vecVelocity.Length2D() );
+		VectorNormalize(vecForward);
+		float flBoost;
 
-		// If we're over the maximum, we want to only boost as much as will get us to the goal speed
-		if ( flNewSpeed > flMaxSpeed )
-		{
-			flSpeedAddition -= flNewSpeed - flMaxSpeed;
-		}
+		if (!pMoveData->m_bIsSprinting && !player->m_Local.m_bDucked)
+			flBoost = 0.2f;
+		else
+			flBoost = 0.1f;
 
-		if ( mv->m_flForwardMove < 0.0f )
-			flSpeedAddition *= -1.0f;
+		float flSpeedAddition = mv->m_flForwardMove * flBoost;
 
-		// Add it on
-		VectorAdd( (vecForward*flSpeedAddition), mv->m_vecVelocity, mv->m_vecVelocity );
+		vecForward.x *= flSpeedAddition;
+		vecForward.y *= flSpeedAddition;
+
+		VectorAdd(mv->m_vecVelocity, vecForward, mv->m_vecVelocity);
 	}
 #endif
 
