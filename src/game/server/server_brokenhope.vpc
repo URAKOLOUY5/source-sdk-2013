@@ -1,0 +1,23 @@
+//____________________________________________________________
+//
+// Broken Hope - Server (Project)	
+//____________________________________________________________
+
+$Macro SRCDIR		"..\.."
+$Macro GAMENAME 	"brokenhope" [!$SOURCESDK]
+$Macro GAMENAME 	"brokenhope_mod" [$SOURCESDK]
+
+$Include "$SRCDIR\game\server\server_portal_base.vpc"
+
+$Configuration
+{
+	$Compiler
+	{
+		$AdditionalIncludeDirectories	"$SRCDIR\game\shared\brokenhope;$BASE"
+		$PreprocessorDefinitions		"$BASE;BROKEN_HOPE"
+	}
+}
+
+$Project "Broken Hope - Server"
+{
+}

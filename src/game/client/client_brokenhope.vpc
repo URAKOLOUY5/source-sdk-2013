@@ -1,0 +1,146 @@
+//____________________________________________________________
+//
+// Broken Hope - Client (Project)	
+//____________________________________________________________
+
+$Macro SRCDIR		"..\.."
+$Macro GAMENAME 	"brokenhope" [!$SOURCESDK]
+$Macro GAMENAME 	"brokenhope_mod" [$SOURCESDK]
+
+$Include "$SRCDIR\game\client\client_portal_base.vpc"
+
+$Configuration
+{
+	$Compiler
+	{
+		$AdditionalIncludeDirectories	".\gameui;.\brokenhope\gameui;.\brokenhope\vgui;$SRCDIR\game\shared\brokenhope;$BASE"
+		$PreprocessorDefinitions		"$BASE;BROKEN_HOPE"
+	}
+}
+
+$Project "Broken Hope - Client"
+{
+	$Folder	"Source Files"
+	{
+		$Folder	"Broken Hope"
+		{
+			$Folder	"Game User-interface"
+			{
+				$File	"brokenhope\gameui\basemodframe.h"
+				$File	"brokenhope\gameui\gamemodes.h"
+				$File	"brokenhope\gameui\optionsmousedialog.h"
+				$File	"brokenhope\gameui\UIGameData.h"
+				
+				$File	"brokenhope\gameui\vaddonassociation.h"
+				$File	"brokenhope\gameui\vaddons.h"
+				$File	"brokenhope\gameui\vattractscreen.h"
+				$File	"brokenhope\gameui\vaudio.h"
+				$File	"brokenhope\gameui\vaudiovideo.h"
+				$File	"brokenhope\gameui\vcustomcampaigns.h"
+				$File	"brokenhope\gameui\vdropdownmenu.h"
+				$File	"brokenhope\gameui\vflyoutmenu.h"
+				$File	"brokenhope\gameui\vfooterpanel.h"
+				$File	"brokenhope\gameui\vgenericconfirmation.h"
+				$File	"brokenhope\gameui\vgenericpanellist.h"
+				$File	"brokenhope\gameui\vgetlegacydata.h"
+				$File	"brokenhope\gameui\vhybridbutton.h"
+				$File	"brokenhope\gameui\vingamemainmenu.h"
+				$File	"brokenhope\gameui\vkeyboard.h"
+				$File	"brokenhope\gameui\vkeyboardmouse.h"
+				$File	"brokenhope\gameui\vloadingprogress.h"
+				$File	"brokenhope\gameui\vmainmenu.h"
+				$File	"brokenhope\gameui\vmouse.h"
+				$File	"brokenhope\gameui\vslidercontrol.h"
+				$File	"brokenhope\gameui\vtransitionscreen.h"
+				$File	"brokenhope\gameui\vvideo.h"
+				
+				$File	"brokenhope\gameui\basemodframe.cpp"
+				$File	"brokenhope\gameui\BaseModPanel.cpp"
+				$File	"brokenhope\gameui\gamemodes.cpp"
+				$File	"brokenhope\gameui\optionsmousedialog.cpp"
+				$File	"brokenhope\gameui\vaddonassociation.cpp"
+				$File	"brokenhope\gameui\vaddons.cpp"
+				$File	"brokenhope\gameui\vattractscreen.cpp"
+				$File	"brokenhope\gameui\vaudio.cpp"
+				$File	"brokenhope\gameui\vaudiovideo.cpp"
+				$File	"brokenhope\gameui\vcustomcampaigns.cpp"
+				$File	"brokenhope\gameui\vdropdownmenu.cpp"
+				$File	"brokenhope\gameui\vflyoutmenu.cpp"
+				$File	"brokenhope\gameui\vfooterpanel.cpp"
+				$File	"brokenhope\gameui\vgenericconfirmation.cpp"
+				$File	"brokenhope\gameui\vgenericpanellist.cpp"
+				$File	"brokenhope\gameui\vgetlegacydata.cpp"
+				$File	"brokenhope\gameui\vhybridbutton.cpp"
+				$File	"brokenhope\gameui\vingamemainmenu.cpp"
+				$File	"brokenhope\gameui\vkeyboard.cpp"
+				$File	"brokenhope\gameui\vkeyboardmouse.cpp"
+				$File	"brokenhope\gameui\vloadingprogress.cpp"
+				$File	"brokenhope\gameui\vmainmenu.cpp"
+				$File	"brokenhope\gameui\vmenubackground.cpp"
+				$File	"brokenhope\gameui\vmouse.cpp"
+				$File	"brokenhope\gameui\vslidercontrol.cpp"
+				$File	"brokenhope\gameui\vtransitionscreen.cpp"
+				$File	"brokenhope\gameui\vvideo.cpp"
+				$File	"brokenhope\gameui\UIGameData.cpp"
+
+
+				-$File	"portal\GameUI\basemodframe.h"
+				-$File	"portal\GameUI\gamemodes.h"
+				-$File	"portal\GameUI\optionsmousedialog.h"
+				-$File	"portal\GameUI\UIGameData.h"
+				
+				-$File	"portal\GameUI\vaddonassociation.h"
+				-$File	"portal\GameUI\vaddons.h"
+				-$File	"portal\GameUI\vattractscreen.h"
+				-$File	"portal\GameUI\vaudio.h"
+				-$File	"portal\GameUI\vaudiovideo.h"
+				-$File	"portal\GameUI\vcustomcampaigns.h"
+				-$File	"portal\GameUI\vdropdownmenu.h"
+				-$File	"portal\GameUI\vflyoutmenu.h"
+				-$File	"portal\GameUI\vfooterpanel.h"
+				-$File	"portal\GameUI\vgenericconfirmation.h"
+				-$File	"portal\GameUI\vgenericpanellist.h"
+				-$File	"portal\GameUI\vgetlegacydata.h"
+				-$File	"portal\GameUI\vhybridbutton.h"
+				-$File	"portal\GameUI\vingamemainmenu.h"
+				-$File	"portal\GameUI\vkeyboard.h"
+				-$File	"portal\GameUI\vkeyboardmouse.h"
+				-$File	"portal\GameUI\vloadingprogress.h"
+				-$File	"portal\GameUI\vmainmenu.h"
+				-$File	"portal\GameUI\vmouse.h"
+				-$File	"portal\GameUI\vslidercontrol.h"
+				-$File	"portal\GameUI\vtransitionscreen.h"
+				-$File	"portal\GameUI\vvideo.h"
+				
+				-$File	"portal\GameUI\basemodframe.cpp"
+				-$File	"portal\GameUI\BaseModPanel.cpp"
+				-$File	"portal\GameUI\gamemodes.cpp"
+				-$File	"portal\GameUI\optionsmousedialog.cpp"
+				-$File	"portal\GameUI\vaddonassociation.cpp"
+				-$File	"portal\GameUI\vaddons.cpp"
+				-$File	"portal\GameUI\vattractscreen.cpp"
+				-$File	"portal\GameUI\vaudio.cpp"
+				-$File	"portal\GameUI\vaudiovideo.cpp"
+				-$File	"portal\GameUI\vcustomcampaigns.cpp"
+				-$File	"portal\GameUI\vdropdownmenu.cpp"
+				-$File	"portal\GameUI\vflyoutmenu.cpp"
+				-$File	"portal\GameUI\vfooterpanel.cpp"
+				-$File	"portal\GameUI\vgenericconfirmation.cpp"
+				-$File	"portal\GameUI\vgenericpanellist.cpp"
+				-$File	"portal\GameUI\vgetlegacydata.cpp"
+				-$File	"portal\GameUI\vhybridbutton.cpp"
+				-$File	"portal\GameUI\vingamemainmenu.cpp"
+				-$File	"portal\GameUI\vkeyboard.cpp"
+				-$File	"portal\GameUI\vkeyboardmouse.cpp"
+				-$File	"portal\GameUI\vloadingprogress.cpp"
+				-$File	"portal\GameUI\vmainmenu.cpp"
+				-$File	"portal\GameUI\vmenubackground.cpp"
+				-$File	"portal\GameUI\vmouse.cpp"
+				-$File	"portal\GameUI\vslidercontrol.cpp"
+				-$File	"portal\GameUI\vtransitionscreen.cpp"
+				-$File	"portal\GameUI\vvideo.cpp"
+				-$File	"portal\GameUI\UIGameData.cpp"
+			}
+		}
+	}
+}
