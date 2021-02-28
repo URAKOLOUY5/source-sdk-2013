@@ -1,0 +1,13 @@
+"GameInfo"
+{
+	FileSystem
+	{
+		SteamAppId				630 
+		
+		SearchPaths
+		{
+			vconfig				|gameinfo_path|.	// for all the vconfig stuff
+			vconfig				platform			// for all the vgui stuff
+		}
+	}
+}

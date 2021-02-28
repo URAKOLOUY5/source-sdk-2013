@@ -1,0 +1,52 @@
+"sprites/640_hud"
+{
+	TextureData
+	{
+		"whiteAdditive"
+		{
+				"file"		"vgui/white_additive"
+				"x"			"0"
+				"y"			"0"
+				"width"		"1"
+				"height"	"1"
+		}
+
+		"pain_up"
+		{
+				"file"		"sprites/640_pain_up"
+				"x"			"0"
+				"y"			"0"
+				"width"		"128"
+				"height"	"48"
+		}
+
+		"pain_down"
+		{
+				"file"		"sprites/640_pain_down"
+				"x"			"0"
+				"y"			"0"
+				"width"		"128"
+				"height"	"48"
+		}
+
+		"pain_left"
+		{
+				"file"		"sprites/640_pain_left"
+				"x"			"0"
+				"y"			"0"
+				"width"		"48"
+				"height"	"128"
+		}
+
+		"pain_right"
+		{
+				"file"		"sprites/640_pain_right"
+				"x"			"0"
+				"y"			"0"
+				"width"		"48"
+				"height"	"128"
+		}
+
+
+	}
+}

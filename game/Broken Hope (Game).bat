@@ -1,0 +1,1 @@
+@start brokenhope.exe -game brokenhope_mod -override_vpk
