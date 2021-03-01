@@ -1,0 +1,3 @@
+[submodule "fgds"]
+	path = fgds
+	url = https://github.com/URAKOLOUY5/u5-maps-fgds.git
