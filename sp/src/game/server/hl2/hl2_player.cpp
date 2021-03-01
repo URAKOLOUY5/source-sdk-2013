@@ -701,11 +701,19 @@ void CHL2_Player::CheckSuitZoom( void )
 	if ( IsSuitEquipped() )
 	{
 #endif
+#ifdef ENABLE_ZOOM_IN_OUT 
 		if ( m_afButtonPressed & IN_ZOOMOUT )
+#else
+		if ( m_afButtonReleased & IN_ZOOM )
+#endif
 		{
 			StopZooming();
 		}	
+#ifdef ENABLE_ZOOM_IN_OUT
 		else if ( m_afButtonPressed & IN_ZOOMIN )
+#else
+		else if (m_afButtonPressed & IN_ZOOM)
+#endif
 		{
 			StartZooming();
 		}
