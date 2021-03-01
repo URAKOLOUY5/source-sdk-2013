@@ -140,7 +140,7 @@ static	kbutton_t	in_alt2;
 static	kbutton_t	in_score;
 static	kbutton_t	in_break;
 static	kbutton_t	in_zoom;
-#ifdef PORTAL2
+#ifdef ENABLE_ZOOM_IN_OUT 
 static  kbutton_t   in_zoomin;
 static  kbutton_t   in_zoomout;
 #endif
@@ -487,7 +487,7 @@ void IN_GraphDown( const CCommand &args ) {KeyDown(&in_graph, args[1] );}
 void IN_GraphUp( const CCommand &args ) {KeyUp(&in_graph, args[1] );}
 void IN_ZoomDown( const CCommand &args ) {KeyDown(&in_zoom, args[1] );}
 void IN_ZoomUp( const CCommand &args ) {KeyUp(&in_zoom, args[1] );}
-#ifdef PORTAL2
+#ifdef ENABLE_ZOOM_IN_OUT 
 void IN_ZoomInDown( const CCommand &args ) {KeyDown(&in_zoomin, args[1] );}
 void IN_ZoomInUp( const CCommand &args ) {KeyUp(&in_zoomin, args[1] );}
 void IN_ZoomOutDown( const CCommand &args ) {KeyDown(&in_zoomout, args[1] );}
@@ -1479,7 +1479,7 @@ int CInput::GetButtonBits( int bResetState )
 	CalcButtonBits( bits, IN_ALT2, s_ClearInputState, &in_alt2, bResetState );
 	CalcButtonBits( bits, IN_SCORE, s_ClearInputState, &in_score, bResetState );
 	CalcButtonBits( bits, IN_ZOOM, s_ClearInputState, &in_zoom, bResetState );
-#ifdef PORTAL2
+#ifdef ENABLE_ZOOM_IN_OUT 
 	CalcButtonBits( bits, IN_ZOOMIN, s_ClearInputState, &in_zoomin, bResetState );
 	CalcButtonBits( bits, IN_ZOOMOUT, s_ClearInputState, &in_zoomout, bResetState );
 #endif
@@ -1635,7 +1635,7 @@ static ConCommand startbreak("+break",IN_BreakDown);
 static ConCommand endbreak("-break",IN_BreakUp);
 static ConCommand force_centerview("force_centerview", IN_CenterView_f);
 static ConCommand joyadvancedupdate("joyadvancedupdate", IN_Joystick_Advanced_f, "", FCVAR_CLIENTCMD_CAN_EXECUTE);
-#ifdef PORTAL2
+#ifdef ENABLE_ZOOM_IN_OUT 
 static ConCommand startzoomin("+zoom_in", IN_ZoomInDown);
 static ConCommand endzoomin("-zoom_in", IN_ZoomInUp);
 static ConCommand startzoomout("+zoom_out", IN_ZoomOutDown);
