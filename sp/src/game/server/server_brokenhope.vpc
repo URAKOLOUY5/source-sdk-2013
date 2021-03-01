@@ -14,11 +14,5 @@ $Configuration
 
 $Project "Broken Hope - Server"
 {
-	$Folder	"Source Files"
-	{
-		$Folder	"BH DLL"
-		{
-			$File	"$SRCDIR\game\shared\brokenhope\bh_sharedefs.h"			
-		}
-	}	
+	
 }
