@@ -20,6 +20,7 @@
 #include "view_shared.h"
 #include "texture_group_names.h"
 #include "tier0/icommandline.h"
+#include "tier0/platform.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -61,6 +62,9 @@ IMPLEMENT_CLIENTCLASS_DT( C_EnvProjectedTexture, DT_EnvProjectedTexture, CEnvPro
 	RecvPropFloat(	 RECVINFO( m_flQuadraticAtten ) ),
 	RecvPropFloat(	 RECVINFO( m_flShadowAtten ) ),
 	RecvPropBool(	 RECVINFO( m_bAlwaysDraw )	),
+
+	// U5 Maps
+	RecvPropInt(	 RECVINFO( m_iStyle ) ),
 
 	// Not needed on the client right now, change when it actually is needed
 	//RecvPropBool(	 RECVINFO( m_bProjectedTextureVersion )	),
@@ -388,6 +392,10 @@ void C_EnvProjectedTexture::UpdateLight( void )
 		}
 
 		float flAlpha = m_flCurrentLinearFloatLightAlpha * ( 1.0f / 255.0f );
+
+		// U5 Maps
+		// Get the current light style value to throttle the brightness by
+		flAlpha *= engine->LightStyleValue( m_iStyle );
 
 #ifdef MAPBASE
 		state.m_fConstantAtten = m_flConstantAtten;

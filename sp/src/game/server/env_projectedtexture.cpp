@@ -6,6 +6,7 @@
 
 #include "cbase.h"
 #include "shareddefs.h"
+#include "world.h"
 #ifdef ASW_PROJECTED_TEXTURES
 #include "env_projectedtexture.h"
 #endif
@@ -52,6 +53,11 @@ BEGIN_DATADESC( CEnvProjectedTexture )
 	DEFINE_KEYFIELD( m_flShadowAtten, FIELD_FLOAT, "shadowatten" ),
 #endif
 
+	// U5 Maps - Appearance of proj lights	
+	DEFINE_KEYFIELD( m_iStyle, FIELD_INTEGER, "style" ),
+	DEFINE_KEYFIELD( m_iDefaultStyle, FIELD_INTEGER, "defaultstyle" ),
+	DEFINE_KEYFIELD( m_iszPattern, FIELD_STRING, "pattern" ),
+
 	DEFINE_INPUTFUNC( FIELD_VOID, "TurnOn", InputTurnOn ),
 	DEFINE_INPUTFUNC( FIELD_VOID, "TurnOff", InputTurnOff ),
 	DEFINE_INPUTFUNC( FIELD_VOID, "AlwaysUpdateOn", InputAlwaysUpdateOn ),
@@ -69,6 +75,8 @@ BEGIN_DATADESC( CEnvProjectedTexture )
 	DEFINE_INPUTFUNC( FIELD_COLOR32, "LightColor", InputSetLightColor ),
 	DEFINE_INPUTFUNC( FIELD_FLOAT, "Ambient", InputSetAmbient ),
 	DEFINE_INPUTFUNC( FIELD_STRING, "SpotlightTexture", InputSetSpotlightTexture ),
+	DEFINE_INPUTFUNC( FIELD_INTEGER, "SetLightStyle", InputSetLightStyle ),
+	DEFINE_INPUTFUNC( FIELD_STRING, "SetPattern", InputSetPattern ),
 #ifdef MAPBASE
 	DEFINE_INPUTFUNC( FIELD_INTEGER, "SetSpotlightFrame", InputSetSpotlightFrame ),
 	DEFINE_INPUTFUNC( FIELD_FLOAT, "SetBrightness", InputSetBrightness ),
@@ -117,6 +125,9 @@ IMPLEMENT_SERVERCLASS_ST( CEnvProjectedTexture, DT_EnvProjectedTexture )
 	SendPropFloat( SENDINFO( m_flQuadraticAtten ) ),
 	SendPropFloat( SENDINFO( m_flShadowAtten ) ),
 	SendPropBool( SENDINFO( m_bAlwaysDraw ) ),
+
+	// U5 Maps
+	SendPropInt( SENDINFO( m_iStyle ) ),
 
 	// Not needed on the client right now, change when it actually is needed
 	//SendPropBool( SENDINFO( m_bProjectedTextureVersion ) ),
@@ -273,7 +284,7 @@ bool CEnvProjectedTexture::GetKeyValue( const char *szKeyName, char *szValue, in
 		// Undo correction
 		Q_snprintf( szValue, iMaxLen, "%f", m_flQuadraticAtten *= 0.0001f );
 		return true;
-	}
+	}	
 #endif
 	return BaseClass::GetKeyValue( szKeyName, szValue, iMaxLen );
 }
@@ -363,6 +374,18 @@ void CEnvProjectedTexture::InputSetSpotlightTexture( inputdata_t &inputdata )
 	Q_strcpy( m_SpotlightTextureName.GetForModify(), inputdata.value.String() );
 }
 
+// U5 Maps
+void CEnvProjectedTexture::InputSetLightStyle( inputdata_t &inputdata )
+{
+	m_iStyle = inputdata.value.Int();
+} 
+
+void CEnvProjectedTexture::InputSetPattern( inputdata_t &inputdata )
+{
+	m_iszPattern = inputdata.value.StringID();
+	engine->LightStyle( m_iStyle, (char *) STRING( m_iszPattern ) );
+}
+
 #ifdef MAPBASE
 void CEnvProjectedTexture::InputSetSpotlightFrame( inputdata_t &inputdata )
 {
@@ -401,6 +424,22 @@ void CEnvProjectedTexture::Spawn( void )
 
 	m_bState = ( ( GetSpawnFlags() & ENV_PROJECTEDTEXTURE_STARTON ) != 0 );
 	m_bAlwaysUpdate = ( ( GetSpawnFlags() & ENV_PROJECTEDTEXTURE_ALWAYSUPDATE ) != 0 );
+
+	// Update light styles
+	if ( m_iStyle >= 32 )
+	{
+		if ( m_iszPattern == NULL_STRING && m_iDefaultStyle > 0 )
+		{
+			m_iszPattern = MAKE_STRING( GetDefaultLightstyleString( m_iDefaultStyle ) );
+		}
+
+		if ( m_bState == false )
+			engine->LightStyle( m_iStyle, "a" );
+		else if ( m_iszPattern != NULL_STRING )
+			engine->LightStyle( m_iStyle, (char *) STRING( m_iszPattern ) );
+		else
+			engine->LightStyle( m_iStyle, "m" );
+	}
 
 	BaseClass::Spawn();
 }

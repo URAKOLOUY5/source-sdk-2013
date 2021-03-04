@@ -112,6 +112,15 @@ private:
 	// Not needed on the client right now, change to CNetworkVar when it actually is needed
 	bool m_bProjectedTextureVersion;
 #endif
+
+	// U5 Maps
+	// Light style
+	CNetworkVar(int, m_iStyle);
+	int			m_iDefaultStyle;
+	string_t	m_iszPattern;
+
+	void InputSetLightStyle(inputdata_t& inputdata);
+	void InputSetPattern(inputdata_t& inputdata);
 };
 #endif
 
