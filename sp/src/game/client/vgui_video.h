@@ -45,14 +45,18 @@ public:
 	}
 
 	bool BeginPlayback( const char *pFilename );
+	void StopPlayback(void);
 
 	void SetBlackBackground( bool bBlack ){ m_bBlackBackground = bBlack; }
+	void SetAllowInterrupt(bool bAllowInterrupt) { m_bAllowInterruption = bAllowInterrupt; }
+
+	void SetLooping(bool bLooping) { m_bLooping = bLooping; }
 
 protected:
 
-	virtual void OnTick( void ) { BaseClass::OnTick(); }
-	virtual void OnCommand( const char *pcCommand ) { BaseClass::OnCommand( pcCommand ); }
-	virtual void OnVideoOver(){}
+	virtual void OnTick(void);
+	virtual void OnCommand(const char* pcCommand) { BaseClass::OnCommand(pcCommand); }
+	virtual void OnVideoOver();
 
 protected:
 	IVideoMaterial *m_VideoMaterial;
@@ -67,6 +71,13 @@ protected:
 
 	bool			m_bBlackBackground;
 	bool			m_bAllowAlternateMedia;
+
+	bool			m_bLooping;
+	bool			m_bStopAllSounds;
+	bool			m_bAllowInterruption;
+	int				m_nShutdownCount;
+
+	bool			m_bStarted;
 };
 
 
