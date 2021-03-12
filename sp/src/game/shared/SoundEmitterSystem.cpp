@@ -1226,6 +1226,12 @@ void CBaseEntity::ScriptEmitSound( const char *soundname )
 	EmitSound( soundname );
 }
 
+void CBaseEntity::ScriptStopSound( const char *soundname )
+{
+	StopSound( soundname );
+}
+
+
 float CBaseEntity::ScriptSoundDuration( const char *soundname, const char *actormodel )
 {
 	float duration = CBaseEntity::GetSoundDuration( soundname, actormodel );
