@@ -288,6 +288,8 @@ public:
 #endif
 	void Move(void);
 
+	//void ReturnToEyes( void );	
+
 	// Always transmit to clients so they know where to move the view to
 	virtual int UpdateTransmitState();
 	
@@ -296,6 +298,9 @@ public:
 	// Input handlers
 	void InputEnable( inputdata_t &inputdata );
 	void InputDisable( inputdata_t &inputdata );
+
+	void InputReturnToEyes( inputdata_t &inputdata );
+	void InputTeleportToView( inputdata_t &inputdata );
 
 #ifdef MAPBASE
 	void InputSetFOV( inputdata_t &inputdata );

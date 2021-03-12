@@ -3104,6 +3104,9 @@ BEGIN_DATADESC( CTriggerCamera )
 	DEFINE_KEYFIELD( m_bDontSetPlayerView, FIELD_BOOLEAN, "DontSetPlayerView" ),
 #endif
 
+	//DEFINE_INPUTFUNC( FIELD_VOID, "ReturnToEyes", InputReturnToEyes ),
+	DEFINE_INPUTFUNC( FIELD_VOID, "TeleportToView", InputTeleportToView ),
+
 	// Inputs
 	DEFINE_INPUTFUNC( FIELD_VOID, "Enable", InputEnable ),
 	DEFINE_INPUTFUNC( FIELD_VOID, "Disable", InputDisable ),
@@ -3235,6 +3238,47 @@ void CTriggerCamera::InputEnable( inputdata_t &inputdata )
 //------------------------------------------------------------------------------
 void CTriggerCamera::InputDisable( inputdata_t &inputdata )
 { 
+	Disable();
+}
+
+/* //------------------------------------------------------------------------------
+// Purpose: Input handler to return the view to the player eyes
+//------------------------------------------------------------------------------
+void CTriggerCamera::InputReturnToEyes( inputdata_t &inputdata )
+{
+	if ( m_hPlayer && HasSpawnFlags( SF_CAMERA_PLAYER_SETFOV ) )
+	{
+		CBasePlayer *pBasePlayer = (CBasePlayer*)m_hPlayer.Get();
+		pBasePlayer->SetFOV( this, 0, m_fovSpeed );
+	}
+
+	SetThink( &CTriggerCamera::ReturnToEyes );
+	SetNextThink( gpGlobals->curtime );
+} */
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CTriggerCamera::InputTeleportToView( inputdata_t &inputdata )
+{
+	if( m_hPlayer )
+	{	
+		CBasePlayer *pBasePlayer = (CBasePlayer*)m_hPlayer.Get();
+		
+		QAngle vecPlayerView = GetAbsAngles();
+		Vector vecEyeOffset = pBasePlayer->EyePosition() - pBasePlayer->GetAbsOrigin();
+		Vector vecTeleportPosition = GetAbsOrigin() - vecEyeOffset;
+		
+		trace_t tr;
+		UTIL_TraceLine( GetAbsOrigin(), GetAbsOrigin() - 1.02f*vecEyeOffset, MASK_SOLID, pBasePlayer, COLLISION_GROUP_NONE, &tr );
+		if( tr.fraction != 1.0 )
+		{
+			vecTeleportPosition = tr.endpos;
+		}
+
+		pBasePlayer->SetGroundEntity( NULL );		
+		pBasePlayer->Teleport( &vecTeleportPosition, &vecPlayerView, NULL );
+	}
 	Disable();
 }
 
