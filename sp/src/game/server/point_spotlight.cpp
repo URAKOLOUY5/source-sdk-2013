@@ -73,10 +73,13 @@ private:
 	float	m_flSpotlightCurLength;
 	float	m_flSpotlightGoalWidth;
 	float	m_flHDRColorScale;
-#ifdef DBR // In future for U5 Maps
-	const char *m_nSpotlightTexture;
-#endif
 	int		m_nMinDXLevel;
+
+#ifdef MAPBASE
+	float	m_flHaloScale;
+	string_t	m_iszHaloMaterial;
+	string_t	m_iszSpotlightMaterial;
+#endif
 
 public:
 	COutputEvent m_OnOn, m_OnOff;     ///< output fires when turned on, off
@@ -100,13 +103,12 @@ BEGIN_DATADESC( CPointSpotlight )
 	DEFINE_KEYFIELD( m_flSpotlightMaxLength,FIELD_FLOAT, "SpotlightLength"),
 	DEFINE_KEYFIELD( m_flSpotlightGoalWidth,FIELD_FLOAT, "SpotlightWidth"),
 	DEFINE_KEYFIELD( m_flHDRColorScale, FIELD_FLOAT, "HDRColorScale" ),
-
-
-#ifdef DBR // In future for U5MAPS
-	DEFINE_KEYFIELD( m_nSpotlightTexture, FIELD_STRING, "SpotlightTexture" ),
-#endif
-
 	DEFINE_KEYFIELD( m_nMinDXLevel, FIELD_INTEGER, "mindxlevel" ),
+#ifdef MAPBASE
+	DEFINE_KEYFIELD( m_flHaloScale, FIELD_FLOAT, "HaloScale" ),
+	DEFINE_KEYFIELD( m_iszHaloMaterial, FIELD_STRING, "HaloMaterial" ),
+	DEFINE_KEYFIELD( m_iszSpotlightMaterial, FIELD_STRING, "SpotlightMaterial" ),
+#endif
 
 	// Inputs
 	DEFINE_INPUTFUNC( FIELD_VOID,		"LightOn",		InputLightOn ),
@@ -136,6 +138,9 @@ CPointSpotlight::CPointSpotlight()
 #endif
 	m_flHDRColorScale = 1.0f;
 	m_nMinDXLevel = 0;
+#ifdef MAPBASE
+	m_flHaloScale = 60.0f;
+#endif
 }
 
 #ifdef MAPBASE
@@ -157,10 +162,21 @@ void CPointSpotlight::Precache(void)
 	BaseClass::Precache();
 
 	// Sprites.
-	m_nHaloSprite = PrecacheModel("sprites/light_glow03.vmt");
-#ifdef DBR
-	PrecacheModel ( m_nSpotlightTexture );
+#ifdef MAPBASE
+	if (m_iszHaloMaterial == NULL_STRING)
+	{
+		m_iszHaloMaterial = AllocPooledString( "sprites/light_glow03.vmt" );
+	}
+
+	if (m_iszSpotlightMaterial == NULL_STRING)
+	{
+		m_iszSpotlightMaterial = AllocPooledString( "sprites/glow_test02.vmt" );
+	}
+
+	m_nHaloSprite = PrecacheModel( STRING( m_iszHaloMaterial ) );
+	PrecacheModel( STRING( m_iszSpotlightMaterial ) );
 #else
+	m_nHaloSprite = PrecacheModel("sprites/light_glow03.vmt");
 	PrecacheModel( "sprites/glow_test02.vmt" );
 #endif
 }
@@ -379,10 +395,10 @@ void CPointSpotlight::SpotlightCreate(void)
 		m_hSpotlightTarget->m_flLightScale = 0.0;
 	}
 
-#ifdef DBR // In future for U5MAPS
-	m_hSpotlight = CBeam::BeamCreate( m_nSpotlightTexture, m_flSpotlightGoalWidth );
-#else
 	//m_hSpotlight = CBeam::BeamCreate( "sprites/spotlight.vmt", m_flSpotlightGoalWidth );
+#ifdef MAPBASE
+	m_hSpotlight = CBeam::BeamCreate( STRING(m_iszSpotlightMaterial), m_flSpotlightGoalWidth );
+#else
 	m_hSpotlight = CBeam::BeamCreate( "sprites/glow_test02.vmt", m_flSpotlightGoalWidth );
 #endif
 	// Set the temporary spawnflag on the beam so it doesn't save (we'll recreate it on restore)
@@ -390,12 +406,15 @@ void CPointSpotlight::SpotlightCreate(void)
 	m_hSpotlight->AddSpawnFlags( SF_BEAM_TEMPORARY );
 	m_hSpotlight->SetColor( m_clrRender->r, m_clrRender->g, m_clrRender->b ); 
 	m_hSpotlight->SetHaloTexture(m_nHaloSprite);
+#ifdef MAPBASE
+	m_hSpotlight->SetHaloScale(m_flHaloScale);
+#else
 	m_hSpotlight->SetHaloScale(60);
+#endif
 	m_hSpotlight->SetEndWidth(m_flSpotlightGoalWidth);
 	m_hSpotlight->SetBeamFlags( (FBEAM_SHADEOUT|FBEAM_NOTILE) );
 	m_hSpotlight->SetBrightness( 64 );
 	m_hSpotlight->SetNoise( 0 );
-	m_hSpotlight->SetFrame(0);
 	m_hSpotlight->SetMinDXLevel( m_nMinDXLevel );
 
 	if ( m_bEfficientSpotlight )
