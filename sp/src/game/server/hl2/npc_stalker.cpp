@@ -280,7 +280,7 @@ void CNPC_Stalker::Spawn( void )
 {
 	Precache( );
 
-	SetModel( "models/stalker.mdl" );
+	SetModel( DefaultOrCustomModel( "models/stalker.mdl" ) );
 	SetHullType(HULL_HUMAN);
 	SetHullSizeNormal();
 
@@ -323,7 +323,7 @@ void CNPC_Stalker::Spawn( void )
 //-----------------------------------------------------------------------------
 void CNPC_Stalker::Precache( void )
 {
-	PrecacheModel("models/stalker.mdl");
+	PrecacheModel( DefaultOrCustomModel( "models/stalker.mdl" ) );
 	PrecacheModel("sprites/laser.vmt");	
 
 	PrecacheModel("sprites/redglow1.vmt");
