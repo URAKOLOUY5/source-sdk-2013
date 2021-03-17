@@ -88,9 +88,15 @@ extern int gEvilImpulse101;
 
 ConVar sv_autojump( "sv_autojump", "0" );
 
+#ifndef DBR
 ConVar hl2_walkspeed( "hl2_walkspeed", "150" );
 ConVar hl2_normspeed( "hl2_normspeed", "190" );
 ConVar hl2_sprintspeed( "hl2_sprintspeed", "320" );
+#else
+ConVar hl2_walkspeed( "hl2_walkspeed", "150", FCVAR_DEVELOPMENTONLY);
+ConVar hl2_normspeed( "hl2_normspeed", "190", FCVAR_DEVELOPMENTONLY);
+ConVar hl2_sprintspeed( "hl2_sprintspeed", "320", FCVAR_DEVELOPMENTONLY);
+#endif
 
 ConVar hl2_darkness_flashlight_factor ( "hl2_darkness_flashlight_factor", "1" );
 
@@ -98,6 +104,10 @@ ConVar hl2_darkness_flashlight_factor ( "hl2_darkness_flashlight_factor", "1" );
 	#define	HL2_WALK_SPEED 150
 	#define	HL2_NORM_SPEED 190
 	#define	HL2_SPRINT_SPEED 320
+#elif DBR
+	#define	HL2_WALK_SPEED 95
+	#define	HL2_NORM_SPEED 150
+	#define	HL2_SPRINT_SPEED 220
 #else
 	#define	HL2_WALK_SPEED hl2_walkspeed.GetFloat()
 	#define	HL2_NORM_SPEED hl2_normspeed.GetFloat()
@@ -110,7 +120,11 @@ ConVar player_showpredictedposition_timestep( "player_showpredictedposition_time
 ConVar player_squad_transient_commands( "player_squad_transient_commands", "1", FCVAR_REPLICATED );
 ConVar player_squad_double_tap_time( "player_squad_double_tap_time", "0.25" );
 
+#ifdef DBR
+ConVar sv_infinite_aux_power( "sv_infinite_aux_power", "0", FCVAR_CHEAT && FCVAR_DEVELOPMENTONLY);
+#else
 ConVar sv_infinite_aux_power( "sv_infinite_aux_power", "0", FCVAR_CHEAT );
+#endif
 
 ConVar autoaim_unlock_target( "autoaim_unlock_target", "0.8666" );
 
