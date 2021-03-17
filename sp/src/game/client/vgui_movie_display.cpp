@@ -1,4 +1,4 @@
-//========= Copyright Â© 1996-2009, Valve Corporation, All rights reserved. ============//
+//========= Copyright © 1996-2009, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: 
 //
@@ -74,7 +74,7 @@ private:
 	VideoPlaybackInfo_t		m_playbackInfo;
 	CHandle<C_VGuiScreen>	m_hVGUIScreen;
 	CHandle<C_MovieDisplay>	m_hScreenEntity;
-
+	
 	int				m_nTextureId;
 	int				m_nPlaybackHeight;		// Playback dimensions (proper ration adjustments)
 	int				m_nPlaybackWidth;
@@ -356,7 +356,7 @@ bool CMovieDisplayScreen::BeginPlayback( const char *pFilename )
 
 	// Create a globally unique name for this material
 	char szMaterialName[256];
-
+	
 	// Append our group name if we have one
 	const char *szGroupName = m_hScreenEntity->GetGroupName();
 	if ( szGroupName[0] != NULL )
@@ -396,7 +396,7 @@ bool CMovieDisplayScreen::BeginPlayback( const char *pFilename )
 
 	// Get our playback dimensions
 	CalculatePlaybackDimensions( m_playbackInfo.m_nSourceWidth, m_playbackInfo.m_nSourceHeight );
-
+	
 	// Bind our texture
 	m_nTextureId = surface()->CreateNewTextureID( true );
 	g_pMatSystemSurface->DrawSetTextureMaterial( m_nTextureId, m_playbackInfo.m_pMaterial );
@@ -431,7 +431,7 @@ void CMovieDisplayScreen::Paint( void )
 	surface()->DrawSetTexture( m_nTextureId );
 	surface()->DrawSetColor(  255, 255, 255, 255 );
 	surface()->DrawTexturedSubRect( xpos, ypos, xpos+m_nPlaybackWidth, ypos+m_nPlaybackHeight, 0.0f, 0.0f, m_playbackInfo.m_flU, m_playbackInfo.m_flV );
-
+	
 	// Parent's turn
 	BaseClass::Paint();
 }

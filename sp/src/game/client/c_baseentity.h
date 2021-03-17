@@ -169,7 +169,7 @@ struct scriptthinkfunc_t
 	unsigned short	m_iContextHash;
 	bool			m_bNoParam;
 };
-#endif	
+#endif
 
 #define CREATE_PREDICTED_ENTITY( className )	\
 	C_BaseEntity::CreatePredictedEntityByName( className, __FILE__, __LINE__ );
@@ -1389,7 +1389,7 @@ public:
 
 #ifdef MAPBASE
 	int								m_iViewHideFlags;
-	bool							m_bDisableFlashlight;	
+	bool							m_bDisableFlashlight;
 #endif
 
 private:

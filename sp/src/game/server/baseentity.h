@@ -763,7 +763,7 @@ public:
 	void InputDrawEntity( inputdata_t &inputdata );
 	void InputUndrawEntity( inputdata_t &inputdata );
 	void InputEnableReceivingFlashlight( inputdata_t &inputdata );
-	void InputDisableReceivingFlashlight( inputdata_t &inputdata );	
+	void InputDisableReceivingFlashlight( inputdata_t &inputdata );
 	void InputAddEFlags( inputdata_t &inputdata );
 	void InputRemoveEFlags( inputdata_t &inputdata );
 	void InputAddSolidFlags( inputdata_t &inputdata );
@@ -932,7 +932,7 @@ public:
 	CNetworkVar( int, m_iViewHideFlags );
 
 	// Disables receiving projected textures. Based on a keyvalue from later Source games.
-	CNetworkVar( bool, m_bDisableFlashlight );	
+	CNetworkVar( bool, m_bDisableFlashlight );
 #endif
 
 	// was pev->rendercolor

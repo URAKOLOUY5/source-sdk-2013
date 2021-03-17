@@ -16,31 +16,31 @@
 #include "Color.h"
 #include "tier1/mapbase_con_groups.h"
 
-void CV_ColorChanged(IConVar* pConVar, const char* pOldString, float flOldValue);
+void CV_ColorChanged( IConVar *pConVar, const char *pOldString, float flOldValue );
 
 struct ConGroup_t
 {
-	ConGroup_t(const char* _pszName, ConVar* pCvar)
+	ConGroup_t( const char *_pszName, ConVar *pCvar )
 	{
 		pszName = _pszName;
 		cvar = pCvar;
 	}
 
-	const Color& GetColor()
+	const Color &GetColor()
 	{
 		if (_clr.a() == 0)
 		{
 			// Read the cvar
 			int clr[3];
-			sscanf(cvar->GetString(), "%i %i %i", &clr[0], &clr[1], &clr[2]);
-			_clr.SetColor(clr[0], clr[1], clr[2], 255);
+			sscanf( cvar->GetString(), "%i %i %i", &clr[0], &clr[1], &clr[2] );
+			_clr.SetColor( clr[0], clr[1], clr[2], 255 );
 		}
 		return _clr;
 	}
 
-	const char* pszName;
+	const char *pszName;
 	Color _clr;
-	ConVar* cvar;
+	ConVar *cvar;
 
 	//bool bDisabled;
 };
@@ -51,16 +51,16 @@ struct ConGroup_t
 
 #define DEFINE_CON_GROUP_CVAR(name, def, desc) static ConVar con_group_##name##_color( "con_group_" #name "_color", def, FCVAR_ARCHIVE | FCVAR_REPLICATED, desc, CV_ColorChanged )
 
-DEFINE_CON_GROUP_CVAR(mapbase_misc, "192 128 224", "Messages from misc. Mapbase functions, like map-specific files.");
-DEFINE_CON_GROUP_CVAR(physics, "159 209 159", "Messages from physics-related events.");
+DEFINE_CON_GROUP_CVAR( mapbase_misc, "192 128 224", "Messages from misc. Mapbase functions, like map-specific files." );
+DEFINE_CON_GROUP_CVAR( physics, "159 209 159", "Messages from physics-related events." );
 
-DEFINE_CON_GROUP_CVAR(inputoutput, "220 170 220", "Messages from I/O events. (these display in developer 2)");
-DEFINE_CON_GROUP_CVAR(npc_ai, "240 160 200", "Messages from NPC AI, etc. which display at various verbse levels.");
-DEFINE_CON_GROUP_CVAR(npc_scripts, "255 115 215", "Messages from scripted_sequence, etc. (these display in developer 2)");
-DEFINE_CON_GROUP_CVAR(choreo, "240 224 180", "Messages from choreographed scenes and response expressers. (these display in developer 1, 2, etc.)");
+DEFINE_CON_GROUP_CVAR( inputoutput, "220 170 220", "Messages from I/O events. (these display in developer 2)" );
+DEFINE_CON_GROUP_CVAR( npc_ai, "240 160 200", "Messages from NPC AI, etc. which display at various verbse levels." );
+DEFINE_CON_GROUP_CVAR( npc_scripts, "255 115 215", "Messages from scripted_sequence, etc. (these display in developer 2)" );
+DEFINE_CON_GROUP_CVAR( choreo, "240 224 180", "Messages from choreographed scenes and response expressers. (these display in developer 1, 2, etc.)" );
 
-DEFINE_CON_GROUP_CVAR(vscript, "192 224 240", "Internal messages from VScript not produced by the user's scripts.");
-DEFINE_CON_GROUP_CVAR(vscript_print, "80 186 255", "Messages from VScript's 'print' function.");
+DEFINE_CON_GROUP_CVAR( vscript, "192 224 240", "Internal messages from VScript not produced by the user's scripts." );
+DEFINE_CON_GROUP_CVAR( vscript_print, "80 186 255", "Messages from VScript's 'print' function." );
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -70,22 +70,22 @@ DEFINE_CON_GROUP_CVAR(vscript_print, "80 186 255", "Messages from VScript's 'pri
 ConGroup_t g_ConGroups[CON_GROUP_MAX] = {
 
 	// General
-	DEFINE_CON_GROUP(CON_GROUP_MAPBASE_MISC, "Mapbase misc.", mapbase_misc),
-	DEFINE_CON_GROUP(CON_GROUP_PHYSICS, "Physics", physics),
+	DEFINE_CON_GROUP( CON_GROUP_MAPBASE_MISC, "Mapbase misc.", mapbase_misc ),
+	DEFINE_CON_GROUP( CON_GROUP_PHYSICS, "Physics", physics ),
 
 	// Server
-	DEFINE_CON_GROUP(CON_GROUP_IO_SYSTEM, "Entity IO", inputoutput),
-	DEFINE_CON_GROUP(CON_GROUP_NPC_AI, "NPC AI", npc_ai),
-	DEFINE_CON_GROUP(CON_GROUP_NPC_SCRIPTS, "NPC scripts", npc_scripts),
-	DEFINE_CON_GROUP(CON_GROUP_CHOREO, "Choreo", choreo),
+	DEFINE_CON_GROUP( CON_GROUP_IO_SYSTEM, "Entity IO", inputoutput ),
+	DEFINE_CON_GROUP( CON_GROUP_NPC_AI, "NPC AI", npc_ai ),
+	DEFINE_CON_GROUP( CON_GROUP_NPC_SCRIPTS, "NPC scripts", npc_scripts ),
+	DEFINE_CON_GROUP( CON_GROUP_CHOREO, "Choreo", choreo ),
 
 	// VScript
-	DEFINE_CON_GROUP(CON_GROUP_VSCRIPT, "VScript", vscript),
-	DEFINE_CON_GROUP(CON_GROUP_VSCRIPT_PRINT, "VScript print", vscript_print),
+	DEFINE_CON_GROUP( CON_GROUP_VSCRIPT, "VScript", vscript ),
+	DEFINE_CON_GROUP( CON_GROUP_VSCRIPT_PRINT, "VScript print", vscript_print ),
 
 };
 
-void CV_ColorChanged(IConVar* pConVar, const char* pOldString, float flOldValue)
+void CV_ColorChanged( IConVar *pConVar, const char *pOldString, float flOldValue )
 {
 	for (int i = 0; i < CON_GROUP_MAX; i++)
 	{
@@ -97,23 +97,23 @@ void CV_ColorChanged(IConVar* pConVar, const char* pOldString, float flOldValue)
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 
-ConVar con_group_include_name("con_group_include_name", "0", FCVAR_NONE, "Includes groups when printing.");
+ConVar con_group_include_name( "con_group_include_name", "0", FCVAR_NONE, "Includes groups when printing." );
 
-CON_COMMAND(con_group_list, "Prints a list of all console groups.")
+CON_COMMAND( con_group_list, "Prints a list of all console groups." )
 {
-	Msg("============================================================\n");
+	Msg( "============================================================\n" );
 	for (int i = 0; i < CON_GROUP_MAX; i++)
 	{
-		Msg("	# ");
-		ConColorMsg(g_ConGroups[i].GetColor(), "%s", g_ConGroups[i].pszName);
-		Msg(" - %s ", g_ConGroups[i].cvar->GetHelpText());
+		Msg( "	# " );
+		ConColorMsg( g_ConGroups[i].GetColor(), "%s", g_ConGroups[i].pszName );
+		Msg( " - %s ", g_ConGroups[i].cvar->GetHelpText() );
 
 		//if (g_ConGroups[i].bDisabled)
 		//	Msg("(DISABLED)");
 
 		Msg("\n");
 	}
-	Msg("============================================================\n");
+	Msg( "============================================================\n" );
 }
 
 // TODO: Figure out how this can be done without server/client disparity issues
@@ -130,26 +130,27 @@ CON_COMMAND( con_group_toggle, "Toggles a console group." )
 			return;
 		}
 	}
+
 	Msg( "No group named \"%s\"\n", pszGroup );
 }
 */
 
-void CGMsg(int level, int nGroup, const tchar* pMsg, ...)
+void CGMsg( int level, int nGroup, const tchar* pMsg, ... )
 {
 	// Return early if we're not at this level
 	if (!IsSpewActive("developer", level))
 		return;
 
-	char string[2048];
+	char string[ 2048 ];
 	va_list argptr;
-	va_start(argptr, pMsg);
-	Q_vsnprintf(string, sizeof(string), pMsg, argptr);
-	va_end(argptr);
+	va_start( argptr, pMsg );
+	Q_vsnprintf( string, sizeof(string), pMsg, argptr );
+	va_end( argptr );
 
-	Assert(nGroup >= 0);
-	Assert(nGroup < CON_GROUP_MAX);
+	Assert( nGroup >= 0 );
+	Assert( nGroup < CON_GROUP_MAX );
 
-	ConGroup_t* pGroup = &g_ConGroups[nGroup];
+	ConGroup_t *pGroup = &g_ConGroups[nGroup];
 
 	/*if (pGroup->bDisabled)
 	{

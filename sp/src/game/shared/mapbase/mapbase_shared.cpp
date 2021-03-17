@@ -71,7 +71,7 @@ ConVar mapbase_load_actbusy("mapbase_load_actbusy", "1", FCVAR_ARCHIVE, "Should 
 
 #ifdef GAME_DLL
 // This cvar should change with each Mapbase update
-ConVar mapbase_version( "mapbase_version", "6.2", FCVAR_NONE, "The version of Mapbase currently being used in this mod." );
+ConVar mapbase_version( "mapbase_version", "6.3", FCVAR_NONE, "The version of Mapbase currently being used in this mod." );
 
 extern void MapbaseGameLog_Init();
 
@@ -212,8 +212,11 @@ public:
 
 		RefreshMapName();
 
-		// Shared Mapbase localization file
+		// Shared Mapbase scripts to avoid overwriting mod files
 		g_pVGuiLocalize->AddFile( "resource/mapbase_%language%.txt" );
+#ifdef CLIENT_DLL
+		PanelMetaClassMgr()->LoadMetaClassDefinitionFile( "scripts/vgui_screens_mapbase.txt" );
+#endif
 	}
 
 	virtual void OnRestore()
@@ -551,6 +554,11 @@ CUtlVector<MODTITLECOMMENT> *Mapbase_GetChapterMaps()
 CUtlVector<MODCHAPTER> *Mapbase_GetChapterList()
 {
 	return &g_MapbaseChapterList;
+}
+
+int Mapbase_GetChapterCount()
+{
+	return g_MapbaseChapterList.Count();
 }
 
 ThreeState_t Flashlight_GetLegacyVersionKey()

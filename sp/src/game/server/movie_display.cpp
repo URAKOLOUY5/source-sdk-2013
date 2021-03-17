@@ -1,4 +1,4 @@
-//========= Copyright Â© 1996-2009, Valve Corporation, All rights reserved. ============//
+//========= Copyright © 1996-2009, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: Allows movies to be played as a VGUI screen in the world
 //

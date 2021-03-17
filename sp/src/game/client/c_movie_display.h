@@ -1,4 +1,4 @@
-//========= Copyright Â© 1996-2009, Valve Corporation, All rights reserved. ============//
+//========= Copyright © 1996-2009, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: 
 //
@@ -31,4 +31,4 @@ private:
 	char	m_szGroupName[128];
 };
 
-#endif //C_MOVIE_DISPLAY_H 
+#endif //C_MOVIE_DISPLAY_H

@@ -451,8 +451,7 @@ BEGIN_ENT_SCRIPTDESC_ROOT( C_BaseEntity, "Root class of all client-side entities
 
 	DEFINE_SCRIPTFUNC_NAMED( ScriptGetModelName, "GetModelName", "Returns the name of the model" )
 
-	DEFINE_SCRIPTFUNC_NAMED( ScriptStopSound, "StopSound", "Stops a sound from this entity." )	
-
+	DEFINE_SCRIPTFUNC_NAMED( ScriptStopSound, "StopSound", "Stops a sound from this entity." )
 	DEFINE_SCRIPTFUNC_NAMED( ScriptEmitSound, "EmitSound", "Plays a sound from this entity." )
 	DEFINE_SCRIPTFUNC_NAMED( VScriptPrecacheScriptSound, "PrecacheSoundScript", "Precache a sound for later playing." )
 	DEFINE_SCRIPTFUNC_NAMED( ScriptSoundDuration, "GetSoundDuration", "Returns float duration of the sound. Takes soundname and optional actormodelname." )
@@ -546,8 +545,7 @@ BEGIN_ENT_SCRIPTDESC_ROOT( C_BaseEntity, "Root class of all client-side entities
 
 	DEFINE_SCRIPTFUNC( SetModel, "Set client-only entity model" )
 	//DEFINE_SCRIPTFUNC_NAMED( ScriptInitializeAsClientEntity, "InitializeAsClientEntity", "" )
-	DEFINE_SCRIPTFUNC_NAMED( Remove, "Destroy", "Remove clientside entity" )	
-
+	DEFINE_SCRIPTFUNC_NAMED( Remove, "Destroy", "Remove clientside entity" )
 	DEFINE_SCRIPTFUNC_NAMED( GetEntityIndex, "entindex", "" )
 
 	DEFINE_SCRIPTFUNC_NAMED( ScriptSetContextThink, "SetContextThink", "Set a think function on this entity." )
@@ -588,7 +586,7 @@ BEGIN_RECV_TABLE_NOBASE(C_BaseEntity, DT_BaseEntity)
 	RecvPropInt(RECVINFO(m_clrRender)),
 #ifdef MAPBASE
 	RecvPropInt(RECVINFO(m_iViewHideFlags)),
-	RecvPropBool(RECVINFO(m_bDisableFlashlight)),	
+	RecvPropBool(RECVINFO(m_bDisableFlashlight)),
 #endif
 	RecvPropInt(RECVINFO(m_iTeamNum)),
 	RecvPropInt(RECVINFO(m_CollisionGroup)),
@@ -1345,7 +1343,6 @@ void C_BaseEntity::Term()
 		g_pScriptVM->RemoveInstance( m_hScriptInstance );
 		m_hScriptInstance = NULL;
 
-
 #ifdef MAPBASE_VSCRIPT
 		FOR_EACH_VEC( m_ScriptThinkFuncs, i )
 		{
@@ -1353,7 +1350,7 @@ void C_BaseEntity::Term()
 			if ( h ) g_pScriptVM->ReleaseScript( h );
 		}
 		m_ScriptThinkFuncs.PurgeAndDeleteElements();
-#endif		
+#endif
 	}
 }
 

@@ -5254,7 +5254,7 @@ void CBasePlayer::Spawn( void )
 	if ( !g_pGameRules->IsMultiplayer() && g_pScriptVM )
 	{
 		g_pScriptVM->SetValue( "player", GetScriptInstance() );
-	}	
+	}
 
 #if !defined( TF_DLL )
 	IGameEvent *event = gameeventmanager->CreateEvent( "player_spawn" );
@@ -6384,7 +6384,6 @@ void CBasePlayer::CheatImpulseCommands( int iImpulse )
 
 	switch ( iImpulse )
 	{
-#ifndef PORTAL2
 	case 76:
 		{
 			if (!giPrecacheGrunt)
@@ -6399,14 +6398,12 @@ void CBasePlayer::CheatImpulseCommands( int iImpulse )
 			}
 			break;
 		}
-#endif
 
 	case 81:
 
 		GiveNamedItem( "weapon_cubemap" );
 		break;
 
-#ifndef PORTAL2
 	case 82:
 		// Cheat to create a jeep in front of the player
 		CreateJeep( this );
@@ -6458,7 +6455,6 @@ void CBasePlayer::CheatImpulseCommands( int iImpulse )
 		gEvilImpulse101		= false;
 
 		break;
-#endif
 
 	case 102:
 		// Gibbage!!!
