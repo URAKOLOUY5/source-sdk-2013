@@ -1791,10 +1791,10 @@ void CHL2_Player::ToggleZoom(void)
 //-----------------------------------------------------------------------------
 void CHL2_Player::StartZooming( void )
 {
-#ifdef DBR
-	int iFOV = 60;
+#ifdef MAPBASE
+	int iFOV = GetPlayerProxy() ? GetPlayerProxy()->m_SuitZoomFOV : 25;
 #else
-	int iFOV = 45;
+	int iFOV = 25;
 #endif
 #ifdef PORTAL2
 	if ( SetFOV( this, iFOV, 0.1f ) )
@@ -4664,6 +4664,7 @@ BEGIN_DATADESC( CLogicPlayerProxy )
 	DEFINE_INPUTFUNC( FIELD_STRING,	"SetPlayerModel", InputSetPlayerModel ),
 	DEFINE_INPUTFUNC( FIELD_BOOLEAN, "SetPlayerDrawExternally", InputSetPlayerDrawExternally ),
 	DEFINE_INPUT( m_MaxArmor, FIELD_INTEGER, "SetMaxInputArmor" ),
+	DEFINE_INPUT( m_SuitZoomFOV, FIELD_INTEGER, "SetSuitZoomFOV" ),	
 #endif
 	DEFINE_FIELD( m_hPlayer, FIELD_EHANDLE ),
 END_DATADESC()
