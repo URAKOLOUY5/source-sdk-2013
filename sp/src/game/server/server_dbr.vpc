@@ -8,7 +8,7 @@ $Configuration
 {
 	$Compiler
 	{
-		$AdditionalIncludeDirectories	"$BASE;$SRCDIR\game\shared\hl2;$SRCDIR\game\shared\episodic;.\hl2;.\episodic;.\dbr"
+		$AdditionalIncludeDirectories	"$BASE;$SRCDIR\game\shared\hl2;$SRCDIR\game\shared\episodic;$SRCDIR\game\shared\dbr;.\hl2;.\episodic;.\dbr"
 		$PreprocessorDefinitions		"$BASE;HL2_DLL;HL2_EPISODIC;DBR;USES_SAVERESTORE"
 	}
 }
@@ -291,6 +291,14 @@ $Project "Server (DBR)"
 				$File	"hl2\weapon_cguard.cpp"
 				$File	"hl2\weapon_flaregun.cpp"
 				$File	"hl2\weapon_flaregun.h"
+			}
+		}
+		
+		$Folder "DBR"
+		{
+			$Folder "DBR Shared"
+			{
+				$File	"$SRCDIR\game\shared\dbr\dbr_shareddeffs.h"
 			}
 		}
 	}
