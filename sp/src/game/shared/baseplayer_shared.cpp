@@ -91,6 +91,10 @@
 ConVar mp_usehwmmodels( "mp_usehwmmodels", "0", NULL, "Enable the use of the hw morph models. (-1 = never, 1 = always, 0 = based upon GPU)" ); // -1 = never, 0 = if hasfastvertextextures, 1 = always
 #endif
 
+#ifdef U5MAPS
+ConVar u5maps_version( "u5maps_version", "3.28", FCVAR_NONE, "The version of U5Maps currently being used in this game(-mod)." );
+#endif
+
 bool UseHWMorphModels()
 {
 // #ifdef CLIENT_DLL 
