@@ -2422,7 +2422,7 @@ bool CGameMovement::CheckJumpButton( void )
 		return false;
 #endif
 
-#ifdef SUPRESS_JUMP_ON_DUCK
+#ifdef DBR
 	// Cannot jump will while duck
 	if ( player->GetFlags() & FL_DUCKING )
 		return false;

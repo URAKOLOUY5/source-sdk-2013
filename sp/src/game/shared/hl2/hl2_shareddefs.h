@@ -44,12 +44,4 @@ enum
 #define DMG_SNIPER			(DMG_LASTGENERICFLAG<<1)	// This is sniper damage
 #define DMG_MISSILEDEFENSE	(DMG_LASTGENERICFLAG<<2)	// The only kind of damage missiles take. (special missile defense)
 
-#ifdef DBR
-//--------------
-// DAM SPECIFIC
-//--------------
-
-#define SUPRESS_JUMP_ON_DUCK
-#endif
-
 #endif // HL2_SHAREDDEFS_H
