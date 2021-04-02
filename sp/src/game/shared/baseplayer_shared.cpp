@@ -92,7 +92,7 @@ ConVar mp_usehwmmodels( "mp_usehwmmodels", "0", NULL, "Enable the use of the hw 
 #endif
 
 #ifdef U5MAPS
-ConVar u5maps_version( "u5maps_version", "3.28 March", FCVAR_NONE, "The version of U5Maps currently being used in this game(-mod)." );
+ConVar u5maps_version( "u5maps_version", "4.2 April", FCVAR_NONE, "The version of U5Maps currently being used in this game(-mod)." );
 #endif
 
 bool UseHWMorphModels()
