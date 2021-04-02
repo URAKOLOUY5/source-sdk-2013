@@ -65,7 +65,11 @@ COptionsDialog::COptionsDialog(vgui::Panel *parent) : PropertyDialog(parent, "Op
 #endif
 	if (ModInfo().IsSinglePlayerOnly() && !ModInfo().NoDifficulty())
 	{
+#ifdef DBR
+		AddPage(new COptionsSubDifficulty(this), "#GameUI_Mod");
+#else
 		AddPage(new COptionsSubDifficulty(this), "#GameUI_Difficulty");
+#endif
 	}
 
 	if (ModInfo().HasPortals())

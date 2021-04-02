@@ -23,7 +23,7 @@ $Project "client"
 
 $Project "GameUI"
 {
-	"gameui\GameUI.vpc" [$WINDOWS||$X360||$POSIX]
+	"gameui\Gameui_dbr.vpc" [($WINDOWS||$X360||$POSIX) && $DBR]
 }
 
 $Project "fgdlib"

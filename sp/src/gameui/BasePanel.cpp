@@ -175,12 +175,14 @@ void CGameMenuItem::ApplySchemeSettings(IScheme *pScheme)
 
 void CGameMenuItem::PaintBackground()
 {
+#ifndef DBR
 	if ( !GameUI().IsConsoleUI() )
 	{
 		BaseClass::PaintBackground();
 	}
 	else
 	{
+#endif
 		if ( !IsArmed() || !IsVisible() || GetParent()->GetAlpha() < 32 )
 			return;
 
@@ -188,8 +190,10 @@ void CGameMenuItem::PaintBackground()
 		GetSize( wide, tall );
 
 		DrawBoxFade( 0, 0, wide, tall, GetButtonBgColor(), 1.0f, 255, 0, true );
-		DrawBoxFade( 2, 2, wide - 4, tall - 4, Color( 0, 0, 0, 96 ), 1.0f, 255, 0, true );
+		DrawBoxFade( 0, 0, wide + 100, tall + 100, Color( 19, 76, 105, 192 ), 1.0f, 255, 0, true );
+#ifndef DBR
 	}
+#endif
 }
 
 void CGameMenuItem::SetRightAlignedText(bool state)

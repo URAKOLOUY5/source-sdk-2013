@@ -418,10 +418,11 @@ public:
 		m_pShaderDetail->AddItem("#gameui_low", NULL);
 		m_pShaderDetail->AddItem("#gameui_high", NULL);
 
+#ifndef DBR
 		m_pColorCorrection = new ComboBox( this, "ColorCorrection", 2, false );
 		m_pColorCorrection->AddItem("#gameui_disabled", NULL);
 		m_pColorCorrection->AddItem("#gameui_enabled", NULL);
-
+#endif
 		m_pMotionBlur = new ComboBox( this, "MotionBlur", 2, false );
 		m_pMotionBlur->AddItem("#gameui_disabled", NULL);
 		m_pMotionBlur->AddItem("#gameui_enabled", NULL);
@@ -432,9 +433,12 @@ public:
 
 		m_pDXLevel->SetEnabled(false);
 		
+#ifndef DBR
 		m_pColorCorrection->SetEnabled( mat_dxlevel.GetInt() >= 90 );
+#endif
 		m_pMotionBlur->SetEnabled( mat_dxlevel.GetInt() >= 90 );
 		
+#ifndef DBR
 		if ( g_pCVar->FindVar( "fov_desired" ) == NULL )
 		{
 			Panel *pFOV = FindChildByName( "FovSlider" );
@@ -449,6 +453,7 @@ public:
 				pFOV->SetVisible( false );
 			}
 		}
+#endif
 		
 		MarkDefaultSettingsAsRecommended();
 
@@ -564,7 +569,9 @@ public:
 		int nRootLOD = pKeyValues->GetInt( "ConVar.r_rootlod", 0 );
 		int nReduceFillRate = pKeyValues->GetInt( "ConVar.mat_reducefillrate", 0 );
 		int nDXLevel = pKeyValues->GetInt( "ConVar.mat_dxlevel", 0 );
+#ifndef DBR
 		int nColorCorrection = pKeyValues->GetInt( "ConVar.mat_colorcorrection", 0 );
+#endif
 		int nMotionBlur = pKeyValues->GetInt( "ConVar.mat_motion_blur_enabled", 0 );
 		// It doesn't make sense to retrieve this convar from dxsupport, because we'll then have materialsystem setting this config at loadtime. (Also, it only has very minimal support for CPU related configuration.)
 		//int nMulticore = pKeyValues->GetInt( "ConVar.mat_queue_mode", 0 );
@@ -653,7 +660,9 @@ public:
 
 		SetComboItemAsRecommended( m_pHDR, nDXLevel >= 90 ? 2 : 0 );
 
+#ifndef DBR
 		SetComboItemAsRecommended( m_pColorCorrection, nColorCorrection );
+#endif
 
 		SetComboItemAsRecommended( m_pMotionBlur, nMotionBlur );
 
@@ -768,17 +777,20 @@ public:
 		int iMC = m_pMulticore->GetActiveItem();
 		ApplyChangesToConVar( "mat_queue_mode", (iMC == 0) ? 0 : -1 );	 
 
+#ifndef DBR
 		ApplyChangesToConVar( "mat_colorcorrection", m_pColorCorrection->GetActiveItem() );
+#endif
 
 		ApplyChangesToConVar( "mat_motion_blur_enabled", m_pMotionBlur->GetActiveItem() );
-		
+
+#ifdef DBR
 		CCvarSlider *pFOV = (CCvarSlider *)FindChildByName( "FOVSlider" );
 		if ( pFOV ) 
 		{
 			pFOV->ApplyChanges();
 		}
 	}
-
+#endif
 	virtual void OnResetData()
 	{
 		ConVarRef mat_dxlevel( "mat_dxlevel" );
@@ -887,7 +899,9 @@ public:
 		//  -- After that, we'll switch -2 to mean it's enabled.
 		m_pMulticore->ActivateItem( (iMC == 0) ? 0 : 1 );
 
+#ifndef DBR
 		m_pColorCorrection->ActivateItem( mat_colorcorrection.GetInt() );
+#endif
 
 		m_pMotionBlur->ActivateItem( mat_motion_blur_enabled.GetInt() );
 
@@ -977,7 +991,9 @@ private:
 	bool m_bUseChanges;
 	vgui::ComboBox *m_pModelDetail, *m_pTextureDetail, *m_pAntialiasingMode, *m_pFilteringMode;
 	vgui::ComboBox *m_pShadowDetail, *m_pHDR, *m_pWaterDetail, *m_pVSync, *m_pMulticore, *m_pShaderDetail;
+#ifndef DBR	
 	vgui::ComboBox *m_pColorCorrection;
+#endif
 	vgui::ComboBox *m_pMotionBlur;
 	vgui::ComboBox *m_pDXLevel;
 
