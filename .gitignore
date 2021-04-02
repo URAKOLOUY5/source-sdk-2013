@@ -97,3 +97,4 @@ sp/src/vgui2/*.pdb
 sp/src/devtools/gcc9+support.o
 *.pdb
 game/bin/GameConfig.txt
+sp/game/dbr/bin/GameUI.dll
