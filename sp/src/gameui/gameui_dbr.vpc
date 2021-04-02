@@ -5,7 +5,9 @@
 //-----------------------------------------------------------------------------
 
 $macro SRCDIR		".."
-$Macro OUTBINDIR	"$SRCDIR\..\game\bin"
+$macro GAMENAME		"dbr"
+$Macro OUTBINDIR	"$SRCDIR\..\game\$GAMENAME\bin"
+
 
 $include "$SRCDIR\vpc_scripts\source_dll_base.vpc"
 

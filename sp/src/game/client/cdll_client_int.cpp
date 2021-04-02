@@ -366,7 +366,7 @@ static class DllOverride {
     public:
         DllOverride() {
             Sys_LoadInterface("filesystem_stdio.dll", FILESYSTEM_INTERFACE_VERSION, nullptr, (void **)&g_pFullFileSystem);
-            const char *pGameDir = CommandLine()->ParmValue("-game", "hl2");
+            const char *pGameDir = CommandLine()->ParmValue("-game", "dbr");
             pGameDir = VarArgs("%s/bin", pGameDir);
             g_pFullFileSystem->AddSearchPath(pGameDir, "EXECUTABLE_PATH", PATH_ADD_TO_HEAD);
         }
