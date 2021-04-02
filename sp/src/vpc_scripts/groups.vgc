@@ -11,12 +11,14 @@
 $Group "gamedlls"
 {
 	"client"
+	"gameui"	
 	"server"
 }
 
 $Group "game"
 {
 	"client"
+	"gameui"	
 	"mathlib"
 	"raytrace"
 	"vtf"
@@ -35,6 +37,7 @@ $Group "everything"
 {
 	"captioncompiler"
 	"client"
+	"gameui"	
 	"fgdlib"
 	"game_shader_dx9"
 	"glview"

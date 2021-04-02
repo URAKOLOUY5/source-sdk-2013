@@ -490,6 +490,10 @@ public:
 	bool GetBool() const { return !!GetInt(); }
 	const char *GetString( void ) const;
 
+	// True if it has a min/max setting
+	bool GetMin( float& minVal ) const;
+	bool GetMax( float& maxVal ) const;
+
 	void SetValue( const char *pValue );
 	void SetValue( float flValue );
 	void SetValue( int nValue );

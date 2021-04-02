@@ -21,6 +21,11 @@ $Project "client"
 	"game\client\client_brokenhope.vpc"	[($WIN32||$X360||$POSIX) && $BROKENHOPE]		
 }
 
+$Project "GameUI"
+{
+	"gameui\GameUI.vpc" [$WINDOWS||$X360||$POSIX]
+}
+
 $Project "fgdlib"
 {
 	"fgdlib\fgdlib.vpc" [$WIN32]
