@@ -7718,10 +7718,12 @@ void CBasePlayer::Weapon_Equip( CBaseCombatWeapon *pWeapon )
 	// 
 	// Trust me. It was hard and pointless to get used to. You'll thank me later.
 
+#ifndef HL1_DLL
 	if ( !PlayerHasMegaPhysCannon() )
 	{
 		Weapon_Switch( pWeapon );
 	}
+#endif
 #else
 	bool bShouldSwitch = g_pGameRules->FShouldSwitchWeapon( this, pWeapon );
 
@@ -8506,6 +8508,7 @@ void CMovementSpeedMod::InputSetAdditionalButtons(inputdata_t &data)
 }
 #endif
 
+#ifndef HL1_DLL
 #ifdef MAPBASE
 class CLogicPlayerInfo : public CPointEntity
 {
@@ -8590,7 +8593,7 @@ void CLogicPlayerInfo::GetPlayerInfo( CBasePlayer *pPlayer )
 	m_OutPlayerEntity.Set( pPlayer, pPlayer, this );
 }
 #endif
-
+#endif
 
 void SendProxy_CropFlagsToPlayerFlagBitsLength( const SendProp *pProp, const void *pStruct, const void *pVarData, DVariant *pOut, int iElement, int objectID)
 {

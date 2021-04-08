@@ -58,12 +58,12 @@ public:
 
 	void	InputEnable( inputdata_t &inputdata );
 	void	InputDisable( inputdata_t &inputdata );
-
+#if !defined(HL1_DLL) || defined(HL1_CLIENT_DLL)
 #ifdef MAPBASE
 	void	InputForcePlayerOn( inputdata_t &inputdata );
 	void	InputCheckPlayerOn( inputdata_t &inputdata );
 #endif
-
+#endif
 	bool	IsEnabled() const;
 
 	void	PlayerGotOn( CBasePlayer *pPlayer );

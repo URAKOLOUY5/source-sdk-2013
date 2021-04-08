@@ -61,9 +61,11 @@
 extern int	g_interactionBarnacleVictimReleased;
 #endif //HL2_DLL
 
+#ifndef HL1_DLL
 #ifdef MAPBASE
 extern acttable_t *GetSMG1Acttable();
 extern int GetSMG1ActtableCount();
+#endif
 #endif
 
 extern ConVar weapon_showproficiency;
@@ -2747,6 +2749,7 @@ Activity CBaseCombatCharacter::Weapon_BackupActivity( Activity activity, bool we
 		return activity;
 	}
 
+#ifndef HL1_DLL
 	acttable_t *pTable = GetSMG1Acttable();
 	int actCount = GetSMG1ActtableCount();
 	for ( int i = 0; i < actCount; i++, pTable++ )
@@ -2762,6 +2765,7 @@ Activity CBaseCombatCharacter::Weapon_BackupActivity( Activity activity, bool we
 			return (Activity)pTable->weaponAct;
 		}
 	}
+#endif
 
 	return activity;
 }

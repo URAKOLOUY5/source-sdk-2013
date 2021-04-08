@@ -685,8 +685,10 @@ bool CAI_BaseNPC::FriendlyFireEnabled()
 	if (m_FriendlyFireOverride != TRS_NONE)
 		return m_FriendlyFireOverride == TRS_TRUE;
 
+#ifndef HL1_DLL
 	if (HL2GameRules()->GlobalFriendlyFire() != TRS_NONE)
 		return HL2GameRules()->GlobalFriendlyFire() == TRS_TRUE;
+#endif
 
 	return !(CapabilitiesGet() & bits_CAP_FRIENDLY_DMG_IMMUNE);
 }

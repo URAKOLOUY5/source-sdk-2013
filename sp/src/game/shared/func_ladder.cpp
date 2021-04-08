@@ -396,6 +396,8 @@ void CFuncLadder::InputDisable( inputdata_t &inputdata )
 	m_bDisabled = true;
 }
 
+#if !defined(HL1_DLL)
+#ifndef HL1_CLIENT_DLL
 #ifdef MAPBASE
 //-----------------------------------------------------------------------------
 // Purpose: 
@@ -414,6 +416,8 @@ void CFuncLadder::InputCheckPlayerOn( inputdata_t &inputdata )
 {
 	static_cast<CHL2GameMovement*>(g_pGameMovement)->MountPlayerOntoLadder(this);
 }
+#endif
+#endif
 #endif
 
 //-----------------------------------------------------------------------------
@@ -493,11 +497,12 @@ BEGIN_DATADESC( CFuncLadder )
 	DEFINE_KEYFIELD( m_surfacePropName,FIELD_STRING,	"ladderSurfaceProperties" ),
 	DEFINE_INPUTFUNC( FIELD_VOID, "Enable", InputEnable ),
 	DEFINE_INPUTFUNC( FIELD_VOID, "Disable", InputDisable ),
+#if !defined(HL1_DLL) && defined(HL1_CLIENT_DLL)
 #ifdef MAPBASE
 	DEFINE_INPUTFUNC( FIELD_VOID, "ForcePlayerOn", InputForcePlayerOn ),
 	DEFINE_INPUTFUNC( FIELD_VOID, "CheckPlayerOn", InputCheckPlayerOn ),
 #endif
-
+#endif
 	DEFINE_OUTPUT(	m_OnPlayerGotOnLadder,	"OnPlayerGotOnLadder" ),
 	DEFINE_OUTPUT(	m_OnPlayerGotOffLadder,	"OnPlayerGotOffLadder" ),
 #endif

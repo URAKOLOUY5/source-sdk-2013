@@ -391,7 +391,9 @@ public:
 				} break;
 			//case MANIFEST_SOUNDSCAPES: { g_SoundscapeSystem.AddSoundscapeFile(value); } break;
 			case MANIFEST_SENTENCES: { engine->PrecacheSentenceFile(value); } break;
+#if !defined(HL1_DLL) && defined(HL1_CLIENT_DLL)
 			case MANIFEST_ACTBUSY: { ParseCustomActbusyFile(value); } break;
+#endif
 #endif
 		}
 	}
