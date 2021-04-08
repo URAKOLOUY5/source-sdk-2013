@@ -18,7 +18,8 @@ $Project "client"
 	"game\client\client_hl2.vpc"		[($WIN32||$X360||$POSIX) && $HL2]
 	"game\client\client_episodic.vpc"	[($WIN32||$X360||$POSIX) && $EPISODIC]
 	"game\client\client_dbr.vpc"		[($WIN32||$X360||$POSIX) && $DBR]		
-	"game\client\client_brokenhope.vpc"	[($WIN32||$X360||$POSIX) && $BROKENHOPE]		
+	"game\client\client_brokenhope.vpc"	[($WIN32||$X360||$POSIX) && $BROKENHOPE]
+	"game\client\client_hl_dam.vpc"		[($WIN32||$POSIX) && $HLDAM]
 }
 
 $Project "GameUI"
@@ -60,6 +61,7 @@ $Project "server"
 	"game\server\server_episodic.vpc"	[($WIN32||$X360||$POSIX) && $EPISODIC]
 	"game\server\server_dbr.vpc"	[($WIN32||$X360||$POSIX) && $DBR]	
 	"game\server\server_brokenhope.vpc"	[($WIN32||$X360||$POSIX) && $BROKENHOPE]				
+	"game\server\server_hl_dam.vpc"	[($WIN32||$POSIX) && $HLDAM]				
 }
 
 $Project "mathlib"

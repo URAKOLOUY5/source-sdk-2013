@@ -81,27 +81,6 @@ $Project
 			$File	"mapbase\logic_eventlistener.cpp"
 			$File	"mapbase\logic_register_activator.cpp"
 		}
-		
-		$Folder "HL2 DLL"
-		{
-			// Original stunstick files are conditional'd out in the HL2 VPCs
-			$File	"$SRCDIR\game\shared\hl2mp\weapon_stunstick.cpp"
-			$File	"$SRCDIR\game\shared\hl2mp\weapon_stunstick.h"
-		}
-		
-		$Folder	"HL2MP"
-		{
-			$Folder	"Weapons"
-			{
-				$File	"hl2mp\grenade_satchel.cpp"
-				$File	"hl2mp\grenade_satchel.h"
-				$File	"hl2mp\grenade_tripmine.cpp"
-				$File	"hl2mp\grenade_tripmine.h"
-				
-				$File	"$SRCDIR\game\shared\hl2mp\weapon_slam.cpp"
-				$File	"$SRCDIR\game\shared\hl2mp\weapon_slam.h"
-			}
-		}
 	}
 
 	$Folder	"Link Libraries"

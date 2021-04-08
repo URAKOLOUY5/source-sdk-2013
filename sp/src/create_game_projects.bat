@@ -32,6 +32,11 @@ If not "%DBR%"=="n" (
     set game=%game% /brokenhope
 )
 
+set /p DBR=Use Den and Max? (y): 
+If not "%DBR%"=="n" (
+    set game=%game% /hldam
+)
+
 cls
 
 rem echo.

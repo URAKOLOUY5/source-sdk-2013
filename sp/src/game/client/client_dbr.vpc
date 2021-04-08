@@ -126,6 +126,19 @@ $Project "Client (DBR)"
 			$File	"$SRCDIR\game\shared\hl2\survival_gamerules.cpp"
 			$File	"hl2\vgui_rootpanel_hl2.cpp"
 			$File	"episodic\c_npc_puppet.cpp"
+
+			// Original stunstick files are conditional'd out in the HL2 VPCs
+			$File	"$SRCDIR\game\shared\hl2mp\weapon_stunstick.cpp"
+			$File	"$SRCDIR\game\shared\hl2mp\weapon_stunstick.h"
+		}
+		
+		$Folder	"HL2MP"
+		{
+			$Folder	"Weapons"
+			{
+				$File	"$SRCDIR\game\shared\hl2mp\weapon_slam.cpp"
+				$File	"$SRCDIR\game\shared\hl2mp\weapon_slam.h"
+			}
 		}
 		
 		$Folder "DBR"

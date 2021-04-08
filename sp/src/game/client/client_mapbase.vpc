@@ -62,22 +62,6 @@ $Project
 			$File	"mapbase\c_point_glow.cpp"
 			$File	"mapbase\c_vgui_text_display.cpp"
 		}
-		
-		$Folder "HL2 DLL"
-		{
-			// Original stunstick files are conditional'd out in the HL2 VPCs
-			$File	"$SRCDIR\game\shared\hl2mp\weapon_stunstick.cpp"
-			$File	"$SRCDIR\game\shared\hl2mp\weapon_stunstick.h"
-		}
-		
-		$Folder	"HL2MP"
-		{
-			$Folder	"Weapons"
-			{
-				$File	"$SRCDIR\game\shared\hl2mp\weapon_slam.cpp"
-				$File	"$SRCDIR\game\shared\hl2mp\weapon_slam.h"
-			}
-		}
 	}
 
 	$Folder	"Link Libraries"
