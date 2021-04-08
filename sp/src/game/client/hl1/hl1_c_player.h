@@ -34,6 +34,18 @@ public:
 	CNetworkVar( float, m_flPlayAftershock );
 	CNetworkVar( float, m_flNextAmmoBurn );	// while charging, when to absorb another unit of player's ammo?
 
+#ifdef DAM
+	virtual void CalcPlayerView(Vector& eyeOrigin, QAngle& eyeAngles, float& fov);
+	virtual void CalcViewRoll(QAngle& eyeAngles);
+	virtual void CalcViewBob(Vector& eyeOrigin);
+	virtual void CalcViewIdle(QAngle& eyeAngles);
+
+	float ViewBob;
+	double BobTime;
+	float BobLastTime;
+	float IdleScale;
+#endif
+
 private:
 	C_HL1_Player( const C_HL1_Player & );
 	
