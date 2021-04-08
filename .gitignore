@@ -98,3 +98,6 @@ sp/src/devtools/gcc9+support.o
 *.pdb
 game/bin/GameConfig.txt
 sp/game/dbr/bin/GameUI.dll
+sp/src/vscript/squirrel/out
+.vscode
+.vs

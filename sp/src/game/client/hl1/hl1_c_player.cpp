@@ -54,7 +54,6 @@ void C_HL1_Player::CalcPlayerView(Vector& eyeOrigin, QAngle& eyeAngles, float& f
 	}
 
 	CalcViewBob(eyeOrigin);
-	CalcViewIdle(eyeAngles);
 }
 
 ConVar cl_hl1_rollspeed("cl_hl1_rollspeed", "300.0");
