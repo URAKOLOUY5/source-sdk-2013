@@ -35,10 +35,12 @@ public:
 
 		CollisionProp()->UseTriggerBounds( true, 12.0f );
 	}
+	
 	void Precache( void )
 	{
 		PrecacheModel( SUIT_MODEL );
 	}
+	
 	bool MyTouch( CBasePlayer *pPlayer )
 	{
 		if ( pPlayer->IsSuitEquipped() )
@@ -46,10 +48,8 @@ public:
 
 		if( !gEvilImpulse101 )
 		{
-			if ( HasSpawnFlags( SF_SUIT_SHORTLOGON ) )
-				UTIL_EmitSoundSuit(pPlayer->edict(), "!HEV_A0");		// short version of suit logon,
-			else
-				UTIL_EmitSoundSuit(pPlayer->edict(), "!HEV_AAx");	// long version of suit logon
+			if ( !HasSpawnFlags( SF_SUIT_SHORTLOGON ) )
+				UTIL_EmitSoundSuit(pPlayer->edict(), "!HEV_AAx");
 		}
 
 		pPlayer->EquipSuit();
