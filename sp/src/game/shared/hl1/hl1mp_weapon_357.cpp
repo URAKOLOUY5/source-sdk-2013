@@ -192,16 +192,10 @@ void CWeapon357::PrimaryAttack( void )
 //-----------------------------------------------------------------------------
 void CWeapon357::SecondaryAttack( void )
 {
-	// only in multiplayer
+	// actually only in multiplayer https://developer.valvesoftware.com/wiki/Half-Life:_Source_Bugs#.357
 	if ( !g_pGameRules->IsMultiplayer() )
 	{
-#ifndef CLIENT_DLL
-		// unless we have cheats on
-		if ( !sv_cheats->GetBool() )
-		{
-			return;
-		}
-#endif
+		return;
 	}
 
 	ToggleZoom();
