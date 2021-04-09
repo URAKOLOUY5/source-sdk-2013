@@ -211,7 +211,7 @@ void CTriggerRelay::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE 
 }
 
 
-/* // The Multimanager Entity - when fired, will fire up to 16 targets
+// The Multimanager Entity - when fired, will fire up to 16 targets
 // at specified times.
 
 class CMultiManager : public CPointEntity
@@ -289,7 +289,8 @@ bool CMultiManager::KeyValue( const char *szKeyName, const char *szValue )
 		{
 			char tmp[128];
 
-			UTIL_StripToken( szKeyName, tmp, Q_ARRAYSIZE( tmp ) );
+			//UTIL_StripToken( szKeyName, tmp, Q_ARRAYSIZE( tmp ) );
+			UTIL_StripToken(szKeyName, tmp);
 			m_iTargetName [ m_cTargets ] = AllocPooledString( tmp );
 			m_flTargetDelay [ m_cTargets ] = atof (szValue);
 			m_cTargets++;
@@ -401,7 +402,7 @@ void CMultiManager::ManagerReport ( void )
 		Msg( "%s %f\n", STRING(m_iTargetName[cIndex]), m_flTargetDelay[cIndex] );
 	}
 }
-#endif */
+#endif
 
 
 //
