@@ -58,8 +58,10 @@ private:
 	int		m_bitsDamage;
 };	
 
+#ifndef DBR
 DECLARE_HUDELEMENT( CHudHealth );
 DECLARE_HUD_MESSAGE( CHudHealth, Damage );
+#endif
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
@@ -74,7 +76,9 @@ CHudHealth::CHudHealth( const char *pElementName ) : CHudElement( pElementName )
 //-----------------------------------------------------------------------------
 void CHudHealth::Init()
 {
+#ifndef DBR
 	HOOK_HUD_MESSAGE( CHudHealth, Damage );
+#endif
 	Reset();
 }
 
