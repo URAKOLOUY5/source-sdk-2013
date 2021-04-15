@@ -10,7 +10,9 @@ using namespace vgui;
 
 #include "tier0/memdbgon.h" 
 
+#ifndef DBR
 DECLARE_HUDELEMENT (CHudHull);
+#endif
 
 # define HULL_INIT 80 
 

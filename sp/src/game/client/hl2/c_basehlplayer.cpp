@@ -31,6 +31,10 @@ ConVar cl_npc_speedmod_outtime( "cl_npc_speedmod_outtime", "1.5", FCVAR_CLIENTDL
 IMPLEMENT_CLIENTCLASS_DT(C_BaseHLPlayer, DT_HL2_Player, CHL2_Player)
 	RecvPropDataTable( RECVINFO_DT(m_HL2Local),0, &REFERENCE_RECV_TABLE(DT_HL2Local) ),
 	RecvPropBool( RECVINFO( m_fIsSprinting ) ),
+// First Person death cam (inspired by Modern Warfare 2019)
+#ifdef DBR	
+	RecvPropEHandle( RECVINFO( m_hRagdoll ) ),
+#endif
 END_RECV_TABLE()
 
 BEGIN_PREDICTION_DATA( C_BaseHLPlayer )
@@ -656,3 +660,252 @@ void C_BaseHLPlayer::BuildTransformations( CStudioHdr *hdr, Vector *pos, Quatern
 	BaseClass::BuildTransformations( hdr, pos, q, cameraTransform, boneMask, boneComputed );
 	BuildFirstPersonMeathookTransformations( hdr, pos, q, cameraTransform, boneMask, boneComputed, "ValveBiped.Bip01_Head1" );
 }
+
+// First Person death cam (inspired by Modern Warfare 2019)
+#ifdef DBR
+
+void C_BaseHLPlayer::CalcDeathCamView(Vector &eyeOrigin, QAngle &eyeAngles, float &fov)
+{
+	// The player's ragdoll has been created.
+	if ( m_hRagdoll.Get() )
+	{
+		// We get the location of the model's eyes.
+		C_BaseHLRagdoll *pRagdoll = dynamic_cast<C_BaseHLRagdoll *>( m_hRagdoll.Get() );
+		pRagdoll->GetAttachment( pRagdoll->LookupAttachment("eyes"), eyeOrigin, eyeAngles );
+
+		// We adjust the camera in the eyes of the model.
+		Vector vForward;
+		AngleVectors(eyeAngles, &vForward);
+
+		trace_t tr;
+		UTIL_TraceLine( eyeOrigin, eyeOrigin + (vForward * 10000), MASK_ALL, pRagdoll, COLLISION_GROUP_NONE, &tr );
+
+		if ( ( !(tr.fraction < 1) || (tr.endpos.DistTo(eyeOrigin) > 25) ) )
+			return;
+	}
+}
+
+IMPLEMENT_CLIENTCLASS_DT_NOBASE( C_BaseHLRagdoll, DT_HL2Ragdoll, CHL2Ragdoll )
+	RecvPropVector( RECVINFO( m_vecRagdollOrigin ) ),
+	RecvPropEHandle( RECVINFO( m_hPlayer ) ),
+	RecvPropInt( RECVINFO( m_nModelIndex ) ),
+	RecvPropInt( RECVINFO( m_nForceBone ) ),
+	RecvPropVector( RECVINFO( m_vecForce ) ),
+	RecvPropVector( RECVINFO( m_vecRagdollVelocity ) )
+END_RECV_TABLE()
+
+C_BaseHLRagdoll::C_BaseHLRagdoll()
+{
+}
+
+C_BaseHLRagdoll::~C_BaseHLRagdoll()
+{
+	PhysCleanupFrictionSounds( this );
+
+	if ( m_hPlayer )
+	{
+		m_hPlayer->CreateModelInstance();
+	}
+}
+
+void C_BaseHLRagdoll::Interp_Copy( C_BaseAnimatingOverlay *pSourceEntity )
+{
+	if ( !pSourceEntity )
+		return;
+	
+	VarMapping_t *pSrc = pSourceEntity->GetVarMapping();
+	VarMapping_t *pDest = GetVarMapping();
+    	
+	// Find all the VarMapEntry_t's that represent the same variable.
+	for ( int i = 0; i < pDest->m_Entries.Count(); i++ )
+	{
+		VarMapEntry_t *pDestEntry = &pDest->m_Entries[i];
+		const char *pszName = pDestEntry->watcher->GetDebugName();
+		for ( int j = 0; j < pSrc->m_Entries.Count(); j++ )
+		{
+			VarMapEntry_t *pSrcEntry = &pSrc->m_Entries[j];
+			if ( !Q_strcmp( pSrcEntry->watcher->GetDebugName(), pszName ) )
+			{
+				pDestEntry->watcher->Copy( pSrcEntry->watcher );
+				break;
+			}
+		}
+	}
+}
+
+void C_BaseHLRagdoll::ImpactTrace( trace_t *pTrace, int iDamageType, char *pCustomImpactName )
+{
+	IPhysicsObject *pPhysicsObject = VPhysicsGetObject();
+
+	if( !pPhysicsObject )
+		return;
+
+	Vector dir = pTrace->endpos - pTrace->startpos;
+
+	if ( iDamageType == DMG_BLAST )
+	{
+		dir *= 4000;  // Adjust impact strength
+				
+		// Apply force at object mass center
+		pPhysicsObject->ApplyForceCenter( dir );
+	}
+	else
+	{
+		Vector hitpos;
+	
+		VectorMA( pTrace->startpos, pTrace->fraction, dir, hitpos );
+		VectorNormalize( dir );
+
+		dir *= 4000;  // Adjust impact strength
+
+		// Apply force where we hit it
+		pPhysicsObject->ApplyForceOffset( dir, hitpos );	
+
+		// Blood spray!
+		//FX_CS_BloodSpray( hitpos, dir, 10 );
+	}
+
+	m_pRagdoll->ResetRagdollSleepAfterTime();
+}
+
+void C_BaseHLRagdoll::CreateHL2Ragdoll( void )
+{
+	// First, initialize all our data. If we have the player's entity on our client,
+	// then we can make ourselves start exactly where the player is.
+	C_BasePlayer *pPlayer = dynamic_cast<C_BasePlayer *>( m_hPlayer.Get() );
+	
+	if ( pPlayer && !pPlayer->IsDormant() )
+	{
+		// Move my current model instance to the ragdoll's so decals are preserved.
+		pPlayer->SnatchModelInstance( this );
+
+		VarMapping_t *varMap = GetVarMapping();
+
+		// Copy all the interpolated vars from the player entity.
+		// The entity uses the interpolated history to get bone velocity.
+		bool bRemotePlayer = (pPlayer != C_BasePlayer::GetLocalPlayer());			
+		if ( bRemotePlayer )
+		{
+			Interp_Copy( pPlayer );
+
+			SetAbsAngles( pPlayer->GetRenderAngles() );
+			GetRotationInterpolator().Reset();
+
+			m_flAnimTime = pPlayer->m_flAnimTime;
+			SetSequence( pPlayer->GetSequence() );
+			m_flPlaybackRate = pPlayer->GetPlaybackRate();
+		}
+		else
+		{
+			// This is the local player, so set them in a default
+			// pose and slam their velocity, angles and origin
+			SetAbsOrigin( m_vecRagdollOrigin );
+			
+			SetAbsAngles( pPlayer->GetRenderAngles() );
+
+			SetAbsVelocity( m_vecRagdollVelocity );
+
+			int iSeq = pPlayer->GetSequence();
+			if ( iSeq == -1 )
+			{
+				Assert( false );	// missing walk_lower?
+				iSeq = 0;
+			}
+			
+			SetSequence( iSeq );	// walk_lower, basic pose
+			SetCycle( 0.0 );
+
+			Interp_Reset( varMap );
+		}		
+	}
+	else
+	{
+		// Overwrite network origin so later interpolation will
+		// use this position
+		SetNetworkOrigin( m_vecRagdollOrigin );
+
+		SetAbsOrigin( m_vecRagdollOrigin );
+		SetAbsVelocity( m_vecRagdollVelocity );
+
+		Interp_Reset( GetVarMapping() );
+		
+	}
+
+	SetModelIndex( m_nModelIndex );
+
+	// Make us a ragdoll...
+	m_nRenderFX = kRenderFxRagdoll;
+
+	matrix3x4_t boneDelta0[MAXSTUDIOBONES];
+	matrix3x4_t boneDelta1[MAXSTUDIOBONES];
+	matrix3x4_t currentBones[MAXSTUDIOBONES];
+	const float boneDt = 0.05f;
+
+	if ( pPlayer && !pPlayer->IsDormant() )
+	{
+		pPlayer->GetRagdollInitBoneArrays( boneDelta0, boneDelta1, currentBones, boneDt );
+	}
+	else
+	{
+		GetRagdollInitBoneArrays( boneDelta0, boneDelta1, currentBones, boneDt );
+	}
+
+	InitAsClientRagdoll( boneDelta0, boneDelta1, currentBones, boneDt );
+}
+
+void C_BaseHLRagdoll::OnDataChanged( DataUpdateType_t type )
+{
+	BaseClass::OnDataChanged( type );
+
+	if ( type == DATA_UPDATE_CREATED )
+	{
+		CreateHL2Ragdoll();
+	}
+}
+
+IRagdoll *C_BaseHLRagdoll::GetIRagdoll() const
+{
+	return m_pRagdoll;
+}
+
+void C_BaseHLRagdoll::UpdateOnRemove( void )
+{
+	VPhysicsSetObject( NULL );
+
+	BaseClass::UpdateOnRemove();
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Clear out any face/eye values stored in the material system
+//-----------------------------------------------------------------------------
+void C_BaseHLRagdoll::SetupWeights( const matrix3x4_t *pBoneToWorld, int nFlexWeightCount, float *pFlexWeights, float *pFlexDelayedWeights )
+{
+	BaseClass::SetupWeights( pBoneToWorld, nFlexWeightCount, pFlexWeights, pFlexDelayedWeights );
+
+	static float destweight[128];
+	static bool bIsInited = false;
+
+	CStudioHdr *hdr = GetModelPtr();
+	if ( !hdr )
+		return;
+
+	int nFlexDescCount = hdr->numflexdesc();
+	if ( nFlexDescCount )
+	{
+		Assert( !pFlexDelayedWeights );
+		memset( pFlexWeights, 0, nFlexWeightCount * sizeof(float) );
+	}
+
+	if ( m_iEyeAttachment > 0 )
+	{
+		matrix3x4_t attToWorld;
+		if (GetAttachment( m_iEyeAttachment, attToWorld ))
+		{
+			Vector local, tmp;
+			local.Init( 1000.0f, 0.0f, 0.0f );
+			VectorTransform( local, attToWorld, tmp );
+			modelrender->SetViewTarget( GetModelPtr(), GetBody(), tmp );
+		}
+	}
+}
+#endif

@@ -1561,6 +1561,15 @@ void CBasePlayer::CalcView( Vector &eyeOrigin, QAngle &eyeAngles, float &zNear, 
 		{
 			CalcObserverView( eyeOrigin, eyeAngles, fov );
 		}
+#ifdef CLIENT_DLL
+// First Person death cam (inspired by Modern Warfare 2019)
+#ifdef DBR		
+		else if ( !this->IsAlive() )
+		{
+			CalcDeathCamView( eyeOrigin, eyeAngles, fov );
+		}
+#endif
+#endif	
 		else
 		{
 			CalcPlayerView( eyeOrigin, eyeAngles, fov );

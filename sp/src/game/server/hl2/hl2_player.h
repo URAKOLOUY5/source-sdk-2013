@@ -126,6 +126,12 @@ public:
 	virtual void		Splash( void );
 	virtual void 		ModifyOrAppendPlayerCriteria( AI_CriteriaSet& set );
 
+// First Person death cam (inspired by Modern Warfare 2019)
+#ifdef DBR
+	// Tracks our ragdoll entity.
+	CNetworkHandle( CBaseEntity, m_hRagdoll );	// Networked entity handle 	
+#endif
+
 #ifdef MAPBASE
 	// For the logic_playerproxy output
 	void				SpawnedAtPoint( CBaseEntity *pSpawnPoint );
@@ -256,6 +262,10 @@ public:
 	const impactdamagetable_t &GetPhysicsImpactDamageTable();
 	virtual int			OnTakeDamage( const CTakeDamageInfo &info );
 	virtual int			OnTakeDamage_Alive( const CTakeDamageInfo &info );
+// First Person death cam (inspired by Modern Warfare 2019)
+#ifdef DBR
+	virtual void		CreateRagdollEntity();	
+#endif
 	virtual void		OnDamagedByExplosion( const CTakeDamageInfo &info );
 	bool				ShouldShootMissTarget( CBaseCombatCharacter *pAttacker );
 
@@ -449,6 +459,30 @@ void CHL2_Player::DisableCappedPhysicsDamage()
 {
 	m_bUseCappedPhysicsDamageTable = false;
 }
+
+// First Person death cam (inspired by Modern Warfare 2019)
+#ifdef DBR
+class CHL2Ragdoll : public CBaseAnimatingOverlay
+{
+public:
+	DECLARE_CLASS( CHL2Ragdoll, CBaseAnimatingOverlay );
+	DECLARE_SERVERCLASS();
+
+	// Transmit ragdolls to everyone.
+	virtual int UpdateTransmitState()
+	{
+		return SetTransmitState( FL_EDICT_ALWAYS );
+	}
+
+public:
+	// In case the client has the player entity, we transmit the player index.
+	// In case the client doesn't have it, we transmit the player's model index, origin, and angles
+	// so they can create a ragdoll in the right place.
+	CNetworkHandle( CBaseEntity, m_hPlayer );	// Networked entity handle 
+	CNetworkVector( m_vecRagdollVelocity );
+	CNetworkVector( m_vecRagdollOrigin );
+};
+#endif
 
 
 #endif	//HL2_PLAYER_H

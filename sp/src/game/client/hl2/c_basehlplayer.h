@@ -57,6 +57,10 @@ public:
 	void			PerformClientSideNPCSpeedModifiers( float flFrameTime, CUserCmd *pCmd );
 
 	bool				IsWeaponLowered( void ) { return m_HL2Local.m_bWeaponLowered; }
+// First Person death cam (inspired by Modern Warfare 2019)
+#ifdef DBR
+	virtual void		CalcDeathCamView( Vector& eyeOrigin, QAngle& eyeAngles, float& fov );
+#endif
 
 public:
 
@@ -75,6 +79,8 @@ private:
 	float				m_flZoomRate;
 	float				m_flZoomStartTime;
 
+	EHANDLE				m_hRagdoll;
+
 	bool				m_bPlayUseDenySound;		// Signaled by PlayerUse, but can be unset by HL2 ladder code...
 	float				m_flSpeedMod;
 	float				m_flExitSpeedMod;
@@ -83,5 +89,38 @@ private:
 friend class CHL2GameMovement;
 };
 
+// First Person death cam (inspired by Modern Warfare 2019)
+#ifdef DBR
+class C_BaseHLRagdoll : public C_BaseAnimatingOverlay
+{
+public:
+	DECLARE_CLASS( C_BaseHLRagdoll, C_BaseAnimatingOverlay );
+	DECLARE_CLIENTCLASS();
+	
+	C_BaseHLRagdoll();
+	~C_BaseHLRagdoll();
+
+	virtual void OnDataChanged( DataUpdateType_t type );
+
+	int GetPlayerEntIndex() const;
+	IRagdoll *GetIRagdoll() const;
+
+	void ImpactTrace( trace_t *pTrace, int iDamageType, char *pCustomImpactName );
+	void UpdateOnRemove();
+	virtual void SetupWeights( const matrix3x4_t *pBoneToWorld, int nFlexWeightCount, float *pFlexWeights, float *pFlexDelayedWeights );
+	
+private:	
+	C_BaseHLRagdoll( const C_BaseHLRagdoll & ) {}
+
+	void Interp_Copy( C_BaseAnimatingOverlay *pDestinationEntity );
+	void CreateHL2Ragdoll();
+
+private:
+	EHANDLE	m_hPlayer;
+
+	CNetworkVector( m_vecRagdollVelocity );
+	CNetworkVector( m_vecRagdollOrigin );
+};
+#endif
 
 #endif

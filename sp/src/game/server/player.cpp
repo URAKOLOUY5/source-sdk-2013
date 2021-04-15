@@ -1893,6 +1893,12 @@ void CBasePlayer::Event_Dying( const CTakeDamageInfo& info )
 	
 	SetLocalAngles( angles );
 
+// First Person death cam (inspired by Modern Warfare 2019)
+#ifdef DBR
+	CreateRagdollEntity();
+	BecomeRagdollOnClient( vec3_origin );
+#endif
+
 	SetThink(&CBasePlayer::PlayerDeathThink);
 	SetNextThink( gpGlobals->curtime + 0.1f );
 	BaseClass::Event_Dying( info );

@@ -424,6 +424,22 @@ BEGIN_DATADESC( CCommandRedirect )
 END_DATADESC()
 #endif
 
+// First Person death cam (inspired by Modern Warfare 2019)
+#ifdef DBR
+//------------------------------------------------------------------------------
+// Ragdoll entities
+//------------------------------------------------------------------------------
+LINK_ENTITY_TO_CLASS( player_death_ragdoll, CHL2Ragdoll );
+
+IMPLEMENT_SERVERCLASS_ST_NOBASE( CHL2Ragdoll, DT_HL2Ragdoll )
+	SendPropVector( SENDINFO( m_vecRagdollOrigin ), -1,  SPROP_COORD ),
+	SendPropEHandle( SENDINFO( m_hPlayer ) ),
+	SendPropModelIndex( SENDINFO( m_nModelIndex ) ),
+	SendPropInt		( SENDINFO( m_nForceBone ), 8, 0 ),
+	SendPropVector	( SENDINFO( m_vecForce ), -1, SPROP_NOSCALE ),
+	SendPropVector( SENDINFO( m_vecRagdollVelocity ) )
+END_SEND_TABLE()
+#endif
 
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
@@ -611,6 +627,11 @@ BEGIN_DATADESC( CHL2_Player )
 
 	DEFINE_FIELD( m_flTimeNextLadderHint, FIELD_TIME ),
 
+// First Person death cam (inspired by Modern Warfare 2019)
+#ifdef DBR
+	DEFINE_FIELD( m_hRagdoll, FIELD_EHANDLE ),
+#endif
+
 	//DEFINE_FIELD( m_hPlayerProxy, FIELD_EHANDLE ), //Shut up class check!
 
 END_DATADESC()
@@ -674,6 +695,10 @@ CSuitPowerDevice SuitDeviceCustom[] =
 IMPLEMENT_SERVERCLASS_ST(CHL2_Player, DT_HL2_Player)
 	SendPropDataTable(SENDINFO_DT(m_HL2Local), &REFERENCE_SEND_TABLE(DT_HL2Local), SendProxy_SendLocalDataTable),
 	SendPropBool( SENDINFO(m_fIsSprinting) ),
+// First Person death cam (inspired by Modern Warfare 2019)
+#ifdef DBR
+	SendPropEHandle( SENDINFO(m_hRagdoll) ),
+#endif	
 END_SEND_TABLE()
 
 
@@ -3082,6 +3107,42 @@ int CHL2_Player::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 	// Call the base class implementation
 	return BaseClass::OnTakeDamage_Alive( info );
 }
+
+// First Person death cam (inspired by Modern Warfare 2019)
+#ifdef DBR
+//-----------------------------------------------------------------------------
+// Purpose: Create ragdoll
+//-----------------------------------------------------------------------------
+void CHL2_Player::CreateRagdollEntity()
+{
+	// There is already a ragdoll.
+	if ( m_hRagdoll )
+	{
+		// Remove it.
+		UTIL_RemoveImmediate( m_hRagdoll );
+		m_hRagdoll	= NULL;
+	}
+
+	// We get the corpse.
+	CHL2Ragdoll *pRagdoll = dynamic_cast<CHL2Ragdoll *>( m_hRagdoll.Get() );
+	
+	// Apparently there is none, create it.
+	if ( !pRagdoll )
+		pRagdoll = dynamic_cast<CHL2Ragdoll *>( CreateEntityByName("player_death_ragdoll") );
+
+	if ( pRagdoll )
+	{
+		pRagdoll->m_hPlayer				= this;
+		pRagdoll->m_vecRagdollOrigin	= GetAbsOrigin();
+		pRagdoll->m_vecRagdollVelocity	= GetAbsVelocity();
+		pRagdoll->m_nModelIndex			= m_nModelIndex;
+		pRagdoll->m_nForceBone			= m_nForceBone;
+		pRagdoll->SetAbsOrigin( GetAbsOrigin() );
+	}
+
+	m_hRagdoll	= pRagdoll;
+}
+#endif
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
