@@ -6397,11 +6397,19 @@ void CBasePlayer::CheatImpulseCommands( int iImpulse )
 				giPrecacheGrunt = 1;
 				Msg( "You must now restart to use Grunt-o-matic.\n");
 			}
+#ifdef HL1_DLL
+			else
+			{
+				Vector forward = UTIL_YawToVector( EyeAngles().y );
+				Create("monster_human_grunt", GetLocalOrigin() + forward * 128, GetLocalAngles());
+			}
+#else
 			else
 			{
 				Vector forward = UTIL_YawToVector( EyeAngles().y );
 				Create("NPC_human_grunt", GetLocalOrigin() + forward * 128, GetLocalAngles());
 			}
+#endif
 			break;
 		}
 
