@@ -171,10 +171,8 @@ void CFlashlightEffect::UpdateLightNew(const Vector &vecPos, const Vector &vecFo
 	FlashlightState_t state;
 
 	// We will lock some of the flashlight params if player is on a ladder, to prevent oscillations due to the trace-rays
-	bool bPlayerOnLadder = ( C_BasePlayer::GetLocalPlayer()->GetMoveType() == MOVETYPE_LADDER );
+	// bool bPlayerOnLadder = ( C_BasePlayer::GetLocalPlayer()->GetMoveType() == MOVETYPE_LADDER );
 
-	const float flEpsilon = 0.1f;			// Offset flashlight position along vecUp
-	const float flDistCutoff = 128.0f;
 	const float flDistDrag = 0.2;
 
 	CTraceFilterSkipPlayerAndViewModel traceFilter;
@@ -191,9 +189,10 @@ void CFlashlightEffect::UpdateLightNew(const Vector &vecPos, const Vector &vecFo
 		}
 	}
 
-	Vector vOrigin = vecPos + flOffsetY * vecUp;
+	Vector vOrigin = vecPos;
 
 	// Not on ladder...trace a hull
+#ifndef DBR
 	if ( !bPlayerOnLadder ) 
 	{
 		trace_t pmOriginTrace;
@@ -206,8 +205,12 @@ void CFlashlightEffect::UpdateLightNew(const Vector &vecPos, const Vector &vecFo
 	}
 	else // on ladder...skip the above hull trace
 	{
+#endif
+
 		vOrigin = vecPos;
+#ifndef DBR
 	}
+#endif
 
 	// Now do a trace along the flashlight direction to ensure there is nothing within range to pull back from
 	int iMask = MASK_OPAQUE_AND_NPCS;
@@ -245,31 +248,9 @@ void CFlashlightEffect::UpdateLightNew(const Vector &vecPos, const Vector &vecFo
 		debugoverlay->AddLineOverlay( vOrigin, pmDirectionTrace.endpos, 255, 0, 0, false, 0 );
 	}
 
-	float flDist = (pmDirectionTrace.endpos - vOrigin).Length();
-	if ( flDist < flDistCutoff )
-	{
-		// We have an intersection with our cutoff range
-		// Determine how far to pull back, then trace to see if we are clear
-		float flPullBackDist = bPlayerOnLadder ? r_flashlightladderdist.GetFloat() : flDistCutoff - flDist;	// Fixed pull-back distance if on ladder
-		m_flDistMod = Lerp( flDistDrag, m_flDistMod, flPullBackDist );
-		
-		if ( !bPlayerOnLadder )
-		{
-			trace_t pmBackTrace;
-			UTIL_TraceHull( vOrigin, vOrigin - vDir*(flPullBackDist-flEpsilon), Vector( -4, -4, -4 ), Vector( 4, 4, 4 ), iMask, &traceFilter, &pmBackTrace );
-			if( pmBackTrace.DidHit() )
-			{
-				// We have an intersection behind us as well, so limit our m_flDistMod
-				float flMaxDist = (pmBackTrace.endpos - vOrigin).Length() - flEpsilon;
-				if( m_flDistMod > flMaxDist )
-					m_flDistMod = flMaxDist;
-			}
-		}
-	}
-	else
-	{
-		m_flDistMod = Lerp( flDistDrag, m_flDistMod, 0.0f );
-	}
+	//float flDist = (pmDirectionTrace.endpos - vOrigin).Length();
+	m_flDistMod = Lerp( flDistDrag, m_flDistMod, 0.0f );
+	
 	vOrigin = vOrigin - vDir * m_flDistMod;
 
 	state.m_vecLightOrigin = vOrigin;
