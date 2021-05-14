@@ -58,6 +58,7 @@ config.cfg
 
 # Unnecessary files
 *.lib
+!libjpeg.lib
 *.filters
 *.vpc_crc
 *.sentinel
