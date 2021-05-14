@@ -41,32 +41,34 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 class CHudHealth : public CHudElement, public CHudNumericDisplay
 {
-	DECLARE_CLASS_SIMPLE( CHudHealth, CHudNumericDisplay );
+	DECLARE_CLASS_SIMPLE(CHudHealth, CHudNumericDisplay);
 
 public:
-	CHudHealth( const char *pElementName );
-	virtual void Init( void );
-	virtual void VidInit( void );
-	virtual void Reset( void );
+	CHudHealth(const char* pElementName);
+	virtual void Init(void);
+	virtual void VidInit(void);
+	virtual void Reset(void);
 	virtual void OnThink();
-			void MsgFunc_Damage( bf_read &msg );
+	void MsgFunc_Damage(bf_read& msg);
 
 private:
 	// old variables
 	int		m_iHealth;
-	
-	int		m_bitsDamage;
-};	
 
-DECLARE_HUDELEMENT( CHudHealth );
-DECLARE_HUD_MESSAGE( CHudHealth, Damage );
+	int		m_bitsDamage;
+};
+
+DECLARE_HUDELEMENT(CHudHealth);
+DECLARE_HUD_MESSAGE(CHudHealth, Damage);
+
+//à
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CHudHealth::CHudHealth( const char *pElementName ) : CHudElement( pElementName ), CHudNumericDisplay(NULL, "HudHealth")
+CHudHealth::CHudHealth(const char* pElementName) : CHudElement(pElementName), CHudNumericDisplay(NULL, "HudHealth")
 {
-	SetHiddenBits( HIDEHUD_HEALTH | HIDEHUD_PLAYERDEAD | HIDEHUD_NEEDSUIT );
+	SetHiddenBits(HIDEHUD_HEALTH | HIDEHUD_PLAYERDEAD | HIDEHUD_NEEDSUIT);
 }
 
 //-----------------------------------------------------------------------------
@@ -74,8 +76,10 @@ CHudHealth::CHudHealth( const char *pElementName ) : CHudElement( pElementName )
 //-----------------------------------------------------------------------------
 void CHudHealth::Init()
 {
-	HOOK_HUD_MESSAGE( CHudHealth, Damage );
+#ifndef DBR
+	HOOK_HUD_MESSAGE(CHudHealth, Damage);
 	Reset();
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -83,11 +87,11 @@ void CHudHealth::Init()
 //-----------------------------------------------------------------------------
 void CHudHealth::Reset()
 {
+#ifndef DBR
 	m_iHealth = INIT_HEALTH;
 	m_bitsDamage = 0;
-#ifndef DBR
-	wchar_t* tempString = g_pVGuiLocalize->Find("#Valve_Hud_HEALTH");
 
+	wchar_t* tempString = g_pVGuiLocalize->Find("#Valve_Hud_HEALTH");
 
 	if (tempString)
 	{
@@ -97,10 +101,8 @@ void CHudHealth::Reset()
 	{
 		SetLabelText(L"HEALTH");
 	}
-#else
-	SetLabelText(L"+");
-#endif
 	SetDisplayValue(m_iHealth);
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -116,41 +118,42 @@ void CHudHealth::VidInit()
 //-----------------------------------------------------------------------------
 void CHudHealth::OnThink()
 {
+#ifndef DBR
 	int newHealth = 0;
-	C_BasePlayer *local = C_BasePlayer::GetLocalPlayer();
-	if ( local )
+	C_BasePlayer* local = C_BasePlayer::GetLocalPlayer();
+	if (local)
 	{
 		// Never below zero
-		newHealth = MAX( local->GetHealth(), 0 );
+		newHealth = MAX(local->GetHealth(), 0);
 	}
 
 	// Only update the fade if we've changed health
-	if ( newHealth == m_iHealth )
+	if (newHealth == m_iHealth)
 	{
 		return;
 	}
 
 	m_iHealth = newHealth;
 
-	if ( m_iHealth >= 20 )
+	if (m_iHealth >= 20)
 	{
 		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("HealthIncreasedAbove20");
 	}
-	else if ( m_iHealth > 0 )
+	else if (m_iHealth > 0)
 	{
 		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("HealthIncreasedBelow20");
 		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("HealthLow");
 	}
 
 	SetDisplayValue(m_iHealth);
+#endif
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CHudHealth::MsgFunc_Damage( bf_read &msg )
+void CHudHealth::MsgFunc_Damage(bf_read& msg)
 {
-
 	int armor = msg.ReadByte();	// armor
 	int damageTaken = msg.ReadByte();	// health
 	long bitsDamage = msg.ReadLong(); // damage bits
@@ -163,9 +166,9 @@ void CHudHealth::MsgFunc_Damage( bf_read &msg )
 	vecFrom.z = msg.ReadBitCoord();
 
 	// Actually took damage?
-	if ( damageTaken > 0 || armor > 0 )
+	if (damageTaken > 0 || armor > 0)
 	{
-		if ( damageTaken > 0 )
+		if (damageTaken > 0)
 		{
 			// start the animation
 			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("HealthDamageTaken");

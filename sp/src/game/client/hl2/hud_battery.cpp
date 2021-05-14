@@ -75,12 +75,11 @@ void CHudBattery::Reset( void )
 {
 #ifndef DBR
 	SetLabelText(g_pVGuiLocalize->Find("#Valve_Hud_Health"));
-#endif
 
-#ifdef DBR
 	SetLabelText(L"*");
-#endif
+
 	SetDisplayValue(m_iBat);
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -108,6 +107,7 @@ bool CHudBattery::ShouldDraw( void )
 //-----------------------------------------------------------------------------
 void CHudBattery::OnThink( void )
 {
+#ifndef DBR
 	if ( m_iBat == m_iNewBat )
 		return;
 
@@ -142,6 +142,7 @@ void CHudBattery::OnThink( void )
 	m_iBat = m_iNewBat;
 
 	SetDisplayValue(m_iBat);
+#endif
 }
 
 //-----------------------------------------------------------------------------

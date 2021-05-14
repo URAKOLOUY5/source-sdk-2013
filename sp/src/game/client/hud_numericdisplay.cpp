@@ -164,7 +164,7 @@ void CHudNumericDisplay::Paint()
 	if (m_bDisplayValue)
 	{
 		// draw our numbers
-		surface()->DrawSetTextColor(GetFgColor());
+		surface()->DrawSetTextColor(m_NumberColor);
 		PaintNumbers(m_hNumberFont, digit_xpos, digit_ypos, m_iValue);
 
 		// draw the overbright blur

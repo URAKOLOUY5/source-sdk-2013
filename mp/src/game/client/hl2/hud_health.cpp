@@ -83,6 +83,7 @@ void CHudHealth::Init()
 //-----------------------------------------------------------------------------
 void CHudHealth::Reset()
 {
+#ifndef DBR
 	m_iHealth		= INIT_HEALTH;
 	m_bitsDamage	= 0;
 
@@ -97,6 +98,7 @@ void CHudHealth::Reset()
 		SetLabelText(L"HEALTH");
 	}
 	SetDisplayValue(m_iHealth);
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -112,6 +114,7 @@ void CHudHealth::VidInit()
 //-----------------------------------------------------------------------------
 void CHudHealth::OnThink()
 {
+#ifndef DBR
 	int newHealth = 0;
 	C_BasePlayer *local = C_BasePlayer::GetLocalPlayer();
 	if ( local )
@@ -139,6 +142,7 @@ void CHudHealth::OnThink()
 	}
 
 	SetDisplayValue(m_iHealth);
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -146,7 +150,6 @@ void CHudHealth::OnThink()
 //-----------------------------------------------------------------------------
 void CHudHealth::MsgFunc_Damage( bf_read &msg )
 {
-
 	int armor = msg.ReadByte();	// armor
 	int damageTaken = msg.ReadByte();	// health
 	long bitsDamage = msg.ReadLong(); // damage bits

@@ -54,6 +54,7 @@ protected:
 
 	CPanelAnimationVar( float, m_flBlur, "Blur", "0" );
 	CPanelAnimationVar( Color, m_TextColor, "TextColor", "FgColor" );
+	CPanelAnimationVar( Color, m_NumberColor, "NumberColor", "FgColor" );
 	CPanelAnimationVar( Color, m_Ammo2Color, "Ammo2Color", "FgColor" );
 
 	CPanelAnimationVar( vgui::HFont, m_hNumberFont, "NumberFont", "HudNumbers" );
