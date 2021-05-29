@@ -252,6 +252,8 @@ public:
 	COutputEvent m_OnPlayerSpawn;
 #endif
 
+	COutputEvent m_PlayerGenericDamaged;
+
 	void InputRequestPlayerHealth( inputdata_t &inputdata );
 	void InputSetFlashlightSlowDrain( inputdata_t &inputdata );
 	void InputSetFlashlightNormalDrain( inputdata_t &inputdata );
@@ -3060,9 +3062,14 @@ int	CHL2_Player::OnTakeDamage( const CTakeDamageInfo &info )
 
 	gamestats->Event_PlayerDamage( this, info );
 
-#ifdef MAPBASE
+#ifdef MAPBASE	
 	FirePlayerProxyOutput("PlayerDamaged", variant_t(), info.GetAttacker(), this);
 #endif
+
+	if( info.GetDamageType() == DMG_CLUB )
+	{
+		FirePlayerProxyOutput("PlayerGenericDamaged", variant_t(), info.GetAttacker(), this);
+	}
 
 	return BaseClass::OnTakeDamage( playerDamage );
 }
@@ -4672,6 +4679,7 @@ BEGIN_DATADESC( CLogicPlayerProxy )
 	DEFINE_OUTPUT( m_RequestedPlayerFlashBattery, "PlayerFlashBattery" ),
 	DEFINE_OUTPUT( m_OnPlayerSpawn, "OnPlayerSpawn" ),
 #endif
+	DEFINE_OUTPUT( m_PlayerGenericDamaged, "PlayerGenericDamaged" ),
 	DEFINE_INPUTFUNC( FIELD_VOID,	"RequestPlayerHealth",	InputRequestPlayerHealth ),
 	DEFINE_INPUTFUNC( FIELD_VOID,	"SetFlashlightSlowDrain",	InputSetFlashlightSlowDrain ),
 	DEFINE_INPUTFUNC( FIELD_VOID,	"SetFlashlightNormalDrain",	InputSetFlashlightNormalDrain ),

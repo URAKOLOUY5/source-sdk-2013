@@ -318,6 +318,12 @@ $Project "Server (DBR)"
 			{
 				$File	"$SRCDIR\game\shared\dbr\dbr_shareddeffs.h"
 			}
+			
+			$Folder	"Weapons"
+			{
+				$File	"dbr\weapon_knife.h"
+				$File	"dbr\weapon_knife.cpp"
+			}
 		}
 	}
 }
